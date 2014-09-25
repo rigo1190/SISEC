@@ -20,15 +20,10 @@ namespace DAL.Modelo
         public DateTime? FechaModificacion { get; set; }
 
         [ScaffoldColumn(false)]
-        public int? UsuarioCapturaID { get; set; }
+        public string UsuarioCaptura { get; set; }
 
         [ScaffoldColumn(false)]
-        public int? UsuarioModificaID { get; set; }
+        public string UsuarioModifica { get; set; }
 
-        [ScaffoldColumn(false)]
-        public virtual Usuario UsuarioCaptura { get; set; }
-
-        [ScaffoldColumn(false)]
-        public virtual Usuario UsuarioModifica { get; set; }
     }
 }

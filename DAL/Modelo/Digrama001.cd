@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DAL.Modelo.SesionDependencia">
+    <Position X="3" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAQAAAEAAAABAAAAAAIBAAAIAAJAAAAABAAAQEI=</HashCode>
+      <FileName>Modelo\SesionDependencia.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CalendarioDependencia" />
+      <Property Name="StatusSesion" />
+      <Property Name="TipoCalendarizacion" />
+      <Property Name="TipoSesion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Modelo.DependenciaFideicomisoEjercicio">
+    <Position X="10" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ACAAAACAAAAAAAAAAAAAIAAAAAAIAEAgAAAAAQIAAAA=</HashCode>
+      <FileName>Modelo\DependenciaFideicomisoEjercicio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ejercicio" />
+      <Property Name="Dependencia" />
+      <Property Name="Fideicomiso" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Modelo.CalendarioDependencia">
+    <Position X="3.5" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAgAAAAAAAAAAAAAIAAAAQAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\CalendarioDependencia.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DependenciaFideicomisoEjercicio" />
+      <Property Name="Ejercicio" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Modelo.Ejercicio">
+    <Position X="6.75" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAQQAQAAA=</HashCode>
+      <FileName>Modelo\Ejercicio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Modelo.Fideicomiso">
+    <Position X="14.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAIAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAEAQEAA=</HashCode>
+      <FileName>Modelo\Fideicomiso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Modelo.Dependencia">
+    <Position X="14.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AECIAAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAAAgQEAA=</HashCode>
+      <FileName>Modelo\Dependencia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Modelo.StatusSesion">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <FileName>Modelo\StatusSesion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Modelo.TipoCalendarizacion">
+    <Position X="7.75" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <FileName>Modelo\TipoCalendarizacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Modelo.TipoSesion">
+    <Position X="5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <FileName>Modelo\TipoSesion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

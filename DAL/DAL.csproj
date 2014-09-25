@@ -46,12 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modelo\CalendarioDependencia.cs" />
+    <Compile Include="Modelo\Dependencia.cs" />
+    <Compile Include="Modelo\DependenciaFideicomisoEjercicio.cs" />
+    <Compile Include="Modelo\Ejercicio.cs" />
+    <Compile Include="Modelo\Fideicomiso.cs" />
     <Compile Include="Modelo\Generica.cs" />
+    <Compile Include="Modelo\Normatividad.cs" />
+    <Compile Include="Modelo\SesionDependencia.cs" />
+    <Compile Include="Modelo\StatusSesion.cs" />
+    <Compile Include="Modelo\TipoCalendarizacion.cs" />
+    <Compile Include="Modelo\TipoSesion.cs" />
+    <Compile Include="Modelo\TipoUsuario.cs" />
     <Compile Include="Modelo\Usuario.cs" />
+    <Compile Include="Modelo\UsuarioDependencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Modelo\Digrama001.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

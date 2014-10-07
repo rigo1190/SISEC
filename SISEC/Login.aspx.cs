@@ -1,0 +1,51 @@
+﻿using BL;
+using DAL.Modelo;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace SISEC
+{
+    public partial class Login1 : System.Web.UI.Page
+    {
+        private UnitOfWork uow;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                UnitOfWork uow = new UnitOfWork();
+            }
+        }
+
+        protected void btnEntrar_Click(object sender, EventArgs e)
+        {
+            string strlogin = hiddenLogin.Value;
+            string strContrasena = hiddenContrasena.Value;
+
+            Usuario user = uow.UsuarioBusinessLogic.Get(u => u.Login == strlogin && u.Password == strContrasena).FirstOrDefault();
+
+            if (user != null)
+            {
+                Session.Timeout = 60;
+                Session["IsAuthenticated"] = true;
+                Session["NombreUsuario"] = user.Nombre;
+                Session["Login"] = user.Login;
+                Response.Redirect("~/Formas/frmSelectorEjercicio.aspx");
+
+            }
+
+            else
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "script", "fnc_ShowMensaje()", true);
+                lblMensajes.Text = "Nombre de usuario o contraseña incorrectos";
+                lblMensajes.CssClass = "error";
+            }
+        }
+
+
+
+    }
+}

@@ -10,7 +10,7 @@
 namespace SISEC {
     
     
-    public partial class Navegador {
+    public partial class SiteAdmin {
         
         /// <summary>
         /// Control head.

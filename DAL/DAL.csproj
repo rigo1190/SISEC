@@ -46,14 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modelo\CalendarioDependencia.cs" />
+    <Compile Include="Modelo\Acuerdo.cs" />
+    <Compile Include="Modelo\Calendario.cs" />
+    <Compile Include="Modelo\Contexto.cs" />
     <Compile Include="Modelo\Dependencia.cs" />
     <Compile Include="Modelo\DependenciaFideicomisoEjercicio.cs" />
     <Compile Include="Modelo\Ejercicio.cs" />
     <Compile Include="Modelo\Fideicomiso.cs" />
     <Compile Include="Modelo\Generica.cs" />
     <Compile Include="Modelo\Normatividad.cs" />
-    <Compile Include="Modelo\SesionDependencia.cs" />
+    <Compile Include="Modelo\Sesion.cs" />
+    <Compile Include="Modelo\Seguimiento.cs" />
     <Compile Include="Modelo\StatusSesion.cs" />
     <Compile Include="Modelo\TipoCalendarizacion.cs" />
     <Compile Include="Modelo\TipoSesion.cs" />
@@ -61,6 +64,8 @@
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\UsuarioDependencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

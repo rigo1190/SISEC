@@ -10,7 +10,7 @@
 namespace SISEC {
     
     
-    public partial class Login {
+    public partial class MLogin {
         
         /// <summary>
         /// Control Head1.

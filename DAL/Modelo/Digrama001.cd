@@ -16,13 +16,12 @@
   <Class Name="DAL.Modelo.DependenciaFideicomisoEjercicio">
     <Position X="10" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>ACAAAACAAAAAAAAAAAAAIAAAAAAIAEAgAAAAAQIBAAA=</HashCode>
+      <HashCode>ACAAAACAAAAAAAAAAAAAAAAAAAAIAAAgAAAAAQIBAAA=</HashCode>
       <FileName>Modelo\DependenciaFideicomisoEjercicio.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Dependencia" />
       <Property Name="Fideicomiso" />
-      <Property Name="Ejercicio" />
     </ShowAsAssociation>
   </Class>
   <Class Name="DAL.Modelo.Calendario">
@@ -39,7 +38,7 @@
   <Class Name="DAL.Modelo.Ejercicio">
     <Position X="6.75" Y="3.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAQQAQAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAQAAQAAA=</HashCode>
       <FileName>Modelo\Ejercicio.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -53,28 +52,28 @@
   <Class Name="DAL.Modelo.Dependencia">
     <Position X="14.5" Y="3.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AECIAAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAAAgQEAA=</HashCode>
+      <HashCode>AECIAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAgQEAA=</HashCode>
       <FileName>Modelo\Dependencia.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DAL.Modelo.StatusSesion">
     <Position X="2.75" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
       <FileName>Modelo\StatusSesion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DAL.Modelo.TipoCalendarizacion">
     <Position X="7.75" Y="6.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
       <FileName>Modelo\TipoCalendarizacion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DAL.Modelo.TipoSesion">
     <Position X="5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQEAA=</HashCode>
       <FileName>Modelo\TipoSesion.cs</FileName>
     </TypeIdentifier>
   </Class>

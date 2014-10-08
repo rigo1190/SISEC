@@ -38,12 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BL\bin\Debug\BL.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="DAL">
-      <HintPath>..\DAL\bin\Debug\DAL.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -110,7 +110,7 @@
     <Content Include="fonts\font-awesome-4.1.0\scss\_spinning.scss" />
     <Content Include="fonts\font-awesome-4.1.0\scss\_stacked.scss" />
     <Content Include="fonts\font-awesome-4.1.0\scss\_variables.scss" />
-    <Content Include="Login.Master" />
+    <Content Include="MLogin.Master" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -141,12 +141,12 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.Master.cs">
-      <DependentUpon>Login.Master</DependentUpon>
+    <Compile Include="MLogin.Master.cs">
+      <DependentUpon>MLogin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.Master.designer.cs">
-      <DependentUpon>Login.Master</DependentUpon>
+    <Compile Include="MLogin.Master.designer.cs">
+      <DependentUpon>MLogin.Master</DependentUpon>
     </Compile>
     <Compile Include="Navegador.Master.cs">
       <DependentUpon>Navegador.Master</DependentUpon>
@@ -190,7 +190,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{d691c40c-9191-421a-bbfd-4d0657f1da73}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{49981495-b07a-4f1b-83df-a6c5b4286cb1}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

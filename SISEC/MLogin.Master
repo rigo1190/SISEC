@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MLogin.Master.cs" Inherits="SISEC.MLogin" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head id="Head1" runat="server">
+
+   
+    <title>Secretaría de Finanzas y Planeación</title>
+    <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />  
+    <script src="<%= ResolveClientUrl("~/Scripts/jquery-1.9.1.js") %>"></script>    
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="Form1" runat="server">
+        <div id="contenedor" class="page">
+            <div id="encabezado" class="header">
+                <div style="text-align:center">
+                        <div style="clear:both"></div>
+                </div>
+            </div>
+            <div id="contenido" class="main">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+            </div>
+ 
+            <div id="pie" class="footer">
+            </div>
+
+        </div>
+        
+    </form>
+</body>
+</html>
+

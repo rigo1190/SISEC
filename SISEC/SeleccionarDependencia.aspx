@@ -38,7 +38,7 @@
                             
                     </div>
 
-                    <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CssClass="btn btn-default" OnClientClick="return fnc_Validar()" ></asp:Button>
+                    <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CssClass="btn btn-default" ></asp:Button>
                     <button type="reset" class="btn btn-default">Cancelar</button>
                 </div>
             </div>

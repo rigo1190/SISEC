@@ -1,5 +1,5 @@
 ﻿using BL;
-using DAL.Modelo;
+using DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +9,12 @@ using System.Web.UI.WebControls;
 
 namespace SISEC
 {
-    public partial class Login1 : System.Web.UI.Page
+    public partial class Login : System.Web.UI.Page
     {
         private UnitOfWork uow;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                UnitOfWork uow = new UnitOfWork();
-            }
+               uow = new UnitOfWork();
         }
 
         protected void btnEntrar_Click(object sender, EventArgs e)
@@ -33,7 +30,7 @@ namespace SISEC
                 Session["IsAuthenticated"] = true;
                 Session["NombreUsuario"] = user.Nombre;
                 Session["Login"] = user.Login;
-                Response.Redirect("~/Formas/frmSelectorEjercicio.aspx");
+                Response.Redirect("~/SeleccionarDependencia.aspx");
 
             }
 

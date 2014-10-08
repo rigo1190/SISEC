@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Login.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SISEC.Login1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MLogin.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SISEC.Login" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
 
@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                            <input type="text" class="form-control" id="txtLogin" placeholder="Usuario" required autofocus autocomplete="off" />
+                            <input type="text" class="form-control" id="txtLogin" placeholder="Usuario" required="required" autofocus="autofocus" autocomplete="off" />
 
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <div class="input-group">
                              <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                            <input type="password" class="form-control" id="txtContrasena" placeholder="Password" required  />
+                            <input type="password" class="form-control" id="txtContrasena" placeholder="Password" required="required"  />
                            
                         </div>
                     </div>

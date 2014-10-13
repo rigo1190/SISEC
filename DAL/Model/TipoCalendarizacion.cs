@@ -16,7 +16,7 @@ namespace DAL.Model
     {
         public TipoCalendarizacion()
         {
-            this.Sesion = new HashSet<Sesion>();
+            this.DetalleSesiones = new HashSet<Sesion>();
         }
     
         public int ID { get; set; }
@@ -28,6 +28,6 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual ICollection<Sesion> Sesion { get; set; }
+        public virtual ICollection<Sesion> DetalleSesiones { get; set; }
     }
 }

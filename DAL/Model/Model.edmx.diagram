@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0156de5970dc474982d858d5d7688ec2" Name="Diagram1">
+      <Diagram DiagramId="0156de5970dc474982d858d5d7688ec2" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="SISEFModel.Acuerdo" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Calendario" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="3.75" PointY="2.5" IsExpanded="true" />
@@ -17,9 +17,9 @@
         <EntityTypeShape EntityType="SISEFModel.StatusSesion" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.TipoCalendarizacion" Width="1.5" PointX="6" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.TipoSesion" Width="1.5" PointX="6" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.TipoUsuario" Width="1.5" PointX="12.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.TipoUsuario" Width="1.5" PointX="15.375" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Usuario" Width="1.5" PointX="12.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.UsuarioDependencia" Width="1.5" PointX="15" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.UsuarioDependencia" Width="1.5" PointX="13.5" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Acuerdo_dbo_Sesion_SesionID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" ManuallyRouted="false" />
@@ -35,8 +35,8 @@
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" ManuallyRouted="false" />
-        <AssociationConnector Association="SISEFModel.FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" ManuallyRouted="false" />
+        <AssociationConnector Association="SISEFModel.TipoUsuarioUsuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

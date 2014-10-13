@@ -16,7 +16,7 @@ namespace DAL.Model
     {
         public TipoUsuario()
         {
-            this.UsuarioDependencia = new HashSet<UsuarioDependencia>();
+            this.DetalleUsuarios = new HashSet<Usuario>();
         }
     
         public int ID { get; set; }
@@ -28,6 +28,6 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual ICollection<UsuarioDependencia> UsuarioDependencia { get; set; }
+        public virtual ICollection<Usuario> DetalleUsuarios { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace DAL.Model
     {
         public Fideicomiso()
         {
-            this.DependenciaFideicomisoEjercicio = new HashSet<DependenciaFideicomisoEjercicio>();
+            this.DetalleFideicomisos = new HashSet<DependenciaFideicomisoEjercicio>();
             this.DetalleSubFideicomisos = new HashSet<Fideicomiso>();
         }
     
@@ -30,7 +30,7 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual ICollection<DependenciaFideicomisoEjercicio> DependenciaFideicomisoEjercicio { get; set; }
+        public virtual ICollection<DependenciaFideicomisoEjercicio> DetalleFideicomisos { get; set; }
         public virtual ICollection<Fideicomiso> DetalleSubFideicomisos { get; set; }
         public virtual Fideicomiso DependeDe { get; set; }
     }

@@ -2,47 +2,42 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="alert alert-info alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="fa fa-info-circle"></i>  <strong>Seleccione Dependencia y Ejercicio</strong> 
-                    </div>
-                </div>
+     <div class="container col-md-offset-4 col-md-4">
+             
+
+        <div class="panel panel-success">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Seleccione el ejercicio y la unidad presupuestal</h3>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Ejercicio</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-lg-4">
-                                <asp:DropDownList ID="ddlEjercicios" runat="server" Width="720px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
-                             </div>
-                        </div>
-                            
-                    </div>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Dependencia</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-lg-4">
-                                <asp:DropDownList ID="ddlDependecia" runat="server" Width="720px" CssClass ="form-control" AutoPostBack="True"></asp:DropDownList>
-                             </div>
-                        </div>
-                            
+            <div class="panel-body">
+                <div class="form-group">
+                   <label for="ddlEjercicios" class="control-label" runat="server">Ejercicios:</label>
+                    <div>
+                        <asp:DropDownList ID="ddlEjercicios" runat="server" Width="400px" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
                     </div>
+                 </div>
+                                 
 
-                    <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CssClass="btn btn-default" ></asp:Button>
+                <div class="form-group">
+                    <label for="ddlUnidadPresupuestal" class="control-label" runat="server">Unidad presupuestal:</label>
+                    <div>
+                        <asp:DropDownList ID="ddlDependecia" runat="server" Width="400px" CssClass ="form-control" AutoPostBack="False"></asp:DropDownList>
+                    </div>
+                </div>      
+
+            </div>
+
+            <div class="panel-footer clearfix">
+
+                <div class="pull-right">                
+                    <asp:Button ID="btnSeleccionar" runat="server" OnClick="btnSeleccionar_Click" Text="Seleccionar" CssClass="btn btn-default" ></asp:Button>
                     <button type="reset" class="btn btn-default">Cancelar</button>
                 </div>
+
             </div>
-        </div>
+           
     </div>
     
 </asp:Content>

@@ -16,14 +16,18 @@ namespace DAL.Model
     {
         public Usuario()
         {
-            this.UsuarioDependencia = new HashSet<UsuarioDependencia>();
+            this.DetalleUsuariosDependencia = new HashSet<UsuarioDependencia>();
         }
     
         public int ID { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string Nombre { get; set; }
+        public int TipoUsuarioID { get; set; }
+        public Nullable<bool> Activo { get; set; }
+        public Nullable<bool> Bloqueado { get; set; }
     
-        public virtual ICollection<UsuarioDependencia> UsuarioDependencia { get; set; }
+        public virtual ICollection<UsuarioDependencia> DetalleUsuariosDependencia { get; set; }
+        public virtual TipoUsuario TipoUsuario { get; set; }
     }
 }

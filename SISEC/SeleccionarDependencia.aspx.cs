@@ -58,7 +58,7 @@ namespace SISEC
         {
             Session["Dependencia"] = ddlDependecia.SelectedValue;
             Session["Ejercicio"] = ddlEjercicios.SelectedValue;
-            //Response.Redirect("~/Formas/POA/POA.aspx");
+            Response.Redirect("~/Formas/Sesiones.aspx");
         }
     }
 }

@@ -17,16 +17,12 @@ namespace DAL.Model
         public int ID { get; set; }
         public int UsuarioID { get; set; }
         public int DependenciaID { get; set; }
-        public int TipoUsuarioID { get; set; }
-        public bool Activo { get; set; }
-        public bool Bloqueado { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
         public virtual Dependencia Dependencia { get; set; }
-        public virtual TipoUsuario TipoUsuario { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

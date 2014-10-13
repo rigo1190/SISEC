@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SISEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SISEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acuerdo">
           <Key>
             <PropertyRef Name="ID" />
@@ -119,9 +119,14 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CalendarioID" Type="int" Nullable="false" />
           <Property Name="Mes" Type="int" Nullable="false" />
+          <Property Name="NumSesion" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaOficio" Type="datetime" />
+          <Property Name="NumOficio" Type="nvarchar" MaxLength="250" />
+          <Property Name="LugarReunion" Type="nvarchar" MaxLength="250" />
           <Property Name="Descripcion" Type="nvarchar(max)" />
           <Property Name="FechaProgramada" Type="datetime" />
           <Property Name="FechaCelebrada" Type="datetime" />
+          <Property Name="HoraProgramada" Type="nvarchar" MaxLength="50" />
           <Property Name="FechaReprogramada" Type="datetime" />
           <Property Name="TipoSesionID" Type="int" Nullable="false" />
           <Property Name="StatusSesionID" Type="int" Nullable="false" />
@@ -192,6 +197,9 @@
           <Property Name="Login" Type="nvarchar" MaxLength="20" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="Bloqueado" Type="bit" />
         </EntityType>
         <EntityType Name="UsuarioDependencia">
           <Key>
@@ -200,9 +208,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UsuarioID" Type="int" Nullable="false" />
           <Property Name="DependenciaID" Type="int" Nullable="false" />
-          <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="Bloqueado" Type="bit" Nullable="false" />
           <Property Name="FechaCaptura" Type="datetime" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
@@ -388,18 +393,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID">
-          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
-          <End Role="UsuarioDependencia" Type="Self.UsuarioDependencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoUsuario">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UsuarioDependencia">
-              <PropertyRef Name="TipoUsuarioID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="UsuarioDependencia" Type="Self.UsuarioDependencia" Multiplicity="*" />
@@ -409,6 +402,18 @@
             </Principal>
             <Dependent Role="UsuarioDependencia">
               <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoUsuarioUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="TipoUsuarioID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -488,17 +493,16 @@
             <End Role="Dependencia" EntitySet="Dependencia" />
             <End Role="UsuarioDependencia" EntitySet="UsuarioDependencia" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID" Association="Self.FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID">
-            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
-            <End Role="UsuarioDependencia" EntitySet="UsuarioDependencia" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" Association="Self.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioDependencia" EntitySet="UsuarioDependencia" />
           </AssociationSet>
+          <AssociationSet Name="FK_TipoUsuarioUsuario" Association="Self.FK_TipoUsuarioUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SISEFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -529,7 +533,7 @@
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="Self.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="Calendario" ToRole="DependenciaFideicomisoEjercicio" />
           <NavigationProperty Name="Ejercicio" Relationship="Self.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" FromRole="Calendario" ToRole="Ejercicio" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_dbo_Sesion_dbo_Calendario_CalendarioID" FromRole="Calendario" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_Calendario_CalendarioID" FromRole="Calendario" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="Dependencia">
           <Key>
@@ -546,8 +550,8 @@
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleSubDependencias" Relationship="Self.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" FromRole="Dependencia" ToRole="Dependencia1" />
           <NavigationProperty Name="DependeDe" Relationship="Self.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" FromRole="Dependencia1" ToRole="Dependencia" />
-          <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" FromRole="Dependencia" ToRole="DependenciaFideicomisoEjercicio" />
-          <NavigationProperty Name="UsuarioDependencia" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Dependencia_DependenciaID" FromRole="Dependencia" ToRole="UsuarioDependencia" />
+          <NavigationProperty Name="DetalleFideicomisos" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" FromRole="Dependencia" ToRole="DependenciaFideicomisoEjercicio" />
+          <NavigationProperty Name="DetalleUsuarios" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Dependencia_DependenciaID" FromRole="Dependencia" ToRole="UsuarioDependencia" />
         </EntityType>
         <EntityType Name="DependenciaFideicomisoEjercicio">
           <Key>
@@ -562,11 +566,11 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Calendario" Relationship="Self.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Calendario" />
+          <NavigationProperty Name="DetalleCalendarios" Relationship="Self.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Calendario" />
           <NavigationProperty Name="Dependencia" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Dependencia" />
           <NavigationProperty Name="Ejercicio" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Ejercicio" />
           <NavigationProperty Name="Fideicomiso" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Fideicomiso" />
-          <NavigationProperty Name="Normatividad" Relationship="Self.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Normatividad" />
+          <NavigationProperty Name="DetallesNormatividad" Relationship="Self.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Normatividad" />
         </EntityType>
         <EntityType Name="Ejercicio">
           <Key>
@@ -580,8 +584,8 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Calendario" Relationship="Self.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" FromRole="Ejercicio" ToRole="Calendario" />
-          <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" FromRole="Ejercicio" ToRole="DependenciaFideicomisoEjercicio" />
+          <NavigationProperty Name="DetalleCalendarios" Relationship="Self.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" FromRole="Ejercicio" ToRole="Calendario" />
+          <NavigationProperty Name="DetalleFideicomisos" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" FromRole="Ejercicio" ToRole="DependenciaFideicomisoEjercicio" />
         </EntityType>
         <EntityType Name="Fideicomiso">
           <Key>
@@ -596,7 +600,7 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" FromRole="Fideicomiso" ToRole="DependenciaFideicomisoEjercicio" />
+          <NavigationProperty Name="DetalleFideicomisos" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" FromRole="Fideicomiso" ToRole="DependenciaFideicomisoEjercicio" />
           <NavigationProperty Name="DetalleSubFideicomisos" Relationship="Self.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" FromRole="Fideicomiso" ToRole="Fideicomiso1" />
           <NavigationProperty Name="DependeDe" Relationship="Self.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" FromRole="Fideicomiso1" ToRole="Fideicomiso" />
         </EntityType>
@@ -648,12 +652,17 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Acuerdo" Relationship="Self.FK_dbo_Acuerdo_dbo_Sesion_SesionID" FromRole="Sesion" ToRole="Acuerdo" />
+          <NavigationProperty Name="DetalleAcuerdos" Relationship="Self.FK_dbo_Acuerdo_dbo_Sesion_SesionID" FromRole="Sesion" ToRole="Acuerdo" />
           <NavigationProperty Name="Calendario" Relationship="Self.FK_dbo_Sesion_dbo_Calendario_CalendarioID" FromRole="Sesion" ToRole="Calendario" />
-          <NavigationProperty Name="Seguimiento" Relationship="Self.FK_dbo_Seguimiento_dbo_Sesion_SesionID" FromRole="Sesion" ToRole="Seguimiento" />
+          <NavigationProperty Name="DetalleSeguimientos" Relationship="Self.FK_dbo_Seguimiento_dbo_Sesion_SesionID" FromRole="Sesion" ToRole="Seguimiento" />
           <NavigationProperty Name="StatusSesion" Relationship="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" FromRole="Sesion" ToRole="StatusSesion" />
           <NavigationProperty Name="TipoCalendarizacion" Relationship="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" FromRole="Sesion" ToRole="TipoCalendarizacion" />
           <NavigationProperty Name="TipoSesion" Relationship="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" FromRole="Sesion" ToRole="TipoSesion" />
+          <Property Name="FechaOficio" Type="DateTime" Precision="3" />
+          <Property Name="NumOficio" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LugarReunion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumSesion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="HoraProgramada" Type="String" MaxLength="50" FixedLength="false" />
         </EntityType>
         <EntityType Name="StatusSesion">
           <Key>
@@ -667,7 +676,7 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" FromRole="StatusSesion" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" FromRole="StatusSesion" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="TipoCalendarizacion">
           <Key>
@@ -681,7 +690,7 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" FromRole="TipoCalendarizacion" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" FromRole="TipoCalendarizacion" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="TipoSesion">
           <Key>
@@ -695,7 +704,7 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Sesion" Relationship="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" FromRole="TipoSesion" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" FromRole="TipoSesion" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -709,7 +718,7 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UsuarioDependencia" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID" FromRole="TipoUsuario" ToRole="UsuarioDependencia" />
+          <NavigationProperty Name="DetalleUsuarios" Relationship="SISEFModel.TipoUsuarioUsuario" FromRole="TipoUsuario" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -719,7 +728,11 @@
           <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UsuarioDependencia" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" FromRole="Usuario" ToRole="UsuarioDependencia" />
+          <NavigationProperty Name="DetalleUsuariosDependencia" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" FromRole="Usuario" ToRole="UsuarioDependencia" />
+          <NavigationProperty Name="TipoUsuario" Relationship="SISEFModel.TipoUsuarioUsuario" FromRole="Usuario" ToRole="TipoUsuario" />
+          <Property Name="TipoUsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <Property Name="Bloqueado" Type="Boolean" />
         </EntityType>
         <EntityType Name="UsuarioDependencia">
           <Key>
@@ -728,15 +741,11 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UsuarioID" Type="Int32" Nullable="false" />
           <Property Name="DependenciaID" Type="Int32" Nullable="false" />
-          <Property Name="TipoUsuarioID" Type="Int32" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="Bloqueado" Type="Boolean" Nullable="false" />
           <Property Name="FechaCaptura" Type="DateTime" Precision="3" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Dependencia" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Dependencia_DependenciaID" FromRole="UsuarioDependencia" ToRole="Dependencia" />
-          <NavigationProperty Name="TipoUsuario" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID" FromRole="UsuarioDependencia" ToRole="TipoUsuario" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" FromRole="UsuarioDependencia" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID">
@@ -919,18 +928,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID">
-          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
-          <End Role="UsuarioDependencia" Type="Self.UsuarioDependencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoUsuario">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UsuarioDependencia">
-              <PropertyRef Name="TipoUsuarioID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="UsuarioDependencia" Type="Self.UsuarioDependencia" Multiplicity="*" />
@@ -1019,242 +1016,258 @@
             <End Role="TipoSesion" EntitySet="TipoSesion" />
             <End Role="Sesion" EntitySet="Sesion" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID" Association="Self.FK_dbo_UsuarioDependencia_dbo_TipoUsuario_TipoUsuarioID">
-            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
-            <End Role="UsuarioDependencia" EntitySet="UsuarioDependencia" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID" Association="Self.FK_dbo_UsuarioDependencia_dbo_Usuario_UsuarioID">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioDependencia" EntitySet="UsuarioDependencia" />
           </AssociationSet>
+          <AssociationSet Name="TipoUsuarioUsuario" Association="SISEFModel.TipoUsuarioUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="TipoUsuarioUsuario">
+          <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
+          <End Type="SISEFModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SISEFModelStoreContainer" CdmEntityContainer="SISEF">
-          <EntitySetMapping Name="Acuerdo">
-            <EntityTypeMapping TypeName="SISEFModel.Acuerdo">
-              <MappingFragment StoreEntitySet="Acuerdo">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SISEFModelStoreContainer" CdmEntityContainer="SISEF">
+    <EntitySetMapping Name="Acuerdo">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Acuerdo)">
+        <MappingFragment StoreEntitySet="Acuerdo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+          <ScalarProperty Name="Notas" ColumnName="Notas" />
+          <ScalarProperty Name="NumAcuerdo" ColumnName="NumAcuerdo" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Calendario">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Calendario)">
+        <MappingFragment StoreEntitySet="Calendario">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DependenciaFideicomisoEjercicioID" ColumnName="DependenciaFideicomisoEjercicioID" />
+          <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dependencia">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Dependencia)">
+        <MappingFragment StoreEntitySet="Dependencia">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="DependeDeID" ColumnName="DependeDeID" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DependenciaFideicomisoEjercicio">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.DependenciaFideicomisoEjercicio)">
+        <MappingFragment StoreEntitySet="DependenciaFideicomisoEjercicio">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
+          <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
+          <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ejercicio">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Ejercicio)">
+        <MappingFragment StoreEntitySet="Ejercicio">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Anio" ColumnName="Anio" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fideicomiso">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Fideicomiso)">
+        <MappingFragment StoreEntitySet="Fideicomiso">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="DependeDeID" ColumnName="DependeDeID" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Normatividad">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Normatividad)">
+        <MappingFragment StoreEntitySet="Normatividad">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="RutaArchivo" ColumnName="RutaArchivo" />
+          <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />
+          <ScalarProperty Name="TipoNormatividad" ColumnName="TipoNormatividad" />
+          <ScalarProperty Name="DependenciaFideicomisoEjercicioID" ColumnName="DependenciaFideicomisoEjercicioID" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seguimiento">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Seguimiento)">
+        <MappingFragment StoreEntitySet="Seguimiento">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sesion">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Sesion)">
+        <MappingFragment StoreEntitySet="Sesion">
+          <ScalarProperty Name="HoraProgramada" ColumnName="HoraProgramada" />
+                <ScalarProperty Name="NumSesion" ColumnName="NumSesion" />
+                <ScalarProperty Name="LugarReunion" ColumnName="LugarReunion" />
+                <ScalarProperty Name="NumOficio" ColumnName="NumOficio" />
+                <ScalarProperty Name="FechaOficio" ColumnName="FechaOficio" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="SesionID" ColumnName="SesionID" />
-                <ScalarProperty Name="Notas" ColumnName="Notas" />
-                <ScalarProperty Name="NumAcuerdo" ColumnName="NumAcuerdo" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Calendario">
-            <EntityTypeMapping TypeName="SISEFModel.Calendario">
-              <MappingFragment StoreEntitySet="Calendario">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DependenciaFideicomisoEjercicioID" ColumnName="DependenciaFideicomisoEjercicioID" />
-                <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Dependencia">
-            <EntityTypeMapping TypeName="SISEFModel.Dependencia">
-              <MappingFragment StoreEntitySet="Dependencia">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="DependeDeID" ColumnName="DependeDeID" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DependenciaFideicomisoEjercicio">
-            <EntityTypeMapping TypeName="SISEFModel.DependenciaFideicomisoEjercicio">
-              <MappingFragment StoreEntitySet="DependenciaFideicomisoEjercicio">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
-                <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
-                <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
+          <ScalarProperty Name="CalendarioID" ColumnName="CalendarioID" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaProgramada" ColumnName="FechaProgramada" />
+          <ScalarProperty Name="FechaCelebrada" ColumnName="FechaCelebrada" />
+          <ScalarProperty Name="FechaReprogramada" ColumnName="FechaReprogramada" />
+          <ScalarProperty Name="TipoSesionID" ColumnName="TipoSesionID" />
+          <ScalarProperty Name="StatusSesionID" ColumnName="StatusSesionID" />
+          <ScalarProperty Name="TipoCalendarizacionID" ColumnName="TipoCalendarizacionID" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StatusSesion">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.StatusSesion)">
+        <MappingFragment StoreEntitySet="StatusSesion">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoCalendarizacion">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.TipoCalendarizacion)">
+        <MappingFragment StoreEntitySet="TipoCalendarizacion">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoSesion">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.TipoSesion)">
+        <MappingFragment StoreEntitySet="TipoSesion">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoUsuario">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.TipoUsuario)">
+        <MappingFragment StoreEntitySet="TipoUsuario">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Usuario)">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ejercicio">
-            <EntityTypeMapping TypeName="SISEFModel.Ejercicio">
-              <MappingFragment StoreEntitySet="Ejercicio">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Anio" ColumnName="Anio" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Fideicomiso">
-            <EntityTypeMapping TypeName="SISEFModel.Fideicomiso">
-              <MappingFragment StoreEntitySet="Fideicomiso">
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsuarioDependencia">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.UsuarioDependencia)">
+        <MappingFragment StoreEntitySet="UsuarioDependencia">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="DependeDeID" ColumnName="DependeDeID" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Normatividad">
-            <EntityTypeMapping TypeName="SISEFModel.Normatividad">
-              <MappingFragment StoreEntitySet="Normatividad">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="RutaArchivo" ColumnName="RutaArchivo" />
-                <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />
-                <ScalarProperty Name="TipoNormatividad" ColumnName="TipoNormatividad" />
-                <ScalarProperty Name="DependenciaFideicomisoEjercicioID" ColumnName="DependenciaFideicomisoEjercicioID" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Seguimiento">
-            <EntityTypeMapping TypeName="SISEFModel.Seguimiento">
-              <MappingFragment StoreEntitySet="Seguimiento">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="SesionID" ColumnName="SesionID" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sesion">
-            <EntityTypeMapping TypeName="SISEFModel.Sesion">
-              <MappingFragment StoreEntitySet="Sesion">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CalendarioID" ColumnName="CalendarioID" />
-                <ScalarProperty Name="Mes" ColumnName="Mes" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="FechaProgramada" ColumnName="FechaProgramada" />
-                <ScalarProperty Name="FechaCelebrada" ColumnName="FechaCelebrada" />
-                <ScalarProperty Name="FechaReprogramada" ColumnName="FechaReprogramada" />
-                <ScalarProperty Name="TipoSesionID" ColumnName="TipoSesionID" />
-                <ScalarProperty Name="StatusSesionID" ColumnName="StatusSesionID" />
-                <ScalarProperty Name="TipoCalendarizacionID" ColumnName="TipoCalendarizacionID" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusSesion">
-            <EntityTypeMapping TypeName="SISEFModel.StatusSesion">
-              <MappingFragment StoreEntitySet="StatusSesion">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoCalendarizacion">
-            <EntityTypeMapping TypeName="SISEFModel.TipoCalendarizacion">
-              <MappingFragment StoreEntitySet="TipoCalendarizacion">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoSesion">
-            <EntityTypeMapping TypeName="SISEFModel.TipoSesion">
-              <MappingFragment StoreEntitySet="TipoSesion">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoUsuario">
-            <EntityTypeMapping TypeName="SISEFModel.TipoUsuario">
-              <MappingFragment StoreEntitySet="TipoUsuario">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="SISEFModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioDependencia">
-            <EntityTypeMapping TypeName="SISEFModel.UsuarioDependencia">
-              <MappingFragment StoreEntitySet="UsuarioDependencia">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
-                <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
-                <ScalarProperty Name="TipoUsuarioID" ColumnName="TipoUsuarioID" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Bloqueado" ColumnName="Bloqueado" />
-                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
-                <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -1268,7 +1281,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>

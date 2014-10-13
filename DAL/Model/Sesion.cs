@@ -16,8 +16,8 @@ namespace DAL.Model
     {
         public Sesion()
         {
-            this.Acuerdo = new HashSet<Acuerdo>();
-            this.Seguimiento = new HashSet<Seguimiento>();
+            this.DetalleAcuerdos = new HashSet<Acuerdo>();
+            this.DetalleSeguimientos = new HashSet<Seguimiento>();
         }
     
         public int ID { get; set; }
@@ -35,10 +35,15 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
+        public Nullable<System.DateTime> FechaOficio { get; set; }
+        public string NumOficio { get; set; }
+        public string LugarReunion { get; set; }
+        public string NumSesion { get; set; }
+        public string HoraProgramada { get; set; }
     
-        public virtual ICollection<Acuerdo> Acuerdo { get; set; }
+        public virtual ICollection<Acuerdo> DetalleAcuerdos { get; set; }
         public virtual Calendario Calendario { get; set; }
-        public virtual ICollection<Seguimiento> Seguimiento { get; set; }
+        public virtual ICollection<Seguimiento> DetalleSeguimientos { get; set; }
         public virtual StatusSesion StatusSesion { get; set; }
         public virtual TipoCalendarizacion TipoCalendarizacion { get; set; }
         public virtual TipoSesion TipoSesion { get; set; }

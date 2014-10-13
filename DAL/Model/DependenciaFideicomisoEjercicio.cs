@@ -16,8 +16,8 @@ namespace DAL.Model
     {
         public DependenciaFideicomisoEjercicio()
         {
-            this.Calendario = new HashSet<Calendario>();
-            this.Normatividad = new HashSet<Normatividad>();
+            this.DetalleCalendarios = new HashSet<Calendario>();
+            this.DetallesNormatividad = new HashSet<Normatividad>();
         }
     
         public int ID { get; set; }
@@ -30,10 +30,10 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual ICollection<Calendario> Calendario { get; set; }
+        public virtual ICollection<Calendario> DetalleCalendarios { get; set; }
         public virtual Dependencia Dependencia { get; set; }
         public virtual Ejercicio Ejercicio { get; set; }
         public virtual Fideicomiso Fideicomiso { get; set; }
-        public virtual ICollection<Normatividad> Normatividad { get; set; }
+        public virtual ICollection<Normatividad> DetallesNormatividad { get; set; }
     }
 }

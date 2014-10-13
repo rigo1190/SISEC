@@ -26,11 +26,20 @@ namespace SISEC
 
             if (user != null)
             {
-                Session.Timeout = 60;
-                Session["IsAuthenticated"] = true;
-                Session["NombreUsuario"] = user.Nombre;
-                Session["Login"] = user.Login;
-                Response.Redirect("~/SeleccionarDependencia.aspx");
+                //Se resuelve el tipo de usuario
+
+                if (user.TipoUsuarioID == 1)
+                {
+                    //Nos vamos a la pantalla de administrador
+                }
+                else
+                {
+                    Session.Timeout = 60;
+                    Session["IsAuthenticated"] = true;
+                    Session["NombreUsuario"] = user.Nombre;
+                    Session["Login"] = user.Login;
+                    Response.Redirect("~/SeleccionarDependencia.aspx");
+                }
 
             }
 

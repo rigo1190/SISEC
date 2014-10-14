@@ -41,89 +41,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">SB Admin v2.0</a>
+                <a class="navbar-brand" href="#">SISEF</a>
+                <asp:Label ID="lblUsuario" Text="usuario" runat="server" class="navbar-brand"></asp:Label>
+                <asp:Label ID="lblEntidad" Text="entidad" runat="server" class="navbar-brand"></asp:Label>  
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+               
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a href="<%=ResolveClientUrl("~/SeleccionarDependencia.aspx") %>">
+                        <i class="glyphicon glyphicon-home"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-messages -->
+                   
                 </li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a href="<%=ResolveClientUrl("~/Login.aspx") %>">
+                        <i class="glyphicon glyphicon-off"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-tasks">
-                       
-                    </ul>
-                    <!-- /.dropdown-tasks -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        
-                    </ul>
-                    <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
             </ul>
@@ -134,16 +70,16 @@
                     <ul class="nav" id="side-menu">
                         
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Calendario</a>
+                            <a class="active" href="<%=ResolveClientUrl("~/Formas/Sesiones.aspx") %>"><i class="fa fa-dashboard fa-fw"></i> Calendario</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Seguimientos<span class="fa arrow"></span></a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Seguimientos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Seguimientos<span class="fa arrow"></span></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Acuerdos</a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-table fa-fw"></i> Acuerdos</a>
                         </li>
                         <li>
-                            <a class="active" href="#"><i class="fa fa-edit fa-fw"></i> Normatividad</a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Normatividad.aspx") %>"><i class="fa fa-edit fa-fw"></i> Normatividad</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>  Notas y Actas<span class="fa arrow"></span></a>

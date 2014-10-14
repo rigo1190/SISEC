@@ -80,7 +80,10 @@
     <Content Include="fonts\font-awesome-4.1.0-2\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome-4.1.0-2\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Formas\Acuerdos.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
+    <Content Include="Formas\Normatividad.aspx" />
+    <Content Include="Formas\Seguimientos.aspx" />
     <Content Include="Formas\Sesiones.aspx" />
     <Content Include="img\close.png" />
     <Content Include="img\edit1.png" />
@@ -154,12 +157,33 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formas\Acuerdos.aspx.cs">
+      <DependentUpon>Acuerdos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Acuerdos.aspx.designer.cs">
+      <DependentUpon>Acuerdos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Catalogos\TEST.aspx.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Formas\Catalogos\TEST.aspx.designer.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Normatividad.aspx.cs">
+      <DependentUpon>Normatividad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Normatividad.aspx.designer.cs">
+      <DependentUpon>Normatividad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Seguimientos.aspx.cs">
+      <DependentUpon>Seguimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Seguimientos.aspx.designer.cs">
+      <DependentUpon>Seguimientos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\Sesiones.aspx.cs">
       <DependentUpon>Sesiones.aspx</DependentUpon>

@@ -21,6 +21,10 @@ namespace SISEC.Formas
                 BindDropDownFideicomisos();
                 CargarGridPrimerFideicomiso();
                 BindDropDownTipoSesion();
+
+                if (ddlFideicomisos.Items.Count == 0)
+                    btnCrearCalendario.Enabled = false;
+
             }
         }
 

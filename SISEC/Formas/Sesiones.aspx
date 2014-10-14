@@ -41,10 +41,11 @@
                             <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Seleccione Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
+                            <div class="col-lg-9">
                                 <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" Width="750px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                              </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
                                 <asp:Button ID="btnCrearCalendario" CssClass="btn btn-default" runat="server" OnClick="btnCrearCalendario_Click" Text="Crear Calendario" />                                     
                              </div>
                         </div>

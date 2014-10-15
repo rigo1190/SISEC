@@ -1,6 +1,34 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="Normatividad.aspx.cs" Inherits="SISEC.Formas.Normatividad" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
 
+        function fnc_MostrarFideicomisos(sender) {
+            var val = sender.value;
+            if (val==1)
+                $("#<%= divFideicomiso.ClientID %>").css("display", "none");
+            else
+                $("#<%= divFideicomiso.ClientID %>").css("display", "block");
+        }
+
+
+        function fnc_NuevaNorma() {
+            $("#<%= divConsultar.ClientID %>").css("display", "none");
+            $("#<%= divGrid.ClientID %>").css("display", "none");
+            $("#<%= divCapturaNormatividad.ClientID %>").css("display", "block");
+            $("#<%= _Accion.ClientID %>").val("N");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
+
+        function fnc_AbrirArchivo(ruta,id) {
+            window.open(ruta+'?i='+id, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,width=750,height=700,top=0');
+        }
+
+        function fnc_ColocarIDNorma(id) {
+            $("#<%= _IDNorma.ClientID %>").val(id);
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="page-wrapper">
@@ -16,16 +44,47 @@
             <div class="row" runat="server" id="divEncabezado">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
+                         <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Tipo Normatividad</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-10">
+                                <asp:DropDownList ID="ddlTipoNormatividad" Width="750px" runat="server" CssClass="form-control">
+                                    <asp:ListItem Text="General" Value="1"></asp:ListItem>
+                                    <asp:ListItem Text="Específica" Value="2"></asp:ListItem>
+                                </asp:DropDownList>                                         
+                             </div>
+                        </div>
+                    </div>
+                    <div id="divFideicomiso" style="display:none" runat="server" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Fideicomiso</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-10">
+                                <asp:DropDownList ID="ddlFideicomisos" runat="server" Width="950px" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="divConsultar" runat="server">
+                        <asp:Button ID="btnConsultar" OnClick="btnConsultar_Click" Text="Consultar" runat="server" CssClass="btn btn-default" />
+                    </div>
+                    
+
+                    <div><p>&nbsp;</p></div>
+
+                    <div id="divGrid" style="display:none" runat="server" class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Normatividades</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:GridView ID="gridNormatividad" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
+                                <asp:GridView ID="gridNormatividad" OnPageIndexChanging="gridNormatividad_PageIndexChanging" OnRowDataBound="gridNormatividad_RowDataBound" ShowHeaderWhenEmpty="true" DataKeyNames="ID,TipoNormatividad" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                          <asp:TemplateField HeaderText="Acciones">
                                             <ItemTemplate>
-                                                <asp:ImageButton  ID="imgBtnEdit" ToolTip="Editar" runat="server" ImageUrl="~/img/Edit1.png" />
+                                                <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-search"></span></button>
                                                 <asp:ImageButton  ID="imgBtnEliminar" ToolTip="Borrar" runat="server" ImageUrl="~/img/close.png" data-toggle="modal" data-target="#myModal"/>
                                             </ItemTemplate>
                                             <HeaderStyle BackColor="#EEEEEE" />
@@ -33,7 +92,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Tipo Normatividad" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "NumSesion")%>
+                                                <asp:Label runat="server" ID="lblTipo"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
@@ -47,6 +106,11 @@
                                     <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
                                 </asp:GridView>
                              </div>
+
+                             <div class="col-lg-3">
+                                <button type="button" id="btnNuevo" onclick="fnc_NuevaNorma();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                            </div>
+
                         </div>
                             
                     </div>
@@ -62,26 +126,16 @@
                             <div class="col-lg-12 ">
                                 <div class="form-group">
                                     <label>Descripción</label>
-                                    <textarea type="text" disabled="disabled" name="prueba" runat="server" class="form-control" id="txtDescripcion" />
-                                </div>
-                                 
-                                <div class="form-group">
-                                    <label>Tipo de Normatividad</label>
-                                    <asp:DropDownList ID="ddlTipoNormatividad" runat="server" CssClass="form-control"></asp:DropDownList>                                         
+                                    <textarea type="text" name="prueba" runat="server" class="form-control" id="txtDescripcion" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Fideicomiso</label>
-                                    <asp:DropDownList ID="ddlFideicomisos" runat="server" Width="750px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
-                                 </div>
-
-                                <div class="form-group">
-                                    <label>Fecha Programada:</label>
-                                    <asp:FileUpload ID="fileUpload" Enabled="false" runat="server" />
+                                    <label>Archivo Normatividad:</label>
+                                    <asp:FileUpload ID="fileUpload" runat="server" />
                                 </div>
                                 <div class="form-group">
-                                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
-                                    <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
+                                    <asp:Button ID="btnGuardar" OnClick="btnGuardar_Click" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" Text="Cancelar" CssClass="btn btn-default" ></asp:Button>
                                 </div>
                                 
                             </div>
@@ -108,7 +162,7 @@
     <div runat="server" style="display:none">
         <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_Accion" />
-        <input type="hidden" runat="server" id="_IDSesion" />
+        <input type="hidden" runat="server" id="_IDNorma" />
     </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
@@ -122,7 +176,7 @@
                 <h3 id="msgContenido">¿Está seguro que desea eliminar el registro?</h3>
               </div>
               <div class="modal-footer">
-                <asp:Button ID="btnDel" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
+                <asp:Button ID="btnDel" OnClick="btnDel_Click" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               </div>
         

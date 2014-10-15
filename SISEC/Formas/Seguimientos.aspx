@@ -6,7 +6,7 @@
             $("#<%= divEncabezadoDetalle.ClientID %>").css("display", "block");
             $("#<%= divCapturaDetalle.ClientID %>").css("display", "none");
         }
-
+        
         function fnc_ColocarIDSeguimiento(idSeguimiento) {
             $("#<%= _IDSeguimiento.ClientID %>").val(idSeguimiento);
         }

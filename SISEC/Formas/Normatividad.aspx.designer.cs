@@ -22,6 +22,60 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEncabezado;
         
         /// <summary>
+        /// Control ddlTipoNormatividad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoNormatividad;
+        
+        /// <summary>
+        /// Control divFideicomiso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFideicomiso;
+        
+        /// <summary>
+        /// Control ddlFideicomisos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFideicomisos;
+        
+        /// <summary>
+        /// Control divConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divConsultar;
+        
+        /// <summary>
+        /// Control btnConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConsultar;
+        
+        /// <summary>
+        /// Control divGrid.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGrid;
+        
+        /// <summary>
         /// Control gridNormatividad.
         /// </summary>
         /// <remarks>
@@ -49,24 +103,6 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcion;
         
         /// <summary>
-        /// Control ddlTipoNormatividad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoNormatividad;
-        
-        /// <summary>
-        /// Control ddlFideicomisos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFideicomisos;
-        
-        /// <summary>
         /// Control fileUpload.
         /// </summary>
         /// <remarks>
@@ -83,6 +119,15 @@ namespace SISEC.Formas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
+        
+        /// <summary>
+        /// Control btnCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
         
         /// <summary>
         /// Control divMsgError.
@@ -139,13 +184,13 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden _Accion;
         
         /// <summary>
-        /// Control _IDSesion.
+        /// Control _IDNorma.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDSesion;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDNorma;
         
         /// <summary>
         /// Control btnDel.

@@ -92,7 +92,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
           <Property Name="RutaArchivo" Type="nvarchar" MaxLength="250" />
-          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="10" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="250" />
           <Property Name="TipoNormatividad" Type="int" Nullable="false" />
           <Property Name="DependenciaFideicomisoEjercicioID" Type="int" />
           <Property Name="FechaCaptura" Type="datetime" />
@@ -611,7 +612,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="RutaArchivo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="TipoArchivo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TipoArchivo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TipoNormatividad" Type="Int32" Nullable="false" />
           <Property Name="DependenciaFideicomisoEjercicioID" Type="Int32" />
           <Property Name="FechaCaptura" Type="DateTime" Precision="3" />
@@ -619,6 +620,7 @@
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="Self.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="Normatividad" ToRole="DependenciaFideicomisoEjercicio" />
+          <Property Name="NombreArchivo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Seguimiento">
           <Key>
@@ -662,7 +664,7 @@
           <Property Name="NumOficio" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="LugarReunion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="NumSesion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="HoraProgramada" Type="String" MaxLength="50" FixedLength="false" />
+          <Property Name="HoraProgramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StatusSesion">
           <Key>
@@ -1132,7 +1134,8 @@
     <EntitySetMapping Name="Normatividad">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Normatividad)">
         <MappingFragment StoreEntitySet="Normatividad">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="RutaArchivo" ColumnName="RutaArchivo" />
           <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />

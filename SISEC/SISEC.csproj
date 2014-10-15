@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AbrirDocto.aspx" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -157,6 +158,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbrirDocto.aspx.cs">
+      <DependentUpon>AbrirDocto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AbrirDocto.aspx.designer.cs">
+      <DependentUpon>AbrirDocto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Acuerdos.aspx.cs">
       <DependentUpon>Acuerdos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

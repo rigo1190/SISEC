@@ -47,24 +47,21 @@ namespace SISEC.Formas
 
         private void BindDropDownFideicomisos()
         {
-            int idDependencia = Utilerias.StrToInt(Session["Dependencia"].ToString());
+            
             int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
 
-
-            var list = (from d in uow.DependenciaBusinessLogic.Get(e => e.ID == idDependencia)
-                        join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
-                        on d.ID equals df.DependenciaID
-                        join f in uow.FideicomisoBusinessLogic.Get() 
+            var list = (from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
+                        join ud in uow.UsuarioFideicomisoBusinessLogic.Get(e=>e.UsuarioID==idUser)
+                        on df.ID equals ud.DependenciaFideicomisoEjercicioID
+                        join f in uow.FideicomisoBusinessLogic.Get()
                         on df.FideicomisoID equals f.ID
-                        select new { df.ID,f.Descripcion  }).ToList();
+                        select new { df.ID, f.Clave });
 
             ddlFideicomisos.DataSource = list;
             ddlFideicomisos.DataValueField = "ID";
-            ddlFideicomisos.DataTextField = "Descripcion";
+            ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
-
-            
-
         }
         private int BuscarCalendario() 
         {

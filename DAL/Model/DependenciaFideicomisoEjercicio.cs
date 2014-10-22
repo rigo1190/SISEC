@@ -18,6 +18,8 @@ namespace DAL.Model
         {
             this.DetalleCalendarios = new HashSet<Calendario>();
             this.DetallesNormatividad = new HashSet<Normatividad>();
+            this.DetalleUsuarios = new HashSet<UsuarioFideicomiso>();
+            this.DetalleFichasTecnicas = new HashSet<FichaTecnica>();
         }
     
         public int ID { get; set; }
@@ -35,5 +37,7 @@ namespace DAL.Model
         public virtual Ejercicio Ejercicio { get; set; }
         public virtual Fideicomiso Fideicomiso { get; set; }
         public virtual ICollection<Normatividad> DetallesNormatividad { get; set; }
+        public virtual ICollection<UsuarioFideicomiso> DetalleUsuarios { get; set; }
+        public virtual ICollection<FichaTecnica> DetalleFichasTecnicas { get; set; }
     }
 }

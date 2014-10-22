@@ -22,31 +22,29 @@ namespace SISEC.Formas
             if (!IsPostBack)
             {
                 BindDropDownFideicomisos();
+                gridNormatividad.Columns[2].Visible = false;
                 ddlTipoNormatividad.Attributes["onchange"] = "fnc_MostrarFideicomisos(this)";
             }
         }
-
         private void BindDropDownFideicomisos()
         {
-            int idDependencia = Utilerias.StrToInt(Session["Dependencia"].ToString());
             int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
 
-
-            var list = (from d in uow.DependenciaBusinessLogic.Get(e => e.ID == idDependencia)
-                        join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
-                        on d.ID equals df.DependenciaID
+            var list = (from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
+                        join ud in uow.UsuarioFideicomisoBusinessLogic.Get(e => e.UsuarioID == idUser)
+                        on df.ID equals ud.DependenciaFideicomisoEjercicioID
                         join f in uow.FideicomisoBusinessLogic.Get()
                         on df.FideicomisoID equals f.ID
-                        select new { df.ID, f.Descripcion }).ToList();
+                        select new { df.ID, f.Clave });
 
             ddlFideicomisos.DataSource = list;
             ddlFideicomisos.DataValueField = "ID";
-            ddlFideicomisos.DataTextField = "Descripcion";
+            ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
 
 
         }
-
         private void BindGridNormatividad()
         {
             int tipoNormatividad = Utilerias.StrToInt(ddlTipoNormatividad.SelectedValue);
@@ -65,8 +63,12 @@ namespace SISEC.Formas
             gridNormatividad.DataBind();
 
         }
-
-
+        private string GetClaveFideicomiso()
+        {
+            DependenciaFideicomisoEjercicio ente = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(Utilerias.StrToInt(ddlFideicomisos.SelectedValue));
+            Fideicomiso fidei = uow.FideicomisoBusinessLogic.GetByID(ente.FideicomisoID);
+            return fidei.Clave;
+        }
         private void Consultar()
         {
             int tipoNormatividad = Utilerias.StrToInt(ddlTipoNormatividad.SelectedValue);
@@ -79,9 +81,9 @@ namespace SISEC.Formas
                 divFideicomiso.Style.Add("display", "block");
 
             divGrid.Style.Add("display", "block");
-
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
         }
-
         public List<string> GuardarArchivo(HttpPostedFile postedFile, int idNorma)
         {
 
@@ -120,7 +122,6 @@ namespace SISEC.Formas
             return R;
 
         }
-
         private string EliminarArchivo(int id, string nombreArchivo)
         {
             string M = string.Empty;
@@ -151,12 +152,13 @@ namespace SISEC.Formas
 
             return M;
         }
-
         protected void gridNormatividad_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Label lblTipo = (Label)e.Row.FindControl("lblTipo");
+                Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
+                
                 int tipo = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["TipoNormatividad"].ToString());
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
                 int idNorma = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
@@ -165,9 +167,17 @@ namespace SISEC.Formas
                 btnVer.Attributes["onclick"] = "fnc_AbrirArchivo('"+ruta+"',"+idNorma+")";
 
                 if (tipo == 1)
+                {
                     lblTipo.Text = "General";
+                    gridNormatividad.Columns[2].Visible = false;
+                }
                 else
+                {
                     lblTipo.Text = "Específica";
+                    lblFideicomiso.Text = GetClaveFideicomiso();
+                    gridNormatividad.Columns[2].Visible = true;
+                }
+                    
 
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
 
@@ -176,26 +186,22 @@ namespace SISEC.Formas
 
             }
         }
-
         protected void gridNormatividad_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gridNormatividad.PageIndex = e.NewPageIndex;
             BindGridNormatividad();
             divCapturaNormatividad.Style.Add("display", "none");
         }
-
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
             Consultar();
         }
-
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Consultar();
             divCapturaNormatividad.Style.Add("display", "none");
             divConsultar.Style.Add("display", "block");
         }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             int tipoNormatividad = Utilerias.StrToInt(ddlTipoNormatividad.SelectedValue);
@@ -282,7 +288,6 @@ namespace SISEC.Formas
             divMsgSuccess.Style.Add("display", "block");
 
         }
-
         protected void btnDel_Click(object sender, EventArgs e)
         {
             int idNorma = Utilerias.StrToInt(_IDNorma.Value);
@@ -331,9 +336,5 @@ namespace SISEC.Formas
 
         }
 
-
-        
-
-        
     }
 }

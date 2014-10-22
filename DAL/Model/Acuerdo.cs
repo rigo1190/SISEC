@@ -14,6 +14,11 @@ namespace DAL.Model
     
     public partial class Acuerdo
     {
+        public Acuerdo()
+        {
+            this.DetalleSeguimientos = new HashSet<Seguimiento>();
+        }
+    
         public int ID { get; set; }
         public int SesionID { get; set; }
         public string Notas { get; set; }
@@ -22,7 +27,10 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
+        public int StatusAcuerdoID { get; set; }
     
         public virtual Sesion Sesion { get; set; }
+        public virtual ICollection<Seguimiento> DetalleSeguimientos { get; set; }
+        public virtual StatusAcuerdo StatusAcuerdo { get; set; }
     }
 }

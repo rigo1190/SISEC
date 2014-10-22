@@ -12,22 +12,18 @@ namespace DAL.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class FichaTecnica
     {
-        public Usuario()
-        {
-            this.DetalleFideicomisos = new HashSet<UsuarioFideicomiso>();
-        }
-    
         public int ID { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Nombre { get; set; }
-        public int TipoUsuarioID { get; set; }
-        public Nullable<bool> Activo { get; set; }
-        public Nullable<bool> Bloqueado { get; set; }
+        public int DependenciaFideicomisoEjercicioID { get; set; }
+        public string Descripcion { get; set; }
+        public string NombreArchivo { get; set; }
+        public string TipoArchivo { get; set; }
+        public System.DateTime FechaCaptura { get; set; }
+        public System.DateTime FechaModificacion { get; set; }
+        public string UsuarioCaptura { get; set; }
+        public string UsuarioModifica { get; set; }
     
-        public virtual TipoUsuario TipoUsuario { get; set; }
-        public virtual ICollection<UsuarioFideicomiso> DetalleFideicomisos { get; set; }
+        public virtual DependenciaFideicomisoEjercicio DependenciaFideicomisoEjercicio { get; set; }
     }
 }

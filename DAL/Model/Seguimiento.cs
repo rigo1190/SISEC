@@ -15,13 +15,13 @@ namespace DAL.Model
     public partial class Seguimiento
     {
         public int ID { get; set; }
-        public int SesionID { get; set; }
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
+        public int AcuerdoID { get; set; }
     
-        public virtual Sesion Sesion { get; set; }
+        public virtual Acuerdo Acuerdo { get; set; }
     }
 }

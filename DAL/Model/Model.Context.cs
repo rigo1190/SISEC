@@ -39,6 +39,10 @@ namespace DAL.Model
         public virtual DbSet<TipoSesion> TipoSesion { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<UsuarioDependencia> UsuarioDependencia { get; set; }
+        public virtual DbSet<UsuarioFideicomiso> UsuarioFideicomiso { get; set; }
+        public virtual DbSet<StatusAcuerdo> StatusAcuerdo { get; set; }
+        public virtual DbSet<Notas> Notas { get; set; }
+        public virtual DbSet<Actas> Actas { get; set; }
+        public virtual DbSet<FichaTecnica> FichaTecnica { get; set; }
     }
 }

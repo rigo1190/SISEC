@@ -46,10 +46,17 @@ namespace SISEC
             List<Dependencia> list = null;
             string login=Session["Login"].ToString();
 
-            list = (from d in uow.DependenciaBusinessLogic.Get()
-                    join u in uow.UsuarioDependenciaBusinessLogic.Get(u => u.Usuario.Login == login)
-                    on d.ID equals u.DependenciaID
-                    select d).ToList();
+            //list=(from d in uow.DependenciaBusinessLogic.Get()
+            //      join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+            //      on d.ID equals df.DependenciaID
+            //      join u in uow.UsuarioFideicomisoBusinessLogic.Get()
+            //      on d)
+
+
+            //list = (from d in uow.DependenciaBusinessLogic.Get()
+            //        join u in uow.UsuarioFideicomisoBusinessLogic.Get(u => u.Usuario.Login == login)
+            //        on d.ID equals u.DependenciaFideicomisoEjercicioID
+            //        select d).ToList();
 
             return list;
         }

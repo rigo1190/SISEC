@@ -27,13 +27,69 @@ namespace BL
         private IBusinessLogic<TipoCalendarizacion> tipoCalendarizacionBusinessLogic;
         private IBusinessLogic<TipoSesion> tipoSesionBusinessLogic;
         private IBusinessLogic<Normatividad> normatividadBusinessLogic;
-        private IBusinessLogic<UsuarioDependencia> usuarioDependenciaBusinessLogic;
+        private IBusinessLogic<UsuarioFideicomiso> usuarioFideicomisoBusinessLogic;
         private IBusinessLogic<Usuario> usuarioBusinessLogic;
         private IBusinessLogic<TipoUsuario> tipoUsuarioBusinessLogic;
+
+        private IBusinessLogic<Actas> actasBusinessLogic;
+        private IBusinessLogic<Notas> notasBusinessLogic;
+        private IBusinessLogic<FichaTecnica> fichaTecnicaBusinessLogic;
+        private IBusinessLogic<StatusAcuerdo> statusAcuerdoBusinessLogic;
 
         public UnitOfWork()
         {
             this.contexto = new SISEF();
+        }
+
+        public IBusinessLogic<StatusAcuerdo> StatusAcuerdoBusinessLogic
+        {
+            get
+            {
+                if (this.statusAcuerdoBusinessLogic == null)
+                {
+                    this.statusAcuerdoBusinessLogic = new GenericBusinessLogic<StatusAcuerdo>(contexto);
+                }
+
+                return statusAcuerdoBusinessLogic;
+            }
+        }
+
+        public IBusinessLogic<FichaTecnica> FichaTecnicaBusinessLogic
+        {
+            get
+            {
+                if (this.fichaTecnicaBusinessLogic == null)
+                {
+                    this.fichaTecnicaBusinessLogic = new GenericBusinessLogic<FichaTecnica>(contexto);
+                }
+
+                return fichaTecnicaBusinessLogic;
+            }
+        }
+        public IBusinessLogic<Notas> NotasBusinessLogic
+        {
+            get
+            {
+                if (this.notasBusinessLogic == null)
+                {
+                    this.notasBusinessLogic = new GenericBusinessLogic<Notas>(contexto);
+                }
+
+                return notasBusinessLogic;
+            }
+        }
+
+        public IBusinessLogic<Actas> ActasBusinessLogic
+        {
+            get
+            {
+                if (this.actasBusinessLogic == null)
+                {
+                    this.actasBusinessLogic = new GenericBusinessLogic<Actas>(contexto);
+                }
+
+                return actasBusinessLogic;
+            }
         }
 
         public IBusinessLogic<Usuario> UsuarioBusinessLogic
@@ -207,16 +263,16 @@ namespace BL
         }
 
 
-        public IBusinessLogic<UsuarioDependencia> UsuarioDependenciaBusinessLogic
+        public IBusinessLogic<UsuarioFideicomiso> UsuarioFideicomisoBusinessLogic
         {
             get
             {
-                if (this.usuarioDependenciaBusinessLogic == null)
+                if (this.usuarioFideicomisoBusinessLogic == null)
                 {
-                    this.usuarioDependenciaBusinessLogic = new GenericBusinessLogic<UsuarioDependencia>(contexto);
+                    this.usuarioFideicomisoBusinessLogic = new GenericBusinessLogic<UsuarioFideicomiso>(contexto);
                 }
 
-                return usuarioDependenciaBusinessLogic;
+                return usuarioFideicomisoBusinessLogic;
             }
         }
 

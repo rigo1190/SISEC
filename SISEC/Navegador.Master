@@ -43,7 +43,7 @@
                 </button>
                 <a class="navbar-brand" href="#">SISEF</a>
                 <asp:Label ID="lblUsuario" Text="usuario" runat="server" class="navbar-brand"></asp:Label>
-                <asp:Label ID="lblEntidad" Text="entidad" runat="server" class="navbar-brand"></asp:Label>  
+                
             </div>
             <!-- /.navbar-header -->
 
@@ -73,10 +73,7 @@
                             <a class="active" href="<%=ResolveClientUrl("~/Formas/Sesiones.aspx") %>"><i class="fa fa-dashboard fa-fw"></i> Calendario</a>
                         </li>
                         <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/Seguimientos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Seguimientos<span class="fa arrow"></span></a>
-                        </li>
-                        <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-table fa-fw"></i> Acuerdos</a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Acuerdos<span class="fa arrow"></span></a>
                         </li>
                         <li>
                             <a href="<%=ResolveClientUrl("~/Formas/Normatividad.aspx") %>"><i class="fa fa-edit fa-fw"></i> Normatividad</a>

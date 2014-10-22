@@ -81,7 +81,7 @@ namespace SISEC.Formas
         private void BindGridSeguimientos()
         {
             int idSesion = Utilerias.StrToInt(_IDSesion.Value);
-            gridSeguimientos.DataSource = uow.SeguimientoBusinessLogic.Get(e=>e.SesionID==idSesion).ToList();
+            //gridSeguimientos.DataSource = uow.SeguimientoBusinessLogic.Get(e=>e.SesionID==idSesion).ToList();
             gridSeguimientos.DataBind();
         }
         private void BindControlesSeguimiento()
@@ -194,7 +194,7 @@ namespace SISEC.Formas
             {
                 obj.FechaCaptura = DateTime.Now;
                 obj.UsuarioCaptura = Session["Login"].ToString();
-                obj.SesionID = idSesion;
+                //obj.SesionID = idSesion;
                 uow.SeguimientoBusinessLogic.Insert(obj);
             }
             else

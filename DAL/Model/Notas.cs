@@ -12,26 +12,18 @@ namespace DAL.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Dependencia
+    public partial class Notas
     {
-        public Dependencia()
-        {
-            this.DetalleSubDependencias = new HashSet<Dependencia>();
-            this.DetalleFideicomisos = new HashSet<DependenciaFideicomisoEjercicio>();
-        }
-    
         public int ID { get; set; }
-        public string Clave { get; set; }
+        public int SesionID { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<int> Orden { get; set; }
-        public Nullable<int> DependeDeID { get; set; }
+        public string NombreArchivo { get; set; }
+        public string TipoArchivo { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual ICollection<Dependencia> DetalleSubDependencias { get; set; }
-        public virtual Dependencia DependeDe { get; set; }
-        public virtual ICollection<DependenciaFideicomisoEjercicio> DetalleFideicomisos { get; set; }
+        public virtual Sesion Sesion { get; set; }
     }
 }

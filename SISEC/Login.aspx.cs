@@ -35,10 +35,10 @@ namespace SISEC
                 else
                 {
                     Session.Timeout = 60;
-                    Session["IsAuthenticated"] = true;
-                    Session["NombreUsuario"] = user.Nombre;
                     Session["Login"] = user.Login;
-                    Response.Redirect("~/SeleccionarDependencia.aspx");
+                    Session["UserID"] = user.ID;
+
+                    Response.Redirect("~/SeleccionarEjercicio.aspx");
                 }
 
             }

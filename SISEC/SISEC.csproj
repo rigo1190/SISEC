@@ -155,6 +155,7 @@
     <Content Include="Scripts\plugins\morris\raphael.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="SeleccionarDependencia.aspx" />
+    <Content Include="SeleccionarEjercicio.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="SeleccionarDependencia.aspx.designer.cs">
       <DependentUpon>SeleccionarDependencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SeleccionarEjercicio.aspx.cs">
+      <DependentUpon>SeleccionarEjercicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SeleccionarEjercicio.aspx.designer.cs">
+      <DependentUpon>SeleccionarEjercicio.aspx</DependentUpon>
     </Compile>
     <Compile Include="SelectorEjercicio.Master.cs">
       <DependentUpon>SelectorEjercicio.Master</DependentUpon>

@@ -12,17 +12,17 @@ namespace DAL.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class UsuarioDependencia
+    public partial class UsuarioFideicomiso
     {
         public int ID { get; set; }
         public int UsuarioID { get; set; }
-        public int DependenciaID { get; set; }
+        public int DependenciaFideicomisoEjercicioID { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     
-        public virtual Dependencia Dependencia { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual DependenciaFideicomisoEjercicio DependenciaFideicomisoEjercicio { get; set; }
     }
 }

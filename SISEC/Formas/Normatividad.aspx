@@ -18,6 +18,7 @@
             $("#<%= _Accion.ClientID %>").val("N");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= txtDescripcion.ClientID %>").val("");
         }
 
         function fnc_AbrirArchivo(ruta,id) {
@@ -90,11 +91,19 @@
                                             <HeaderStyle BackColor="#EEEEEE" />
                                             <ItemStyle HorizontalAlign="right" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
                                         </asp:TemplateField>
+                                        
                                         <asp:TemplateField HeaderText="Tipo Normatividad" SortExpression="Año">
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblTipo"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Fideicomiso" SortExpression="Año">
+                                            <ItemTemplate>
+                                                <asp:Label runat="server" ID="lblFideicomiso"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
                                          <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
                                             <ItemTemplate>
                                                 <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
@@ -160,7 +169,6 @@
     </div>
 
     <div runat="server" style="display:none">
-        <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_Accion" />
         <input type="hidden" runat="server" id="_IDNorma" />
     </div>

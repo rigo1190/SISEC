@@ -10,7 +10,7 @@
 namespace SISEC.Formas {
     
     
-    public partial class Normatividad {
+    public partial class NotasActas {
         
         /// <summary>
         /// Control divEncabezado.
@@ -22,24 +22,6 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEncabezado;
         
         /// <summary>
-        /// Control ddlTipoNormatividad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoNormatividad;
-        
-        /// <summary>
-        /// Control divFideicomiso.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFideicomiso;
-        
-        /// <summary>
         /// Control ddlFideicomisos.
         /// </summary>
         /// <remarks>
@@ -49,94 +31,175 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.WebControls.DropDownList ddlFideicomisos;
         
         /// <summary>
-        /// Control divConsultar.
+        /// Control gridSesiones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divConsultar;
+        protected global::System.Web.UI.WebControls.GridView gridSesiones;
         
         /// <summary>
-        /// Control btnConsultar.
+        /// Control divNotasActas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConsultar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNotasActas;
         
         /// <summary>
-        /// Control divGrid.
+        /// Control divMenu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGrid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMenu;
         
         /// <summary>
-        /// Control gridNormatividad.
+        /// Control divNotas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridNormatividad;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNotas;
         
         /// <summary>
-        /// Control divCapturaNormatividad.
+        /// Control divEncabezadoNotas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaNormatividad;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEncabezadoNotas;
         
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control gridNotas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcion;
+        protected global::System.Web.UI.WebControls.GridView gridNotas;
         
         /// <summary>
-        /// Control txtArchivoAdjunto.
+        /// Control divCapturaNotas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtArchivoAdjunto;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaNotas;
         
         /// <summary>
-        /// Control fileUpload.
+        /// Control txtDescripcionN.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcionN;
         
         /// <summary>
-        /// Control btnGuardar.
+        /// Control txtArchivoAdjuntoN.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtArchivoAdjuntoN;
         
         /// <summary>
-        /// Control btnCancelar.
+        /// Control fileUploadN.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadN;
+        
+        /// <summary>
+        /// Control btnGuardarN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarN;
+        
+        /// <summary>
+        /// Control divActas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divActas;
+        
+        /// <summary>
+        /// Control divEncabezadoActas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEncabezadoActas;
+        
+        /// <summary>
+        /// Control gridActas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridActas;
+        
+        /// <summary>
+        /// Control divCapturaActas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaActas;
+        
+        /// <summary>
+        /// Control txtDescripcionA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcionA;
+        
+        /// <summary>
+        /// Control txtArchivoAdjuntoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtArchivoAdjuntoA;
+        
+        /// <summary>
+        /// Control fileUploadA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileUploadA;
+        
+        /// <summary>
+        /// Control btnGuardarA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarA;
         
         /// <summary>
         /// Control divMsgError.
@@ -175,30 +238,75 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.WebControls.Label lblMsgSuccess;
         
         /// <summary>
-        /// Control _Accion.
+        /// Control _IDCalendario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _Accion;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDCalendario;
         
         /// <summary>
-        /// Control _IDNorma.
+        /// Control _AccionN.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDNorma;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _AccionN;
         
         /// <summary>
-        /// Control btnDel.
+        /// Control _AccionA.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDel;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _AccionA;
+        
+        /// <summary>
+        /// Control _IDSesion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDSesion;
+        
+        /// <summary>
+        /// Control _IDActa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDActa;
+        
+        /// <summary>
+        /// Control _IDNota.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDNota;
+        
+        /// <summary>
+        /// Control btnDelN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelN;
+        
+        /// <summary>
+        /// Control btnDelA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelA;
     }
 }

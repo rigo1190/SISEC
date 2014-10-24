@@ -63,6 +63,13 @@ namespace SISEC.Formas
             gridNormatividad.DataBind();
 
         }
+        private void BindControlesNorma()
+        {
+            int id = Utilerias.StrToInt(_IDNorma.Value);
+            DAL.Model.Normatividad obj = uow.NormatividadBusinessLogic.GetByID(id);
+            txtDescripcion.Value = obj.Descripcion;
+            txtArchivoAdjunto.Value = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
+        }
         private string GetClaveFideicomiso()
         {
             DependenciaFideicomisoEjercicio ente = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(Utilerias.StrToInt(ddlFideicomisos.SelectedValue));
@@ -158,13 +165,17 @@ namespace SISEC.Formas
             {
                 Label lblTipo = (Label)e.Row.FindControl("lblTipo");
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
-                
-                int tipo = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["TipoNormatividad"].ToString());
+                Label lblArchivoN = (Label)e.Row.FindControl("lblArchivoN");
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
-                int idNorma = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
-                string ruta = ResolveClientUrl("~/AbrirDocto.aspx");
 
-                btnVer.Attributes["onclick"] = "fnc_AbrirArchivo('"+ruta+"',"+idNorma+")";
+                int tipo = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["TipoNormatividad"].ToString());
+                int idNorma = Utilerias.StrToInt(gridNormatividad.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+
+                DAL.Model.Normatividad obj = uow.NormatividadBusinessLogic.GetByID(idNorma);
+
+                string ruta = ResolveClientUrl("~/AbrirDocto.aspx");
+                
+                btnVer.Attributes["onclick"] = "fnc_AbrirArchivo('" + ruta + "'," + idNorma + "," + 1 + ")";
 
                 if (tipo == 1)
                 {
@@ -177,13 +188,13 @@ namespace SISEC.Formas
                     lblFideicomiso.Text = GetClaveFideicomiso();
                     gridNormatividad.Columns[2].Visible = true;
                 }
-                    
+
+                lblArchivoN.Text = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
 
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
 
                 if (imgBtnEliminar != null)
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDNorma(" + idNorma + ")");
-
             }
         }
         protected void gridNormatividad_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -208,9 +219,62 @@ namespace SISEC.Formas
             int idNorma = Utilerias.StrToInt(_IDNorma.Value);
             string ruta = string.Empty;
             string M=string.Empty;
+            string nomAnterior = string.Empty;
+            DAL.Model.Normatividad obj;
 
-            DAL.Model.Normatividad obj = new DAL.Model.Normatividad();
+            if (_Accion.Value.Equals("N"))
+                obj = new DAL.Model.Normatividad();
+            else
+                obj = uow.NormatividadBusinessLogic.GetByID(idNorma);
 
+            nomAnterior = obj.NombreArchivo;
+
+            obj.Descripcion = txtDescripcion.Value;
+            obj.TipoNormatividad = tipoNormatividad;
+            
+            if (tipoNormatividad == 2)
+                obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
+
+            obj.NombreArchivo = fileUpload.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUpload.FileName);
+            obj.TipoArchivo = fileUpload.PostedFile.ContentType;
+
+            if (_Accion.Value.Equals("N"))
+            {
+                obj.FechaCaptura = DateTime.Now;
+                obj.UsuarioCaptura = Session["Login"].ToString();
+                uow.NormatividadBusinessLogic.Insert(obj);
+            }
+            else
+            {
+                obj.FechaModificacion = DateTime.Now;
+                obj.UsuarioModifica = Session["Login"].ToString();
+
+                if (nomAnterior != null)
+                {
+                    if (!nomAnterior.Equals(obj.NombreArchivo))  //Se elimina el archivo anterior
+                        if (!nomAnterior.Equals(string.Empty))
+                            M = EliminarArchivo(obj.ID, nomAnterior);
+                    
+                }
+                
+
+                uow.NormatividadBusinessLogic.Update(obj);
+            }
+
+            uow.SaveChanges();
+
+            //Si hubo errores
+            if (uow.Errors.Count > 0)
+            {
+                foreach (string err in uow.Errors)
+                    M += err;
+
+                //MANEJAR EL ERROR
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                lblMsgError.Text = M;
+                return;
+            }
 
             List<string> R = new List<string>();
 
@@ -226,36 +290,6 @@ namespace SISEC.Formas
                     return;
                 }
 
-
-                obj.Descripcion = txtDescripcion.Value;
-                obj.TipoNormatividad = tipoNormatividad;
-
-                if (tipoNormatividad == 2)
-                    obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
-
-                obj.FechaCaptura = DateTime.Now;
-                obj.UsuarioCaptura = Session["Login"].ToString();
-                obj.NombreArchivo = Path.GetFileName(fileUpload.FileName);
-                obj.TipoArchivo = fileUpload.PostedFile.ContentType;
-
-                uow.NormatividadBusinessLogic.Insert(obj);
-                uow.SaveChanges();
-
-                //Si hubo errores al guardar
-                if (uow.Errors.Count > 0)
-                {
-                    foreach (string err in uow.Errors)
-                        M += err;
-
-                    lblMsgError.Text = M;
-
-                    divMsgError.Style.Add("display", "block");
-                    divMsgSuccess.Style.Add("display", "none");
-
-                    return;
-                }
-
-
                 R = GuardarArchivo(fileUpload.PostedFile, obj.ID);
 
                 //Si hubo errores
@@ -270,19 +304,12 @@ namespace SISEC.Formas
                 
 
             }
-            else
-            {
-                lblMsgError.Text = "No se ha adjuntado ningún archivo";
-                divMsgError.Style.Add("display", "block");
-                divMsgSuccess.Style.Add("display", "none");
-
-                return;
-            }
-
-
+            
             M = "Se ha guardado correctamente";
-
             Consultar();
+            divCapturaNormatividad.Style.Add("display", "none");
+            divGrid.Style.Add("display", "block");
+            divConsultar.Style.Add("display", "block");
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
@@ -313,8 +340,22 @@ namespace SISEC.Formas
             }
 
             //Se elimina el archivo fisico
-            M=EliminarArchivo(idNorma, nombreArchivo);
+            if (nombreArchivo != null)
+            {
+                if (!nombreArchivo.Equals(string.Empty))
+                {
+                    M = EliminarArchivo(idNorma, nombreArchivo);
+                    //Si hubo Errores
+                    if (!M.Equals(string.Empty))
+                    {
+                        lblMsgError.Text = M;
+                        divMsgError.Style.Add("display", "block");
+                        divMsgSuccess.Style.Add("display", "none");
+                        return;
+                    }
+                }
 
+            }
 
             //Si hubo Errores
             if (!M.Equals(string.Empty))
@@ -325,15 +366,25 @@ namespace SISEC.Formas
                 return;
             }
 
-
             BindGridNormatividad();
 
             lblMsgSuccess.Text = "Se ha eliminado correctamente";
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+        }
+        protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
+            _IDNorma.Value = gridNormatividad.DataKeys[row.RowIndex].Value.ToString();
+            _Accion.Value = "A";
 
-
-
+            BindControlesNorma();
+            
+            divCapturaNormatividad.Style.Add("display", "block");
+            divGrid.Style.Add("display", "none");
+            divConsultar.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
         }
 
     }

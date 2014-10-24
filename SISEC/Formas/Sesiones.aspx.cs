@@ -27,7 +27,6 @@ namespace SISEC.Formas
 
             }
         }
-
         private void CargarGridPrimerFideicomiso()
         {
             if (ddlFideicomisos.Items.Count > 0)
@@ -36,7 +35,6 @@ namespace SISEC.Formas
                 BindGridSesiones(idCalendario);
             }
         }
-
         private void BindDropDownTipoSesion()
         {
             ddlTipoSesion.DataSource = uow.TipoSesionBusinessLogic.Get().ToList();
@@ -44,7 +42,6 @@ namespace SISEC.Formas
             ddlTipoSesion.DataTextField = "Descripcion";
             ddlTipoSesion.DataBind();
         }
-
         private void BindDropDownFideicomisos()
         {
             
@@ -115,7 +112,6 @@ namespace SISEC.Formas
 
             return R;
         }
-
         private void LimpiarCampos()
         {
             txtNumOficio.Value = string.Empty;
@@ -129,7 +125,6 @@ namespace SISEC.Formas
             txtDescripcion.Value = string.Empty;
             txtObservaciones.Value = string.Empty;
         }
-
         private void BindControlesSesion()
         {
             int idSesion = Utilerias.StrToInt(_IDSesion.Value);
@@ -147,7 +142,6 @@ namespace SISEC.Formas
             txtDescripcion.Value = obj.Descripcion;
             txtObservaciones.Value = obj.Observaciones;
         }
-
         private void BindControlFideicomiso()
         {
             DependenciaFideicomisoEjercicio ente = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(Utilerias.StrToInt(ddlFideicomisos.SelectedValue));
@@ -155,7 +149,6 @@ namespace SISEC.Formas
 
             txtFideicomiso.Value = fidei.Descripcion;
         }
-
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idCalendario = BuscarCalendario();
@@ -187,7 +180,6 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
-
         protected void btnCrearCalendario_Click(object sender, EventArgs e)
         {
             
@@ -226,7 +218,6 @@ namespace SISEC.Formas
             divMsgSuccess.Style.Add("display", "none");
             _Accion.Value = "N"; //Sera una nueva sesion
         }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             int idCalendario = Utilerias.StrToInt(_IDCalendario.Value);
@@ -253,7 +244,6 @@ namespace SISEC.Formas
                 obj.UsuarioCaptura = Session["Login"].ToString();
                 obj.FechaCaptura = DateTime.Now;
                 obj.CalendarioID = idCalendario;
-                obj.TipoCalendarizacionID = uow.TipoCalendarizacionBusinessLogic.Get(c => c.Clave == "P").FirstOrDefault().ID;
                 obj.StatusSesionID = uow.StatusSesionBusinessLogic.Get(s=>s.Clave=="P").FirstOrDefault().ID;
 
                 uow.SesionBusinessLogic.Insert(obj);
@@ -295,7 +285,6 @@ namespace SISEC.Formas
 
 
         }
-
         protected void gridSesiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -312,7 +301,6 @@ namespace SISEC.Formas
                 
             }
         }
-
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
         {
             GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
@@ -328,7 +316,6 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
-
         protected void btnDel_Click(object sender, EventArgs e)
         {
             string M = "Se ha eliminado correctamente";
@@ -361,7 +348,6 @@ namespace SISEC.Formas
 
 
         }
-
         protected void gridSesiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gridSesiones.PageIndex = e.NewPageIndex;
@@ -375,10 +361,6 @@ namespace SISEC.Formas
             
         }
 
-
-
     }
 
-    
-    
 }

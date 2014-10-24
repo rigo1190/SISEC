@@ -14,11 +14,6 @@ namespace DAL.Model
     
     public partial class TipoCalendarizacion
     {
-        public TipoCalendarizacion()
-        {
-            this.DetalleSesiones = new HashSet<Sesion>();
-        }
-    
         public int ID { get; set; }
         public string Clave { get; set; }
         public string Descripcion { get; set; }
@@ -27,7 +22,5 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
-    
-        public virtual ICollection<Sesion> DetalleSesiones { get; set; }
     }
 }

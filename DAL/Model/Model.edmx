@@ -69,10 +69,6 @@
       <End Role="StatusSesion" EntitySet="StatusSesion" />
       <End Role="Sesion" EntitySet="Sesion" />
     </AssociationSet>
-    <AssociationSet Name="FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" Association="SISEFModel.Store.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID">
-      <End Role="TipoCalendarizacion" EntitySet="TipoCalendarizacion" />
-      <End Role="Sesion" EntitySet="Sesion" />
-    </AssociationSet>
     <AssociationSet Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" Association="SISEFModel.Store.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
       <End Role="TipoSesion" EntitySet="TipoSesion" />
       <End Role="Sesion" EntitySet="Sesion" />
@@ -232,7 +228,6 @@
     <Property Name="FechaReprogramada" Type="datetime" Nullable="true" />
     <Property Name="TipoSesionID" Type="int" Nullable="false" />
     <Property Name="StatusSesionID" Type="int" Nullable="false" />
-    <Property Name="TipoCalendarizacionID" Type="int" Nullable="false" />
     <Property Name="Observaciones" Type="nvarchar(max)" Nullable="true" />
     <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
     <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
@@ -243,6 +238,7 @@
     <Property Name="LugarReunion" Type="nvarchar" Nullable="true" MaxLength="250" />
     <Property Name="NumSesion" Type="nvarchar" Nullable="true" MaxLength="250" />
     <Property Name="HoraProgramada" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="HoraReprogramada" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
   <EntityType Name="StatusSesion">
     <Key>
@@ -356,8 +352,8 @@
     <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="1000" />
     <Property Name="NombreArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
     <Property Name="TipoArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="false" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
+    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
     <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
     <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
@@ -504,18 +500,6 @@
       </Principal>
       <Dependent Role="Sesion">
         <PropertyRef Name="StatusSesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID">
-    <End Role="TipoCalendarizacion" Type="SISEFModel.Store.TipoCalendarizacion" Multiplicity="1" />
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TipoCalendarizacion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Sesion">
-        <PropertyRef Name="TipoCalendarizacionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -776,7 +760,6 @@
           <Property Name="FechaReprogramada" Type="DateTime" Precision="3" />
           <Property Name="TipoSesionID" Type="Int32" Nullable="false" />
           <Property Name="StatusSesionID" Type="Int32" Nullable="false" />
-          <Property Name="TipoCalendarizacionID" Type="Int32" Nullable="false" />
           <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FechaCaptura" Type="DateTime" Precision="3" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
@@ -785,7 +768,6 @@
           <NavigationProperty Name="DetalleAcuerdos" Relationship="Self.FK_dbo_Acuerdo_dbo_Sesion_SesionID" FromRole="Sesion" ToRole="Acuerdo" />
           <NavigationProperty Name="Calendario" Relationship="Self.FK_dbo_Sesion_dbo_Calendario_CalendarioID" FromRole="Sesion" ToRole="Calendario" />
           <NavigationProperty Name="StatusSesion" Relationship="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" FromRole="Sesion" ToRole="StatusSesion" />
-          <NavigationProperty Name="TipoCalendarizacion" Relationship="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" FromRole="Sesion" ToRole="TipoCalendarizacion" />
           <NavigationProperty Name="TipoSesion" Relationship="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" FromRole="Sesion" ToRole="TipoSesion" />
           <Property Name="FechaOficio" Type="DateTime" Precision="3" />
           <Property Name="NumOficio" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -794,6 +776,7 @@
           <Property Name="HoraProgramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleNotas" Relationship="SISEFModel.SesionNotas" FromRole="Sesion" ToRole="Notas" />
           <NavigationProperty Name="Actas" Relationship="SISEFModel.SesionActas" FromRole="Sesion" ToRole="Actas" />
+          <Property Name="HoraReprogramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StatusSesion">
           <Key>
@@ -821,7 +804,6 @@
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" FromRole="TipoCalendarizacion" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="TipoSesion">
           <Key>
@@ -997,18 +979,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID">
-          <End Role="TipoCalendarizacion" Type="Self.TipoCalendarizacion" Multiplicity="1" />
-          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoCalendarizacion">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Sesion">
-              <PropertyRef Name="TipoCalendarizacionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
           <End Role="TipoSesion" Type="Self.TipoSesion" Multiplicity="1" />
           <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
@@ -1078,10 +1048,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" Association="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID">
             <End Role="StatusSesion" EntitySet="StatusSesion" />
-            <End Role="Sesion" EntitySet="Sesion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" Association="Self.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID">
-            <End Role="TipoCalendarizacion" EntitySet="TipoCalendarizacion" />
             <End Role="Sesion" EntitySet="Sesion" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" Association="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
@@ -1224,8 +1190,8 @@
           <Property Name="Descripcion" Type="String" FixedLength="false" MaxLength="1000" Unicode="true" Nullable="true" />
           <Property Name="NombreArchivo" Type="String" FixedLength="false" MaxLength="250" Unicode="true" Nullable="true" />
           <Property Name="TipoArchivo" Type="String" Nullable="true" FixedLength="false" MaxLength="250" Unicode="true" />
-          <Property Name="FechaCaptura" Type="DateTime" Nullable="true" />
-          <Property Name="FechaModificacion" Type="DateTime" Nullable="true" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
         </EntityType>
@@ -1251,8 +1217,8 @@
           <Property Name="Descripcion" Type="String" FixedLength="false" MaxLength="1000" Unicode="true" Nullable="true" />
           <Property Name="NombreArchivo" Type="String" FixedLength="false" MaxLength="250" Unicode="true" Nullable="true" />
           <Property Name="TipoArchivo" Type="String" FixedLength="false" MaxLength="250" Unicode="true" Nullable="true" />
-          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" />
-          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="true" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" FixedLength="false" MaxLength="50" Unicode="true" Nullable="true" />
           <Property Name="UsuarioModifica" Type="String" FixedLength="false" MaxLength="50" Unicode="true" Nullable="true" />
         </EntityType>
@@ -1275,13 +1241,13 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="DependenciaFideicomisoEjercicio" Relationship="SISEFModel.DependenciaFideicomisoEjercicioFichaTecnica" FromRole="FichaTecnica" ToRole="DependenciaFideicomisoEjercicio" />
           <Property Name="DependenciaFideicomisoEjercicioID" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="NombreArchivo" Type="String" FixedLength="false" MaxLength="50" Unicode="true" />
-          <Property Name="TipoArchivo" Type="String" FixedLength="false" MaxLength="250" Nullable="true" />
-          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" />
-          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" />
+          <Property Name="TipoArchivo" Type="String" FixedLength="false" MaxLength="250" Nullable="true" Unicode="true" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" FixedLength="false" MaxLength="50" Unicode="true" Nullable="true" />
-          <Property Name="UsuarioModifica" Type="String" Nullable="true" />
+          <Property Name="UsuarioModifica" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="DependenciaFideicomisoEjercicioFichaTecnica">
           <End Type="SISEFModel.DependenciaFideicomisoEjercicio" Role="DependenciaFideicomisoEjercicio" Multiplicity="1" />
@@ -1430,7 +1396,6 @@
           <ScalarProperty Name="FechaReprogramada" ColumnName="FechaReprogramada" />
           <ScalarProperty Name="TipoSesionID" ColumnName="TipoSesionID" />
           <ScalarProperty Name="StatusSesionID" ColumnName="StatusSesionID" />
-          <ScalarProperty Name="TipoCalendarizacionID" ColumnName="TipoCalendarizacionID" />
           <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
           <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
@@ -1441,6 +1406,7 @@
           <ScalarProperty Name="LugarReunion" ColumnName="LugarReunion" />
           <ScalarProperty Name="NumSesion" ColumnName="NumSesion" />
           <ScalarProperty Name="HoraProgramada" ColumnName="HoraProgramada" />
+          <ScalarProperty Name="HoraReprogramada" ColumnName="HoraReprogramada" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

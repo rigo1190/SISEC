@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0156de5970dc474982d858d5d7688ec2" Name="Diagram1" ZoomLevel="98">
+      <Diagram DiagramId="0156de5970dc474982d858d5d7688ec2" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="SISEFModel.Acuerdo" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Calendario" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="3.625" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="3.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.DependenciaFideicomisoEjercicio" Width="2.625" PointX="6" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Ejercicio" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Fideicomiso" Width="1.5" PointX="3.125" PointY="10.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Normatividad" Width="2.25" PointX="9.375" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Seguimiento" Width="1.5" PointX="15.375" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.Sesion" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.Sesion" Width="3.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.StatusSesion" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.TipoCalendarizacion" Width="1.5" PointX="6" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.TipoSesion" Width="1.5" PointX="5.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.TipoSesion" Width="1.5" PointX="6.125" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.TipoUsuario" Width="1.5" PointX="16.625" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Usuario" Width="1.5" PointX="14.375" PointY="6.375" IsExpanded="true" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Acuerdo_dbo_Sesion_SesionID" ManuallyRouted="false" />
@@ -30,7 +30,6 @@
         <AssociationConnector Association="SISEFModel.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" ManuallyRouted="false" />
-        <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_TipoCalendarizacion_TipoCalendarizacionID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.TipoUsuarioUsuario" />
         <EntityTypeShape EntityType="SISEFModel.UsuarioFideicomiso" Width="3.375" PointX="12.625" PointY="3" />

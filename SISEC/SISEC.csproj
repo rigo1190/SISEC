@@ -84,6 +84,7 @@
     <Content Include="Formas\Acuerdos.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
+    <Content Include="Formas\NotasActas.aspx" />
     <Content Include="Formas\Seguimientos.aspx" />
     <Content Include="Formas\Sesiones.aspx" />
     <Content Include="img\close.png" />
@@ -132,6 +133,7 @@
     <Content Include="less\datepicker.less" />
     <Content Include="less\timepicker.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Reports\Calendario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
@@ -187,6 +189,13 @@
     <Compile Include="Formas\Normatividad.aspx.designer.cs">
       <DependentUpon>Normatividad.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Formas\NotasActas.aspx.cs">
+      <DependentUpon>NotasActas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\NotasActas.aspx.designer.cs">
+      <DependentUpon>NotasActas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Seguimientos.aspx.cs">
       <DependentUpon>Seguimientos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -223,6 +232,13 @@
       <DependentUpon>Navegador.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Calendario.aspx.cs">
+      <DependentUpon>Calendario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Calendario.aspx.designer.cs">
+      <DependentUpon>Calendario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SeleccionarDependencia.aspx.cs">
       <DependentUpon>SeleccionarDependencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

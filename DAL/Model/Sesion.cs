@@ -30,7 +30,6 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaReprogramada { get; set; }
         public int TipoSesionID { get; set; }
         public int StatusSesionID { get; set; }
-        public int TipoCalendarizacionID { get; set; }
         public string Observaciones { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
@@ -41,11 +40,11 @@ namespace DAL.Model
         public string LugarReunion { get; set; }
         public string NumSesion { get; set; }
         public string HoraProgramada { get; set; }
+        public string HoraReprogramada { get; set; }
     
         public virtual ICollection<Acuerdo> DetalleAcuerdos { get; set; }
         public virtual Calendario Calendario { get; set; }
         public virtual StatusSesion StatusSesion { get; set; }
-        public virtual TipoCalendarizacion TipoCalendarizacion { get; set; }
         public virtual TipoSesion TipoSesion { get; set; }
         public virtual ICollection<Notas> DetalleNotas { get; set; }
         public virtual ICollection<Actas> Actas { get; set; }

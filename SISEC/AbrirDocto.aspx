@@ -9,9 +9,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
-    </div>
+        <div runat="server">
+            <div class="alert alert-danger" runat="server" id="divMsgError" style="display:none">
+                <asp:Label ID="lblMsgError" EnableViewState="false" runat="server" CssClass="font-weight:bold"></asp:Label>
+            </div>
+        </div>
     </form>
 </body>
 </html>

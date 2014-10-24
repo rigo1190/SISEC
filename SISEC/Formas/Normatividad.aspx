@@ -19,10 +19,11 @@
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
             $("#<%= txtDescripcion.ClientID %>").val("");
+            $("#<%= txtArchivoAdjunto.ClientID %>").val("");
         }
 
-        function fnc_AbrirArchivo(ruta,id) {
-            window.open(ruta+'?i='+id, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,width=750,height=700,top=0');
+        function fnc_AbrirArchivo(ruta,id, caller) {
+            window.open(ruta + '?i=' + id + '&c=' + caller, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,width=750,height=700,top=0');
         }
 
         function fnc_ColocarIDNorma(id) {
@@ -37,7 +38,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4><i class="fa fa-crosshairs"></i> <strong>Normatividad</strong></h4>  
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                     <Columns>
                                          <asp:TemplateField HeaderText="Acciones">
                                             <ItemTemplate>
-                                                <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-search"></span></button>
+                                                <asp:ImageButton  ID="imgBtnEdit" ToolTip="Editar" runat="server" OnClick="imgBtnEdit_Click" ImageUrl="~/img/Edit1.png" />
                                                 <asp:ImageButton  ID="imgBtnEliminar" ToolTip="Borrar" runat="server" ImageUrl="~/img/close.png" data-toggle="modal" data-target="#myModal"/>
                                             </ItemTemplate>
                                             <HeaderStyle BackColor="#EEEEEE" />
@@ -107,6 +107,18 @@
                                          <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
                                             <ItemTemplate>
                                                 <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Archivo adjunto" SortExpression="Año">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblArchivoN" runat="server"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Ver Archivo" SortExpression="Año">
+                                            <ItemTemplate>
+                                                <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-search"></span></button>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         
@@ -137,7 +149,10 @@
                                     <label>Descripción</label>
                                     <textarea type="text" name="prueba" runat="server" class="form-control" id="txtDescripcion" />
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Archivo adjunto actual:</label>
+                                    <input type="text" disabled="disabled" name="prueba" id="txtArchivoAdjunto" runat="server" class="form-control"  />
+                                </div>
                                 <div class="form-group">
                                     <label>Archivo Normatividad:</label>
                                     <asp:FileUpload ID="fileUpload" runat="server" />

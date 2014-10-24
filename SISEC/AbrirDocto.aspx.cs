@@ -16,8 +16,38 @@ namespace SISEC
         {
             uow = new UnitOfWork();
             int id = Utilerias.StrToInt(Request.Params["i"].ToString());
-            Normatividad obj = uow.NormatividadBusinessLogic.GetByID(id);
-            Response.Redirect("~/ArchivosNormatividad/" + obj.ID + "/" + obj.NombreArchivo);
+            int caller = Utilerias.StrToInt(Request.Params["c"].ToString());
+            string nomCarpeta = string.Empty;
+            string nomArchivo = string.Empty;
+
+            switch (caller)
+            {
+                case 1:
+                    nomCarpeta = "~/ArchivosNormatividad/";
+                    Normatividad norma= uow.NormatividadBusinessLogic.GetByID(id);
+                    nomArchivo = norma.NombreArchivo != null ? norma.NombreArchivo.Trim() : string.Empty;
+                    break;
+                case 2:
+                    nomCarpeta = "~/ArchivosNotas/";
+                    Notas nota = uow.NotasBusinessLogic.GetByID(id);
+                    nomArchivo = nota.NombreArchivo != null ? nota.NombreArchivo.Trim() : string.Empty;
+                    break;
+                case 3:
+                    nomCarpeta = "~/ArchivosActas/";
+                    Actas acta=uow.ActasBusinessLogic.GetByID(id);
+                    nomArchivo = acta.NombreArchivo != null ? acta.NombreArchivo.Trim() : string.Empty;
+                    break;
+            }
+
+
+            if (nomArchivo.Equals(string.Empty))
+            {
+                lblMsgError.Text = "No existe ningun archivo adjunto";
+                divMsgError.Style.Add("display", "block");
+
+            }else
+                Response.Redirect(nomCarpeta + id + "/" + nomArchivo);
+            
 
         }
     }

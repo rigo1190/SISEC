@@ -143,11 +143,11 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Notas y Actas" ItemStyle-CssClass="col-md-2" HeaderStyle-CssClass="panel-footer">
+                                        <asp:TemplateField HeaderText="Notas y Actas" >
                                             <ItemTemplate>
                                                     <button type="button" id="btnNotas" onserverclick="btnNotas_ServerClick" runat="server" class="btn btn-default"> <span class="glyphicon glyphicon-file"></span></button> 
                                             </ItemTemplate>                          
-                                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="50px" />                                            
+                                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>                                            
                                         </asp:TemplateField>
 
                                     </Columns> 
@@ -219,6 +219,7 @@
                                                     <ItemTemplate>
                                                         <button type="button" runat="server" id="btnVerN"><span class="glyphicon glyphicon-search"></span></button>
                                                     </ItemTemplate>
+                                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>     
                                                 </asp:TemplateField>
 
                                             </Columns>
@@ -325,6 +326,7 @@
                                                     <ItemTemplate>
                                                         <button type="button" runat="server" id="btnVerA"><span class="glyphicon glyphicon-search"></span></button>
                                                     </ItemTemplate>
+                                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>    
                                                 </asp:TemplateField>
 
                                         </Columns>

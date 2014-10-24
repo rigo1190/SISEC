@@ -41,6 +41,7 @@ namespace DAL.Model
         public string NumSesion { get; set; }
         public string HoraProgramada { get; set; }
         public string HoraReprogramada { get; set; }
+        public string HoraCelebrada { get; set; }
     
         public virtual ICollection<Acuerdo> DetalleAcuerdos { get; set; }
         public virtual Calendario Calendario { get; set; }

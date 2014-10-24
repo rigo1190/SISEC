@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -21,10 +22,12 @@ namespace SISEC.Formas
                 BindDropDownFideicomisos();
                 CargarGridPrimerFideicomiso();
                 BindDropDownTipoSesion();
+                BindDropDownStatusSesion();
 
                 if (ddlFideicomisos.Items.Count == 0)
                     btnCrearCalendario.Enabled = false;
 
+                ddlStatus.Attributes["onchange"] = "fnc_GetDatosStatus(this)";
             }
         }
         private void CargarGridPrimerFideicomiso()
@@ -59,6 +62,13 @@ namespace SISEC.Formas
             ddlFideicomisos.DataValueField = "ID";
             ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
+        }
+        private void BindDropDownStatusSesion()
+        {
+            ddlStatus.DataSource = uow.StatusSesionBusinessLogic.Get();
+            ddlStatus.DataValueField = "ID";
+            ddlStatus.DataTextField = "Descripcion";
+            ddlStatus.DataBind();
         }
         private int BuscarCalendario() 
         {
@@ -132,15 +142,45 @@ namespace SISEC.Formas
 
             BindControlFideicomiso();
             txtNumOficio.Value = obj.NumOficio;
-            txtFechaOficio.Value = obj.FechaOficio.ToString();
+            txtFechaOficio.Value =String.Format("{0:d}", obj.FechaOficio);
             txtNumSesion.Value = obj.NumSesion;
             ddlTipoSesion.SelectedValue = obj.TipoSesionID.ToString();
-            txtFechaProgramada.Value = obj.FechaProgramada.ToString();
-            txtHoraProgramada.Value = obj.HoraProgramada;
-
             txtLugarReunion.Value = obj.LugarReunion;
             txtDescripcion.Value = obj.Descripcion;
             txtObservaciones.Value = obj.Observaciones;
+            ddlStatus.SelectedValue = obj.StatusSesionID.ToString();
+
+            StatusSesion status = uow.StatusSesionBusinessLogic.GetByID(obj.StatusSesionID);
+
+            switch (status.Clave) //Dependiendo el estatus de la sesion se muestran y bindean los controles correspondientes
+            {
+                case "P": //PROGRAMADA
+                    txtFechaProgramada.Value = String.Format("{0:d}", obj.FechaProgramada);
+                    txtHoraProgramada.Value = obj.HoraProgramada;
+                    divDatosProgramada.Style.Add("display", "block");
+                    divDatosReprogramada.Style.Add("display", "none");
+                    divDatosCelebrada.Style.Add("display", "none");
+                    break;
+                case "RP"://REPROGRAMADA
+                    txtFechaReprogramada.Value = String.Format("{0:d}", obj.FechaReprogramada);
+                    txtHoraReprogramada.Value = obj.HoraReprogramada;
+                    divDatosProgramada.Style.Add("display", "none");
+                    divDatosReprogramada.Style.Add("display", "block");
+                    divDatosCelebrada.Style.Add("display", "none");
+                    break;
+                case "CE": //CELEBRADA
+                    txtFechaCelebrada.Value = String.Format("{0:d}",obj.FechaCelebrada);
+                    txtHoraCelebrada.Value = obj.HoraCelebrada;
+                    divDatosProgramada.Style.Add("display", "none");
+                    divDatosReprogramada.Style.Add("display", "none");
+                    divDatosCelebrada.Style.Add("display", "block");
+                    break;
+                case "C": //CANCELADA
+                    divDatosProgramada.Style.Add("display", "none");
+                    divDatosReprogramada.Style.Add("display", "none");
+                    divDatosCelebrada.Style.Add("display", "none");
+                    break;
+            }
         }
         private void BindControlFideicomiso()
         {
@@ -149,6 +189,20 @@ namespace SISEC.Formas
 
             txtFideicomiso.Value = fidei.Descripcion;
         }
+
+        [WebMethod]
+        public static List<string> GetDatosStatus(int _idStatus)
+        {
+            List<string> R = new List<string>();
+            UnitOfWork uow = new UnitOfWork();
+            int idStatus = _idStatus;//Utilerias.StrToInt(_idStatus);
+            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idStatus);
+            R.Add(obj.Clave);
+
+            return R;
+        }
+
+
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idCalendario = BuscarCalendario();
@@ -233,24 +287,49 @@ namespace SISEC.Formas
             obj.FechaOficio = Convert.ToDateTime(txtFechaOficio.Value);
             obj.NumSesion = txtNumSesion.Value;
             obj.TipoSesionID = Utilerias.StrToInt(ddlTipoSesion.SelectedValue);
-            obj.FechaProgramada =Convert.ToDateTime(txtFechaProgramada.Value);
-            obj.HoraProgramada = txtHoraProgramada.Value;
             obj.LugarReunion = txtLugarReunion.Value;
             obj.Descripcion = txtDescripcion.Value;
             obj.Observaciones = txtObservaciones.Value;
 
-            if (_Accion.Value.Equals("N"))
+            if (_Accion.Value.Equals("N")) //Es nueva sesion
             {
                 obj.UsuarioCaptura = Session["Login"].ToString();
                 obj.FechaCaptura = DateTime.Now;
                 obj.CalendarioID = idCalendario;
+                obj.FechaProgramada = Convert.ToDateTime(txtFechaProgramada.Value);
+                obj.HoraProgramada = txtHoraProgramada.Value;
                 obj.StatusSesionID = uow.StatusSesionBusinessLogic.Get(s=>s.Clave=="P").FirstOrDefault().ID;
-
+                obj.Mes = Convert.ToDateTime(txtFechaProgramada.Value).Month;
                 uow.SesionBusinessLogic.Insert(obj);
 
             }
-            else
+            else //Se esta actualizando una sesion exisente
             {
+                int idStatus = Utilerias.StrToInt(ddlStatus.SelectedValue);
+                StatusSesion status = uow.StatusSesionBusinessLogic.GetByID(idStatus);
+
+                switch (status.Clave) //Dependiendo el estatus de la sesion elegido, se llenan los campos correspondientes
+                {
+                    case "P": //PROGRAMADA
+                        obj.FechaProgramada = Convert.ToDateTime(txtFechaProgramada.Value);
+                        obj.HoraProgramada = txtHoraProgramada.Value;
+                        obj.Mes=Convert.ToDateTime(txtFechaProgramada.Value).Month;
+                        break;
+                    case "RP"://REPROGRAMADA
+                        obj.FechaReprogramada = Convert.ToDateTime(txtFechaReprogramada.Value);
+                        obj.HoraReprogramada = txtHoraReprogramada.Value;
+                        obj.Observaciones = txtObservaciones.Value;
+                        obj.Mes = Convert.ToDateTime(txtFechaReprogramada.Value).Month;
+                        break;
+                    case "CE": //CELEBRADA
+                        obj.FechaCelebrada = Convert.ToDateTime(txtFechaCelebrada.Value);
+                        obj.HoraCelebrada = txtHoraCelebrada.Value;
+                        break;
+                    case "C": //CANCELADA
+                        break;
+                }
+
+                obj.StatusSesionID = idStatus;
                 obj.UsuarioModifica = Session["Login"].ToString();
                 obj.FechaModificacion = DateTime.Now;
                 uow.SesionBusinessLogic.Update(obj);
@@ -290,17 +369,19 @@ namespace SISEC.Formas
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Label lblStatus = (Label)e.Row.FindControl("lblStatus");
+                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
+                List<string> columnas = new List<string>();
                 int idSesion = Utilerias.StrToInt(gridSesiones.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
                 Sesion obj=uow.SesionBusinessLogic.GetByID(idSesion);
-                lblStatus.Text = uow.StatusSesionBusinessLogic.GetByID(obj.StatusSesionID).Descripcion;
+                StatusSesion status=uow.StatusSesionBusinessLogic.GetByID(obj.StatusSesionID);
+                lblStatus.Text = status.Descripcion;
 
-                ImageButton ctrl = (ImageButton)e.Row.FindControl("imgBtnEliminar");
-
-                if (ctrl != null)
-                    ctrl.Attributes.Add("onclick", "fnc_ColocarIDSesion(" + idSesion + ")");
+                if (imgBtnEliminar != null)
+                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDSesion(" + idSesion + ")");
                 
             }
         }
+
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
         {
             GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
@@ -312,7 +393,6 @@ namespace SISEC.Formas
             //HABILTAR LA PARTE DE CONTROLES PARA DAR DE ALTA UN NUEVO REGISTRO DE SESION
             divCapturaSesion.Style.Add("display", "block");
             divEncabezado.Style.Add("display", "none");
-
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
@@ -359,6 +439,35 @@ namespace SISEC.Formas
             divMsgSuccess.Style.Add("display", "none");
 
             
+        }
+
+        protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idStatus = Utilerias.StrToInt(ddlStatus.SelectedValue);
+            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idStatus);
+
+            switch (obj.Clave)
+            {
+
+                case "P": //PROGRAMADA
+                    divDatosProgramada.Style.Add("display", "block");
+                    divDatosReprogramada.Style.Add("display", "none");
+                    divDatosCelebrada.Style.Add("display", "none");
+                    break;
+                case "RP"://REPROGRAMADA
+                    divDatosProgramada.Style.Add("display", "none");
+                    divDatosReprogramada.Style.Add("display", "block");
+                    divDatosCelebrada.Style.Add("display", "none");
+                    break;
+                case "CE": //CELEBRADA
+                    divDatosProgramada.Style.Add("display", "none");
+                    divDatosReprogramada.Style.Add("display", "none");
+                    divDatosCelebrada.Style.Add("display", "block");
+                    break;
+                case "C": //CANCELADA
+                    break;
+            }
+
         }
 
     }

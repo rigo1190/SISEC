@@ -225,7 +225,7 @@ namespace SISEC.Formas
         }
         #endregion
 
-        #region EVENTOS NOTAS
+        #region EVENTOS ACTAS
         protected void gridActas_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gridActas.PageIndex = e.NewPageIndex;
@@ -441,8 +441,227 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
         }
+
         #endregion
-       
-        
+
+        #region EVENTOS NOTAS
+        protected void gridNotas_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridActas.PageIndex = e.NewPageIndex;
+            BindGridNotas();
+
+            divMenu.Style.Add("display", "block");
+            divActas.Style.Add("display", "block");
+            divEncabezadoNotas.Style.Add("display", "block");
+            divCapturaNotas.Style.Add("display", "none");
+            divActas.Style.Add("display", "none");
+
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+        protected void gridNotas_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminarN");
+                Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomisoN");
+                Label lblSesion = (Label)e.Row.FindControl("lblSesionN");
+                Label lblArchivoN = (Label)e.Row.FindControl("lblArchivoN");
+
+                int idNota = Utilerias.StrToInt(gridNotas.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+                Notas nota = uow.NotasBusinessLogic.GetByID(idNota);
+
+                if (imgBtnEliminar != null)
+                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDNota(" + idNota + ")");
+
+                lblFideicomiso.Text = GetClaveFideicomiso();
+                lblSesion.Text = GetNumSesion();
+
+                lblArchivoN.Text = nota.NombreArchivo != null && !nota.NombreArchivo.Equals(string.Empty) ? nota.NombreArchivo : "No existe archivo adjunto";
+
+                //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
+                HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVerN");
+                string ruta = ResolveClientUrl("~/AbrirDocto.aspx");
+                btnVer.Attributes["onclick"] = "fnc_AbrirArchivo('" + ruta + "'," + idNota + "," + 2 + ")";
+            }
+        }
+        protected void imgBtnEditN_Click(object sender, ImageClickEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
+            _IDNota.Value = gridNotas.DataKeys[row.RowIndex].Value.ToString();
+            _AccionN.Value = "A";
+
+            BindControlesNota();
+
+
+            divActas.Style.Add("display", "none");
+            divNotas.Style.Add("display", "block");
+            divCapturaNotas.Style.Add("display", "block");
+            divEncabezadoNotas.Style.Add("display", "none");
+
+            divMenu.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+        protected void btnGuardarN_Click(object sender, EventArgs e)
+        {
+            int idSesion = Utilerias.StrToInt(_IDSesion.Value);
+            int idNota = Utilerias.StrToInt(_IDNota.Value);
+            string nomAnterior = string.Empty;
+
+            string M = string.Empty;
+            Notas obj = null;
+
+
+            if (_AccionN.Value.Equals("N"))
+                obj = new Notas();
+            else
+                obj = uow.NotasBusinessLogic.GetByID(idNota);
+
+            nomAnterior = obj.NombreArchivo;
+
+            obj.Descripcion = txtDescripcionN.Value;
+            obj.NombreArchivo = fileUploadN.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUploadN.FileName);
+            obj.TipoArchivo = fileUploadN.PostedFile.ContentType;
+
+            if (_AccionN.Value.Equals("N"))
+            {
+                obj.FechaCaptura = DateTime.Now;
+                obj.UsuarioCaptura = Session["Login"].ToString();
+                obj.SesionID = idSesion;
+                uow.NotasBusinessLogic.Insert(obj);
+            }
+            else
+            {
+                obj.FechaModificacion = DateTime.Now;
+                obj.UsuarioModifica = Session["Login"].ToString();
+
+                if (nomAnterior != null)
+                {
+                    if (!nomAnterior.Equals(obj.NombreArchivo))  //Se elimina el archivo anterior
+                        if (!nomAnterior.Equals(string.Empty))
+                            M = EliminarArchivo(obj.ID, nomAnterior, "ArchivosNotas");
+                }
+
+                uow.NotasBusinessLogic.Update(obj);
+            }
+
+            uow.SaveChanges();
+
+            if (uow.Errors.Count > 0)
+            {
+                foreach (string err in uow.Errors)
+                    M += err;
+
+                //MANEJAR EL ERROR
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                lblMsgError.Text = M;
+                return;
+            }
+
+            _IDNota.Value = obj.ID.ToString(); //Se coloca el ID del nuevo objeto creado
+
+            //Se almacena el archivo
+            if (!fileUploadN.PostedFile.FileName.Equals(string.Empty))
+            {
+                if (fileUploadN.FileBytes.Length > 10485296)
+                {
+                    lblMsgError.Text = "Se ha excedido en el tamaño del archivo, el máximo permitido es de 10 Mb";
+                    divMsgError.Style.Add("display", "block");
+                    divMsgSuccess.Style.Add("display", "none");
+
+                    return;
+                }
+
+                M = GuardarArchivo(fileUploadN.PostedFile, obj.ID, "ArchivosNotas");
+
+                if (!M.Equals(string.Empty))
+                {
+
+                    //MANEJAR EL ERROR
+                    lblMsgError.Text = M;
+                    divMsgError.Style.Add("display", "block");
+                    divMsgSuccess.Style.Add("display", "none");
+                    lblMsgError.Text = M;
+                    return;
+                }
+            }
+
+            BindGridNotas();
+
+            _AccionN.Value = string.Empty;
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "block");
+            lblMsgSuccess.Text = "Se ha guardado correctamente";
+            divNotas.Style.Add("display", "block");
+            divEncabezadoNotas.Style.Add("display", "block");
+            divCapturaNotas.Style.Add("display", "none");
+
+            divMenu.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "none");
+            //ocutasr controles de Actas
+            divActas.Style.Add("display", "none");
+
+        }
+        protected void btnDelN_Click(object sender, EventArgs e)
+        {
+            string M = "Se ha eliminado correctamente";
+            string nombreArchivo;
+            int idNota = Utilerias.StrToInt(_IDNota.Value);
+
+            Notas obj = uow.NotasBusinessLogic.GetByID(idNota);
+            nombreArchivo = obj.NombreArchivo;
+
+            divMenu.Style.Add("display", "block");
+            divNotas.Style.Add("display", "block");
+            divEncabezadoNotas.Style.Add("display", "block");
+            divCapturaNotas.Style.Add("display", "none");
+            divActas.Style.Add("display", "none");
+
+            //Se elimina el objeto
+            uow.NotasBusinessLogic.Delete(obj);
+            uow.SaveChanges();
+
+            if (uow.Errors.Count > 0) //Si hubo errores
+            {
+                M = string.Empty;
+                foreach (string cad in uow.Errors)
+                    M += cad;
+
+                lblMsgError.Text = M;
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                return;
+            }
+
+            BindGridNotas();
+
+            //Se elimina el archivo fisico
+            if (nombreArchivo != null)
+            {
+                if (!nombreArchivo.Equals(string.Empty))
+                {
+                    M = EliminarArchivo(idNota, nombreArchivo, "ArchivosNotas");
+                    //Si hubo Errores
+                    if (!M.Equals(string.Empty))
+                    {
+                        lblMsgError.Text = M;
+                        divMsgError.Style.Add("display", "block");
+                        divMsgSuccess.Style.Add("display", "none");
+                        return;
+                    }
+                }
+
+            }
+
+
+            lblMsgSuccess.Text = M;
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "block");
+        }
+
+        #endregion
+
     }
 }

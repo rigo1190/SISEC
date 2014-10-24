@@ -120,6 +120,7 @@
                                             <ItemTemplate>
                                                 <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-search"></span></button>
                                             </ItemTemplate>
+                                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>
                                         </asp:TemplateField>
                                         
                                     </Columns> 

@@ -109,7 +109,7 @@ namespace SISEC.Formas
             Sesion obj = uow.SesionBusinessLogic.GetByID(Utilerias.StrToInt(_IDSesion.Value));
             return obj.NumSesion;
         }
-        public string GuardarArchivo(HttpPostedFile postedFile, int idNorma, string nombreCarpeta)
+        public string GuardarArchivo(HttpPostedFile postedFile, int id, string nombreCarpeta)
         {
 
             string M = string.Empty;
@@ -122,7 +122,7 @@ namespace SISEC.Formas
                 if (!ruta.EndsWith("/"))
                     ruta += "/";
 
-                ruta += idNorma.ToString() + "/";
+                ruta += id.ToString() + "/";
 
                 if (ruta.StartsWith("~") || ruta.StartsWith("/"))   //Es una ruta relativa al sitio
                     ruta = Server.MapPath(ruta);

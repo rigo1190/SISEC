@@ -37,6 +37,11 @@ namespace SISEC
                     Actas acta=uow.ActasBusinessLogic.GetByID(id);
                     nomArchivo = acta.NombreArchivo != null ? acta.NombreArchivo.Trim() : string.Empty;
                     break;
+                case 4: //FICHAS TECNICAS
+                    nomCarpeta = "~/ArchivosFichas/";
+                    FichaTecnica ficha = uow.FichaTecnicaBusinessLogic.GetByID(id);
+                    nomArchivo = ficha.NombreArchivo != null ? ficha.NombreArchivo.Trim() : string.Empty;
+                    break;
             }
 
 

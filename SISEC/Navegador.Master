@@ -82,6 +82,9 @@
                             <a href="<%=ResolveClientUrl("~/Formas/NotasActas.aspx") %>"><i class="fa fa-wrench fa-fw"></i>  Notas y Actas<span class="fa arrow"></span></a>
                         </li>
                         <li>
+                            <a href="<%=ResolveClientUrl("~/Formas/FichaTecnica.aspx") %>"><i class="fa fa-wrench fa-fw"></i> Ficha Técnica<span class="fa arrow"></span></a>
+                        </li>
+                        <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>

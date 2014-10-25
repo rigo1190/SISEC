@@ -83,6 +83,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formas\Acuerdos.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
+    <Content Include="Formas\Fichas.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
     <Content Include="Formas\Seguimientos.aspx" />
@@ -181,6 +182,13 @@
     </Compile>
     <Compile Include="Formas\Catalogos\TEST.aspx.designer.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Fichas.aspx.cs">
+      <DependentUpon>Fichas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Fichas.aspx.designer.cs">
+      <DependentUpon>Fichas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\Normatividad.aspx.cs">
       <DependentUpon>Normatividad.aspx</DependentUpon>

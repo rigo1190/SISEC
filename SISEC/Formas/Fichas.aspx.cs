@@ -26,6 +26,8 @@ namespace SISEC.Formas
 
             }
         }
+
+        #region METODOS
         private void BindGridFichas()
         {
             int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
@@ -44,6 +46,7 @@ namespace SISEC.Formas
             FichaTecnica obj = uow.FichaTecnicaBusinessLogic.GetByID(id);
             txtDescripcion.Value = obj.Descripcion;
             txtArchivoAdjunto.Value = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
+            txtFideicomiso.Value = GetClaveFideicomiso();
         }
         public string GuardarArchivo(HttpPostedFile postedFile, int idFicha)
         {
@@ -135,6 +138,9 @@ namespace SISEC.Formas
 
 
         }
+        #endregion
+
+        #region EVENTOS
         protected void gridFichas_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -150,7 +156,15 @@ namespace SISEC.Formas
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDFicha(" + idFicha + ")");
 
                 lblFideicomiso.Text = GetClaveFideicomiso();
-                lblArchivo.Text = ficha.NombreArchivo != null && !ficha.NombreArchivo.Equals(string.Empty) ? ficha.NombreArchivo : "No existe archivo adjunto";
+
+                if (ficha.NombreArchivo != null)
+                    if (!ficha.NombreArchivo.Equals(string.Empty))
+                        lblArchivo.Text = ficha.NombreArchivo;
+                    else
+                        lblArchivo.Text = "No existe archivo adjunto";
+                else
+                    lblArchivo.Text = "No existe archivo adjunto";
+
 
                 //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
@@ -164,6 +178,8 @@ namespace SISEC.Formas
             BindGridFichas();
             divEncabezado.Style.Add("display", "block");
             divCaptura.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
         }
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
         {
@@ -172,7 +188,9 @@ namespace SISEC.Formas
             _Accion.Value = "A";
 
             BindControlesFicha();
+            divDatosFideicomiso.Style.Add("display", "block");
             divEncabezado.Style.Add("display", "none");
+            divFideicomiso.Style.Add("display", "none");
             divCaptura.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
@@ -193,6 +211,7 @@ namespace SISEC.Formas
 
             nomAnterior = obj.NombreArchivo;
 
+            obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
             obj.Descripcion = txtDescripcion.Value;
             obj.NombreArchivo = fileUpload.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUpload.FileName);
             obj.TipoArchivo = fileUpload.PostedFile.ContentType;
@@ -201,7 +220,7 @@ namespace SISEC.Formas
             {
                 obj.FechaCaptura = DateTime.Now;
                 obj.UsuarioCaptura = Session["Login"].ToString();
-                
+
                 uow.FichaTecnicaBusinessLogic.Insert(obj);
             }
             else
@@ -265,12 +284,101 @@ namespace SISEC.Formas
 
             _Accion.Value = string.Empty;
 
+            divDatosFideicomiso.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
             lblMsgSuccess.Text = "Se ha guardado correctamente";
             divEncabezado.Style.Add("display", "block");
+            divFideicomiso.Style.Add("display", "block");
             divCaptura.Style.Add("display", "none");
 
         }
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            BindGridFichas();
+            divFideicomiso.Style.Add("display", "block");
+            divDatosFideicomiso.Style.Add("display", "none");
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+            _Accion.Value = string.Empty;
+        }
+        protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGridFichas();
+
+            if (_Accion.Value.Equals("N"))
+            {
+                divCaptura.Style.Add("display", "block");
+                divEncabezado.Style.Add("display", "none");
+            }
+            else
+            {
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+            }
+
+            divFideicomiso.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+        protected void btnDel_Click(object sender, EventArgs e)
+        {
+            string M = "Se ha eliminado correctamente";
+            string nombreArchivo;
+            int idFicha = Utilerias.StrToInt(_IDFicha.Value);
+
+            FichaTecnica obj = uow.FichaTecnicaBusinessLogic.GetByID(idFicha);
+            nombreArchivo = obj.NombreArchivo;
+
+
+            divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
+            divFideicomiso.Style.Add("display", "block");
+
+            //Se elimina el objeto
+            uow.FichaTecnicaBusinessLogic.Delete(obj);
+            uow.SaveChanges();
+
+            if (uow.Errors.Count > 0) //Si hubo errores
+            {
+                M = string.Empty;
+                foreach (string cad in uow.Errors)
+                    M += cad;
+
+                lblMsgError.Text = M;
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                return;
+            }
+
+            BindGridFichas();
+
+            //Se elimina el archivo fisico
+            if (nombreArchivo != null)
+            {
+                if (!nombreArchivo.Equals(string.Empty))
+                {
+                    M = EliminarArchivo(idFicha, nombreArchivo);
+                    //Si hubo Errores
+                    if (!M.Equals(string.Empty))
+                    {
+                        lblMsgError.Text = M;
+                        divMsgError.Style.Add("display", "block");
+                        divMsgSuccess.Style.Add("display", "none");
+                        return;
+                    }
+                }
+
+            }
+
+
+            lblMsgSuccess.Text = M;
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "block");
+        }
+        #endregion
+        
     }
 }

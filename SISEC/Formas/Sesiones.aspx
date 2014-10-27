@@ -76,11 +76,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Seleccione Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Seleccione Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-9">
-                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" Width="750px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
+                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                              </div>
                             <div class="col-lg-3">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
@@ -92,7 +92,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Sesiones</h3>
+                            <h3 class="panel-title"><i class="fa"></i> Lista de Sesiones</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -168,7 +168,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-fw"></i>Datos de la Sesión</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Datos de la Sesión</h3>
                         </div>
                          <div class="panel-body">
                             <div class="col-lg-6 ">

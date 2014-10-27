@@ -104,11 +104,11 @@
                
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Seleccione Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Seleccione Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
-                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" Width="1000px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
+                            <div class="col-lg-12">
+                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                              </div>
                         </div>
                             
@@ -116,11 +116,11 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Sesiones</h3>
+                             <h3 class="panel-title"><i class="fa"></i> Lista de Sesiones</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-md-12">
-                                <asp:GridView ID="gridSesiones" OnRowDataBound="gridSesiones_RowDataBound" OnPageIndexChanging="gridSesiones_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table" runat="server" AutoGenerateColumns="false" >
+                                <asp:GridView ID="gridSesiones" OnRowDataBound="gridSesiones_RowDataBound" OnPageIndexChanging="gridSesiones_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Número de Sesión" SortExpression="Año">
                                             <ItemTemplate>
@@ -175,7 +175,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-fw"></i>Notas</h3>
+                                    <h3 class="panel-title"><i class="fa"></i>Notas</h3>
                                 </div>
 
                                 <div class="panel-body">
@@ -227,12 +227,8 @@
                                         </asp:GridView>
 
                                     </div>
-
-                                    <div class="col-lg-3">
-                                        <button type="button" id="btnCrearNota" onclick="fnc_CrearNuevaNota();" class="btn btn-default" value="Nuevo">Nuevo</button>
-                                        <button type="button" id="btnVolverN" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
-                                    </div>
-
+                                    <button type="button" id="btnCrearNota" onclick="fnc_CrearNuevaNota();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                    <button type="button" id="btnVolverN" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
                                 </div>
 
                             </div>
@@ -244,7 +240,7 @@
                          <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-fw"></i>Datos de la Nota</h3>
+                                <h3 class="panel-title"><i class="fa"></i>Datos de la Nota</h3>
                             </div>
                                 <div class="panel-body">
                                     <div class="col-md-12 ">
@@ -282,7 +278,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-fw"></i>Actas</h3>
+                                <h3 class="panel-title"><i class="fa"></i>Actas</h3>
                             </div>
 
                             <div class="panel-body">
@@ -334,10 +330,9 @@
                                     </asp:GridView>
 
                                 </div>
-                                 <div class="col-lg-3">
-                                    <button type="button" id="btnCrearActa" onclick="fnc_CrearNuevaActa();" class="btn btn-default" value="Nuevo">Nuevo</button>
-                                     <button type="button" id="btnVolverA" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
-                                </div>
+                                 
+                                <button type="button" id="btnCrearActa" onclick="fnc_CrearNuevaActa();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                <button type="button" id="btnVolverA" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
                             </div>
 
                         </div>
@@ -350,7 +345,7 @@
                          <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-fw"></i>Datos de la Acta</h3>
+                                <h3 class="panel-title"><i class="fa"></i>Datos de la Acta</h3>
                             </div>
                                 <div class="panel-body">
                                     <div class="col-md-12 ">

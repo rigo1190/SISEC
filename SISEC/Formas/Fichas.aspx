@@ -1,37 +1,62 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="Fichas.aspx.cs" Inherits="SISEC.Formas.Fichas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+
+        function fnc_NuevaFicha() {
+            $("#<%= divGrid.ClientID %>").css("display", "none");
+            $("#<%= divCaptura.ClientID %>").css("display", "block");
+            $("#<%= _Accion.ClientID %>").val("N");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= txtDescripcion.ClientID %>").val("");
+            $("#<%= txtArchivoAdjunto.ClientID %>").val("");
+        }
+
+        function fnc_AbrirArchivo(ruta, id, caller) {
+            window.open(ruta + '?i=' + id + '&c=' + caller, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,width=750,height=700,top=0');
+        }
+
+        function fnc_ColocarIDFicha(id) {
+            $("#<%= _IDFicha.ClientID %>").val(id);
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="alert alert-success alert-dismissable">
                         <h4><i class="fa fa-crosshairs"></i> <strong>Fichas Técnicas</strong></h4>  
                     </div>
                 </div>
             </div>
 
-            <div class="row" runat="server" id="divEncabezado">
-                 <div class="col-lg-12">
+            <div class="row">
+                 <div class="col-md-12">
                     <div id="divFideicomiso" runat="server" class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-fw"></i>Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
-                                <asp:DropDownList ID="ddlFideicomisos" runat="server" Width="950px" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
+                            <div class="col-md-12">
+                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged"  runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div id="divGrid" style="display:none" runat="server" class="panel panel-default">
+            <div class="row" runat="server" id="divEncabezado">
+                 <div class="col-md-12">
+                    <div id="divGrid" runat="server" class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Fichas Técnicas</h3>
+                            <h3 class="panel-title"><i class="fa"></i> Lista de Fichas Técnicas</h3>
                         </div>
                         
                         <div class="panel-body">
-                            <div class="col-lg-12">
+                            <div class="col-md-12">
                                 <asp:GridView ID="gridFichas" OnPageIndexChanging="gridFichas_PageIndexChanging" OnRowDataBound="gridFichas_RowDataBound" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                          <asp:TemplateField HeaderText="Acciones">
@@ -57,7 +82,7 @@
 
                                         <asp:TemplateField HeaderText="Archivo adjunto" SortExpression="Año">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblArchivoN" runat="server"></asp:Label>
+                                                <asp:Label ID="lblArchivo" runat="server"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -74,8 +99,8 @@
                                 </asp:GridView>
                              </div>
 
-                             <div class="col-lg-3">
-                                <button type="button" id="btnNuevo" onclick="fnc_NuevaNorma();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                             <div class="col-md-3">
+                                <button type="button" id="btnNuevo" onclick="fnc_NuevaFicha();" class="btn btn-default" value="Nuevo">Nuevo</button>
                             </div>
 
                         </div>
@@ -85,13 +110,19 @@
             </div>
 
             <div class="row" runat="server" id="divCaptura" style="display:none">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-fw"></i>Datos de la Ficha Técnica</h3>
                         </div>
                          <div class="panel-body">
-                            <div class="col-lg-12 ">
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <div id="divDatosFideicomiso" runat="server">
+                                        <label>Fideicomiso:</label>
+                                        <input type="text" disabled="disabled" name="prueba" id="txtFideicomiso" runat="server" class="form-control"  />
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Descripción</label>
                                     <textarea type="text" name="prueba" runat="server" class="form-control" id="txtDescripcion" />
@@ -106,7 +137,7 @@
                                 </div>
                                 <div class="form-group">
                                     <asp:Button ID="btnGuardar" runat="server" OnClick="btnGuardar_Click" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
-                                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" Text="Cancelar" CssClass="btn btn-default" ></asp:Button>
                                 </div>
                                 
                             </div>
@@ -117,20 +148,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel-footer">
-                        <div class="alert alert-danger" runat="server" id="div1" style="display:none">
-                            <asp:Label ID="Label1" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
-                        </div>
-                        <div class="alert alert-success" runat="server" id="div2" style="display:none">
-                            <asp:Label ID="Label2" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="panel-footer">
                         <div class="alert alert-danger" runat="server" id="divMsgError" style="display:none">
                             <asp:Label ID="lblMsgError" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
@@ -160,7 +178,7 @@
                 <h3 id="msgContenido">¿Está seguro que desea eliminar el registro?</h3>
               </div>
               <div class="modal-footer">
-                <asp:Button ID="btnDel" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
+                <asp:Button ID="btnDel" OnClick="btnDel_Click" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               </div>
         

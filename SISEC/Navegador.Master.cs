@@ -16,13 +16,13 @@ namespace SISEC
         {
             uow=new UnitOfWork();
             string login = Session["Login"].ToString();
-            
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+            Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
             Usuario user = uow.UsuarioBusinessLogic.Get(u => u.Login == login).FirstOrDefault();
             lblUsuario.Text = user.Nombre;
-
-            //Dependencia ente = uow.DependenciaBusinessLogic.Get(d => d.ID == dependencia).FirstOrDefault();
-
-            //lblEntidad.Text = ente.Clave;
+            lblEjercicio.Text = "Ejercicio " + ejercicio.Anio;
+            
 
         }
     }

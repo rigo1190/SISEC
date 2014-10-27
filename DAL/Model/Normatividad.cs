@@ -25,7 +25,9 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
         public string NombreArchivo { get; set; }
+        public Nullable<int> EjercicioID { get; set; }
     
         public virtual DependenciaFideicomisoEjercicio DependenciaFideicomisoEjercicio { get; set; }
+        public virtual Ejercicio Ejercicio { get; set; }
     }
 }

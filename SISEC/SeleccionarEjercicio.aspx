@@ -14,8 +14,8 @@
             <div class="panel-body">
                 <div class="form-group">
                    <label for="ddlEjercicios" class="control-label" runat="server">Ejercicios:</label>
-                    <div>
-                        <asp:DropDownList ID="ddlEjercicios" runat="server" Width="400px" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
+                    <div class="col-lg-12">
+                        <asp:DropDownList ID="ddlEjercicios" runat="server" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
                     </div>
                  </div>
             </div>

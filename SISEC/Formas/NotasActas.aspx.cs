@@ -73,14 +73,29 @@ namespace SISEC.Formas
             Notas obj = uow.NotasBusinessLogic.GetByID(id);
 
             txtDescripcionN.Value = obj.Descripcion;
-            txtArchivoAdjuntoN.Value = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
+
+            if (obj.NombreArchivo != null)
+                if (!obj.NombreArchivo.Equals(string.Empty))
+                    txtArchivoAdjuntoN.Value = obj.NombreArchivo;
+                else
+                    txtArchivoAdjuntoN.Value = "No existe archivo adjunto";
+            else
+                txtArchivoAdjuntoN.Value= "No existe archivo adjunto";
         }
         private void BindControlesActa()
         {
             int id = Utilerias.StrToInt(_IDActa.Value);
             Actas obj = uow.ActasBusinessLogic.GetByID(id);
             txtDescripcionA.Value = obj.Descripcion;
-            txtArchivoAdjuntoA.Value = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
+
+            if (obj.NombreArchivo != null)
+                if (!obj.NombreArchivo.Equals(string.Empty))
+                    txtArchivoAdjuntoA.Value = obj.NombreArchivo;
+                else
+                    txtArchivoAdjuntoA.Value = "No existe archivo adjunto";
+            else
+                txtArchivoAdjuntoA.Value = "No existe archivo adjunto";
+
         }
         private int BuscarCalendario()
         {
@@ -212,6 +227,7 @@ namespace SISEC.Formas
             divEncabezado.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+            divNotasActas.Style.Add("display", "none");
         }
         protected void gridSesiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -258,7 +274,13 @@ namespace SISEC.Formas
                 lblFideicomiso.Text = GetClaveFideicomiso();
                 lblSesion.Text = GetNumSesion();
 
-                lblArchivoA.Text = acta.NombreArchivo != null && !acta.NombreArchivo.Equals(string.Empty) ? acta.NombreArchivo : "No existe archivo adjunto";
+                if (acta.NombreArchivo != null)
+                    if (!acta.NombreArchivo.Equals(string.Empty))
+                        lblArchivoA.Text = acta.NombreArchivo;
+                    else
+                        lblArchivoA.Text = "No existe archivo adjunto";
+                else
+                    lblArchivoA.Text = "No existe archivo adjunto";
 
                 //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVerA");
@@ -477,7 +499,13 @@ namespace SISEC.Formas
                 lblFideicomiso.Text = GetClaveFideicomiso();
                 lblSesion.Text = GetNumSesion();
 
-                lblArchivoN.Text = nota.NombreArchivo != null && !nota.NombreArchivo.Equals(string.Empty) ? nota.NombreArchivo : "No existe archivo adjunto";
+                if (nota.NombreArchivo != null)
+                    if (!nota.NombreArchivo.Equals(string.Empty))
+                        lblArchivoN.Text = nota.NombreArchivo;
+                    else
+                        lblArchivoN.Text = "No existe archivo adjunto";
+                else
+                    lblArchivoN.Text = "No existe archivo adjunto";
 
                 //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVerN");

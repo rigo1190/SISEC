@@ -46,12 +46,12 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                          <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Tipo Normatividad</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Tipo Normatividad</h3>
                              
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
-                                <asp:DropDownList ID="ddlTipoNormatividad" Width="750px" runat="server" CssClass="form-control">
+                            <div class="col-lg-12">
+                                <asp:DropDownList ID="ddlTipoNormatividad" runat="server" CssClass="form-control">
                                     <asp:ListItem Text="General" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Específica" Value="2"></asp:ListItem>
                                 </asp:DropDownList>                                         
@@ -60,11 +60,11 @@
                     </div>
                     <div id="divFideicomiso" style="display:none" runat="server" class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
-                                <asp:DropDownList ID="ddlFideicomisos" runat="server" Width="950px" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
+                            <div class="col-lg-12">
+                                <asp:DropDownList ID="ddlFideicomisos" runat="server" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
 
                     <div id="divGrid" style="display:none" runat="server" class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Normatividades</h3>
+                            <h3 class="panel-title"><i class="fa"></i> Lista de Normatividades</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -143,7 +143,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-fw"></i>Datos de la Normatividad</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Datos de la Normatividad</h3>
                         </div>
                          <div class="panel-body">
                             <div class="col-lg-12 ">

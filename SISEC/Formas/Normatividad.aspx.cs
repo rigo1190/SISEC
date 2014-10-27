@@ -50,9 +50,10 @@ namespace SISEC.Formas
             int tipoNormatividad = Utilerias.StrToInt(ddlTipoNormatividad.SelectedValue);
             int fideicomiso = 0;
             List<DAL.Model.Normatividad> list = null;
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
 
             if (tipoNormatividad == 1) //General
-                list = uow.NormatividadBusinessLogic.Get(e => e.TipoNormatividad == 1).ToList();
+                list = uow.NormatividadBusinessLogic.Get(e => e.TipoNormatividad == 1 && e.EjercicioID==idEjercicio).ToList();
             else //especifica
             {
                 fideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
@@ -189,7 +190,13 @@ namespace SISEC.Formas
                     gridNormatividad.Columns[2].Visible = true;
                 }
 
-                lblArchivoN.Text = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
+                if (obj.NombreArchivo != null)
+                    if (!obj.NombreArchivo.Equals(string.Empty))
+                        lblArchivoN.Text = obj.NombreArchivo;
+                    else
+                        lblArchivoN.Text = "No existe archivo adjunto";
+                else
+                    lblArchivoN.Text = "No existe archivo adjunto";
 
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
 
@@ -231,9 +238,15 @@ namespace SISEC.Formas
 
             obj.Descripcion = txtDescripcion.Value;
             obj.TipoNormatividad = tipoNormatividad;
-            
+
             if (tipoNormatividad == 2)
                 obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
+            else
+            {
+                int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+                obj.EjercicioID = idEjercicio;
+            }
+                
 
             obj.NombreArchivo = fileUpload.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUpload.FileName);
             obj.TipoArchivo = fileUpload.PostedFile.ContentType;

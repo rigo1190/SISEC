@@ -43,6 +43,7 @@
                 </button>
                 <a class="navbar-brand" href="#">SISEF</a>
                 <asp:Label ID="lblUsuario" Text="usuario" runat="server" class="navbar-brand"></asp:Label>
+                <asp:Label ID="lblEjercicio" Text="ejercicio" runat="server" class="navbar-brand"></asp:Label>
                 
             </div>
             <!-- /.navbar-header -->
@@ -50,7 +51,7 @@
             <ul class="nav navbar-top-links navbar-right">
                
                 <li class="dropdown">
-                    <a href="<%=ResolveClientUrl("~/SeleccionarDependencia.aspx") %>">
+                    <a href="<%=ResolveClientUrl("~/SeleccionarEjercicio.aspx") %>">
                         <i class="glyphicon glyphicon-home"></i>
                     </a>
                    
@@ -73,29 +74,27 @@
                             <a class="active" href="<%=ResolveClientUrl("~/Formas/Sesiones.aspx") %>"><i class="fa fa-dashboard fa-fw"></i> Calendario</a>
                         </li>
                         <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Acuerdos<span class="fa arrow"></span></a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Acuerdos</a>
                         </li>
                         <li>
                             <a href="<%=ResolveClientUrl("~/Formas/Normatividad.aspx") %>"><i class="fa fa-edit fa-fw"></i> Normatividad</a>
                         </li>
                         <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/NotasActas.aspx") %>"><i class="fa fa-wrench fa-fw"></i>  Notas y Actas<span class="fa arrow"></span></a>
+                            <a href="<%=ResolveClientUrl("~/Formas/NotasActas.aspx") %>"><i class="fa fa-wrench fa-fw"></i>  Notas y Actas</a>
                         </li>
                         <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/FichaTecnica.aspx") %>"><i class="fa fa-wrench fa-fw"></i> Ficha Técnica<span class="fa arrow"></span></a>
+                            <a href="<%=ResolveClientUrl("~/Formas/Fichas.aspx") %>"><i class="fa fa-gears fa-fw"></i> Ficha Técnica</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Second Level Item</a>
+                                    <a href="<%=ResolveClientUrl("~/Reports/Calendario.aspx") %>">Agenda</a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Item</a>
+                                    <a href="#">Acuerdos</a>
                                 </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                </li>
+                                
                             </ul>
                         </li>
                     </ul>

@@ -19,8 +19,8 @@ namespace DAL.Model
         public string Descripcion { get; set; }
         public string NombreArchivo { get; set; }
         public string TipoArchivo { get; set; }
-        public System.DateTime FechaCaptura { get; set; }
-        public System.DateTime FechaModificacion { get; set; }
+        public Nullable<System.DateTime> FechaCaptura { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
     

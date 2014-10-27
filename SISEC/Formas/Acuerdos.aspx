@@ -114,11 +114,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Seleccione Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Seleccione Fideicomiso</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-lg-10">
-                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" Width="1000px" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
+                            <div class="col-lg-12">
+                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                              </div>
                         </div>
                             
@@ -126,7 +126,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Lista de Sesiones</h3>
+                             <h3 class="panel-title"><i class="fa"></i> Lista de Sesiones</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -176,7 +176,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Acuerdos por sesión</h3>
+                                    <h3 class="panel-title"><i class="fa"></i>Acuerdos por sesión</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="col-lg-12">
@@ -245,7 +245,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-fw"></i>Datos del Acuerdo</h3>
+                                    <h3 class="panel-title"><i class="fa"></i>Datos del Acuerdo</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="col-lg-12">
@@ -278,7 +278,7 @@
                                 <div class="col-lg-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title"><i class="fa fa-fw"></i>Seguimientos</h3>
+                                            <h3 class="panel-title"><i class="fa"></i>Seguimientos</h3>
                                         </div>
                                         <div class="panel-body">
                                             <div class="col-lg-12">
@@ -318,7 +318,7 @@
                                 <div class="col-lg-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title"><i class="fa fa-fw"></i>Datos del Seguimiento</h3>
+                                            <h3 class="panel-title"><i class="fa"></i>Datos del Seguimiento</h3>
                                         </div>
                                         <div class="panel-body">
                                             <div class="col-lg-12">

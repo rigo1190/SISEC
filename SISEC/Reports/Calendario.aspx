@@ -49,6 +49,10 @@
                     break;
                 case "C": //CANCELADA
                     $("#<%= txtStatusSesion.ClientID %>").val("CELEBRADA");
+                    $("#<%= divDatosProgramada.ClientID %>").css("display", "none");
+                    $("#<%= divDatosReprogramada.ClientID %>").css("display", "none");
+                    $("#<%= divDatosCelebrada.ClientID %>").css("display", "none");
+                    break;
                     break;
             }
 
@@ -111,7 +115,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender" OnSelectionChanged="Calendar1_SelectionChanged" OnVisibleMonthChanged="Calendar1_VisibleMonthChanged"
+                                <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender"
                                     
                                     DayStyle-Height="100" DayStyle-Width="75" DayStyle-HorizontalAlign="Left"
                                     DayStyle-verticalalign="Top"
@@ -125,7 +129,7 @@
                                     OtherMonthDayStyle-ForeColor="#C0C0C0" DayStyle-BorderStyle="Solid" 
                                     DayStyle-BorderWidth="1" TodayDayStyle-ForeColor="Black" Height="600" 
                                     DayHeaderStyle-Font-Name="Verdana"
-                                    Width="750"
+                                    Width="1000px"
                                     >
                                 </asp:Calendar>                                   
                              </div>

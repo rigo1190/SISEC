@@ -203,14 +203,7 @@ namespace SISEC.Reports
 
             }
         }
-        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
-        {
-
-        }
-        protected void Calendar1_VisibleMonthChanged(object sender, MonthChangedEventArgs e)
-        {
-
-        }
+        
     }
 
 

@@ -133,6 +133,7 @@
     <Content Include="fonts\font-awesome-4.1.0-2\scss\_variables.scss" />
     <Content Include="less\datepicker.less" />
     <Content Include="less\timepicker.less" />
+    <None Include="Properties\PublishProfiles\DEVELOP.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Reports\Calendario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -159,7 +160,9 @@
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="SeleccionarDependencia.aspx" />
     <Content Include="SeleccionarEjercicio.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbrirDocto.aspx.cs">

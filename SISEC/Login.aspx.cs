@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -34,10 +35,11 @@ namespace SISEC
                 }
                 else
                 {
+                    
+                    FormsAuthentication.RedirectFromLoginPage(user.Login, false);
                     Session.Timeout = 60;
                     Session["Login"] = user.Login;
                     Session["UserID"] = user.ID;
-
                     Response.Redirect("~/SeleccionarEjercicio.aspx");
                 }
 

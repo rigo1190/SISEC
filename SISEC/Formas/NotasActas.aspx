@@ -99,6 +99,11 @@
                 <h4><i class="fa fa-crosshairs"></i> <strong>Notas y Actas</strong></h4>  
             </div>
         </div>
+        <div class="row">
+            <div class="alert alert-warning" runat="server" id="divAlerta" style="display:none">
+                <asp:Label ID="lblAlerta" EnableViewState="false" runat="server" Text="Alerta" CssClass="font-weight:bold"></asp:Label>
+            </div>
+        </div>
 
         <div class="row" runat="server" id="divEncabezado">
                

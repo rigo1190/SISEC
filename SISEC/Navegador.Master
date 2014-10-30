@@ -86,7 +86,7 @@
                             <a href="<%=ResolveClientUrl("~/Formas/Fichas.aspx") %>"><i class="fa fa-gears fa-fw"></i> Ficha Técnica</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Consultas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="<%=ResolveClientUrl("~/Reports/Calendario.aspx") %>">Agenda</a>

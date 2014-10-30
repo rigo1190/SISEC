@@ -27,6 +27,7 @@ namespace SISEC.Formas
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
                 }
+                
             }
         }
 
@@ -61,6 +62,12 @@ namespace SISEC.Formas
             list = uow.SesionBusinessLogic.Get(e => e.CalendarioID == idCalendario).ToList();
             gridSesiones.DataSource = list;
             gridSesiones.DataBind();
+
+            if (list.Count == 0)
+            {
+                lblAlerta.Text = "No existen sesiones. Capture nuevas sesiones para poder agregar Acuerdos";
+                divAlerta.Style.Add("display", "block");
+            }
         }
         private void BindGridSeguimientos()
         {

@@ -56,13 +56,12 @@ namespace SISEC.Formas
             gridSesiones.DataSource = list;
             gridSesiones.DataBind();
 
-
-
-           if (list.Count==0)
-           {
+            if (list.Count==0)
+            {
                 lblAlerta.Text = "No existen sesiones. Capture nuevas sesiones para poder agregar Notas y Actas";
                 divAlerta.Style.Add("display", "block");
-           }
+            }else
+               divAlerta.Style.Add("display", "none");
         }
         private void BindGridNotas()
         {
@@ -208,6 +207,10 @@ namespace SISEC.Formas
 
 
             divEncabezado.Style.Add("display", "block");
+            divNotasActas.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+            
         }
         protected void btnNotas_ServerClick(object sender, EventArgs e)
         {

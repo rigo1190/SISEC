@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -26,6 +27,10 @@ namespace SISEC.Formas
                 {
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
+
+                    //Acuerdo obj = uow.AcuerdoBusinessLogic.GetByID(1);
+                    //Repeater1.DataSource = obj.DetalleSeguimientos.ToList();
+                    //Repeater1.DataBind();
                 }
                 
             }
@@ -67,7 +72,8 @@ namespace SISEC.Formas
             {
                 lblAlerta.Text = "No existen sesiones. Capture nuevas sesiones para poder agregar Acuerdos";
                 divAlerta.Style.Add("display", "block");
-            }
+            }else
+                divAlerta.Style.Add("display", "none");
         }
         private void BindGridSeguimientos()
         {
@@ -133,6 +139,60 @@ namespace SISEC.Formas
 
         }
 
+        [WebMethod]
+        public static List<object> GetDatosAcuerdos(int idAcuerdo)
+        {
+            List<object> R = new List<object>();
+            string claveStatus = string.Empty;
+            UnitOfWork uow = new UnitOfWork();
+
+            Acuerdo acuerdo = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
+            Sesion sesion = uow.SesionBusinessLogic.GetByID(acuerdo.SesionID);
+
+            R.Add(GetClaveFideicomiso(sesion.CalendarioID, uow));
+            R.Add(sesion.NumSesion);
+            R.Add(acuerdo.NumAcuerdo);
+            R.Add(acuerdo.Notas);
+            R.Add(GetClaveStatus(acuerdo.StatusAcuerdoID,uow));
+            
+            if (acuerdo.DetalleSeguimientos.Count > 0)
+                R.Add(GetSeguimientos(acuerdo.DetalleSeguimientos.ToList()));
+            
+
+            return R;
+        }
+
+        public static List<string> GetSeguimientos(List<Seguimiento> list)
+        {
+            List<string> listDesc = new List<string>();
+            int i=1;
+
+            foreach (Seguimiento s in list)
+            {
+                listDesc.Add(i.ToString() + ")" + " " + s.Descripcion);
+                i++;
+            }
+
+            return listDesc;
+        }
+
+        public static string GetClaveStatus(int idStatus, UnitOfWork uow)
+        {
+            StatusAcuerdo obj = uow.StatusAcuerdoBusinessLogic.GetByID(idStatus);
+            return obj.Descripcion;
+        }
+
+        public static string GetClaveFideicomiso(int idCalendario, UnitOfWork uow)
+        {
+            Fideicomiso obj = (from c in uow.CalendarioBusinessLogic.Get(e => e.ID == idCalendario)
+                               join d in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                               on c.DependenciaFideicomisoEjercicioID equals d.ID
+                               join f in uow.FideicomisoBusinessLogic.Get()
+                               on d.FideicomisoID equals f.ID
+                               select f).FirstOrDefault();
+            return obj.Clave; 
+        }
+
         #endregion
 
         #region EVENTOS SESIONES
@@ -143,6 +203,11 @@ namespace SISEC.Formas
 
             divDetalleAcuerdos.Style.Add("display", "none");
             divEncabezado.Style.Add("display", "block");
+
+            divMenu.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+
         }
         protected void gridSesiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -188,6 +253,7 @@ namespace SISEC.Formas
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
+                ImageButton imgDetalle = (ImageButton)e.Row.FindControl("imgDetalle");
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
                 Label lblSesion = (Label)e.Row.FindControl("lblSesion");
 
@@ -198,6 +264,10 @@ namespace SISEC.Formas
 
                 lblFideicomiso.Text = GetClaveFideicomiso();
                 lblSesion.Text = GetNumSesion();
+
+                
+                if (imgDetalle != null)
+                    imgDetalle.Attributes["onclick"] = "fnc_CargarDetalleAcuerdo(" + idAcuerdo + ");return false;";
                 
             }
         }

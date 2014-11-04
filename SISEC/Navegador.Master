@@ -92,7 +92,7 @@
                                     <a href="<%=ResolveClientUrl("~/Reports/Calendario.aspx") %>">Agenda</a>
                                 </li>
                                 <li>
-                                    <a href="#">Acuerdos</a>
+                                    <a href="<%=ResolveClientUrl("~/Reports/Acuerdos.aspx") %>">Acuerdos</a>
                                 </li>
                                 
                             </ul>

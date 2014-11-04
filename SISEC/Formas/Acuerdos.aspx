@@ -96,10 +96,45 @@
             $("#<%= _IDSeguimiento.ClientID %>").val(idSeguimiento);
         }
 
+        function fnc_CargarDetalleAcuerdo(idAcuerdo) {
+            PageMethods.GetDatosAcuerdos(idAcuerdo, fnc_ColocarDetalleAcuerdo)
+        }
+
+        function fnc_ColocarDetalleAcuerdo(response) {
+            $("#<%= txtFideicomiso.ClientID %>").val(response[0]);
+            $("#<%= txtSesion.ClientID %>").val(response[1]);
+            $("#<%= txtNumeroAcuerdo.ClientID %>").val(response[2]);
+            $("#<%= txtAcuerdo.ClientID %>").val(response[3]);
+            $("#<%= txtStatusAcuerdo.ClientID %>").val(response[4]);
+
+            var divSeguimientos = document.getElementById("divSeguimientosDetalle");
+            var totalNodes = divSeguimientos.childNodes.length;
+            
+            if (totalNodes >= 1) {
+                for (index = totalNodes-1;index >= 0; index--) {
+                    divSeguimientos.removeChild(divSeguimientos.childNodes[index]);
+                }
+            }
+
+            if (response.length > 5) {
+                
+                for (index = 0; index < response[5].length; index++) {
+                    var nuevoP = document.createElement("p");
+                    var texto = document.createTextNode("    "+response[5][index]);
+                    nuevoP.appendChild(texto);
+                    divSeguimientos.appendChild(nuevoP);
+
+                }
+            }
+
+            $("#modalDatos").modal('show') //Se muestra el modal
+        }
+
     </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server"></asp:ScriptManager>
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -193,6 +228,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Acciones">
                                                     <ItemTemplate>
+                                                        <asp:ImageButton  ID="imgDetalle" ToolTip="Detalle acuerdo" runat="server" ImageUrl="~/img/magnifier.png" />
                                                         <asp:ImageButton  ID="imgBtnEdit" ToolTip="Editar" OnClick="imgBtnEdit_Click" runat="server" ImageUrl="~/img/Edit1.png" />
                                                         <asp:ImageButton  ID="imgBtnEliminar" ToolTip="Borrar" runat="server" ImageUrl="~/img/close.png" data-toggle="modal" data-target="#myModal"/>
                                                     </ItemTemplate>
@@ -215,12 +251,6 @@
                                                 <asp:TemplateField HeaderText="Número de Acuerdo" SortExpression="Año">
                                                     <ItemTemplate>
                                                         <%# DataBinder.Eval(Container.DataItem, "NumAcuerdo")%>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-
-                                                <asp:TemplateField HeaderText="Acuerdo" SortExpression="Año">
-                                                    <ItemTemplate>
-                                                        <%# DataBinder.Eval(Container.DataItem, "Notas")%>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
@@ -408,6 +438,52 @@
               <div class="modal-footer">
                 <asp:Button ID="btnDelS" OnClick="btnDelS_Click" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+        
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDatos" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modalTitle">Datos del Acuerdo</h4>
+              </div>
+              <div class="modal-body">
+                     <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Fideicomiso</label>
+                             <input class="form-control" disabled="disabled" runat="server" id="txtFideicomiso"/>
+                        </div>
+                         <div class="form-group">
+                            <label>Número de Sesión:</label>
+                            <input class="form-control" disabled="disabled"  runat="server" id="txtSesion" />
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Acuerdo:</label>
+                            <input class="form-control" disabled="disabled"  runat="server" id="txtNumeroAcuerdo" />
+                        </div>
+                        <div class="form-group">
+                            <label>Acuerdo</label>
+                            <input class="form-control" disabled="disabled"  runat="server" id="txtAcuerdo"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Acuerdo:</label>
+                            <input class="form-control" disabled="disabled"  runat="server" id="txtStatusAcuerdo"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Seguimientos:</label>
+                             <div id="divSeguimientosDetalle">
+                             </div> 
+                        </div>
+                       
+                    </div>
+                     
+              </div>
+              <div class="modal-footer">
+                
               </div>
         
             </div>

@@ -14,11 +14,11 @@ namespace SISEC.Reports
     public partial class Calendario : System.Web.UI.Page
     {
         private UnitOfWork uow;
-        private DateTime tempDate; 
+        //private DateTime tempDate; 
         protected void Page_Load(object sender, EventArgs e)
         {
             uow = new UnitOfWork();
-            tempDate = Calendar1.TodaysDate;
+            //tempDate = Calendar1.TodaysDate;
             
             if (!IsPostBack)
             {

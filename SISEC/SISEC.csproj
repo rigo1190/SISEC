@@ -135,6 +135,7 @@
     <Content Include="less\timepicker.less" />
     <None Include="Properties\PublishProfiles\DEVELOP.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Reports\Acuerdos.aspx" />
     <Content Include="Reports\Calendario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
@@ -243,6 +244,13 @@
       <DependentUpon>Navegador.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Acuerdos.aspx.cs">
+      <DependentUpon>Acuerdos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Acuerdos.aspx.designer.cs">
+      <DependentUpon>Acuerdos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Calendario.aspx.cs">
       <DependentUpon>Calendario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

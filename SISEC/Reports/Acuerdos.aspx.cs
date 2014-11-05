@@ -31,7 +31,7 @@ namespace SISEC.Reports
         {
             int idCalendario = BuscarCalendario();
             ddlSesiones.DataSource = uow.SesionBusinessLogic.Get(e => e.CalendarioID == idCalendario).ToList();
-            ddlSesiones.DataTextField = "Descripcion";
+            ddlSesiones.DataTextField = "NumSesion";
             ddlSesiones.DataValueField = "ID";
             ddlSesiones.DataBind();
         }

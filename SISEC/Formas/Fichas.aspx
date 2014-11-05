@@ -8,6 +8,7 @@
             $("#<%= _Accion.ClientID %>").val("N");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= divDatosFideicomiso.ClientID %>").css("display", "none");
             $("#<%= txtDescripcion.ClientID %>").val("");
             $("#<%= txtArchivoAdjunto.ClientID %>").val("");
         }

@@ -796,7 +796,7 @@
           <Property Name="NumSesion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="HoraProgramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleNotas" Relationship="SISEFModel.SesionNotas" FromRole="Sesion" ToRole="Notas" />
-          <NavigationProperty Name="Actas" Relationship="SISEFModel.SesionActas" FromRole="Sesion" ToRole="Actas" />
+          <NavigationProperty Name="DetalleActas" Relationship="SISEFModel.SesionActas" FromRole="Sesion" ToRole="Actas" />
           <Property Name="HoraReprogramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HoraCelebrada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>

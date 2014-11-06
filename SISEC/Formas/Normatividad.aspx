@@ -22,8 +22,11 @@
             $("#<%= txtArchivoAdjunto.ClientID %>").val("");
         }
 
-        function fnc_AbrirArchivo(ruta,id, caller) {
-            window.open(ruta + '?i=' + id + '&c=' + caller, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,width=750,height=700,top=0');
+        function fnc_AbrirArchivo(ruta, id, caller) {
+            var izq = (screen.width - 750) / 2
+            var sup = (screen.height - 600) / 2
+
+            window.open(ruta + '?i=' + id + '&c=' + caller, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
         }
 
         function fnc_ColocarIDNorma(id) {

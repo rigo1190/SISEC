@@ -15,6 +15,8 @@
         function fnc_Cancelar() {
             $("#<%= divEncabezado.ClientID %>").css("display", "block");
             $("#<%= divCapturaSesion.ClientID %>").css("display", "none");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
         }
 
         function fnc_ColocarIDSesion(idSesion) {
@@ -55,11 +57,51 @@
 
         }
 
+        function fnc_Validar() {
+
+            //$("#myselect").val();
+
+            var status=$("#<%= ddlStatus.ClientID %>").val();
+            var fechaOficio = $("#<%= txtFechaOficio.ClientID %>").val();
+            var fecha;
+
+            if (fechaOficio == "" || fechaOficio == null || fechaOficio == undefined) {
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
+                $("#<%= lblMsgError.ClientID %>").text("Debe indicar la fecha de oficio");
+                return false;
+            }
+                
+            var msg = "";
+            switch (status) {
+                case "1": //PROGRAMADA
+                    fecha = $("#<%= txtFechaProgramada.ClientID %>").val();
+                    msg = "Debe indicar la fecha programada";
+                    break;
+                case "2": //REPROGRAMADA
+                    fecha = $("#<%= txtFechaReprogramada.ClientID %>").val();
+                    msg = "Debe indicar la fecha reprogramada";
+                    break;
+                case "3": //CELEBRADA
+                    fecha = $("#<%= txtFechaCelebrada.ClientID %>").val();
+                    msg = "Debe indicar la fecha celebrada";
+                    break;
+            }
+
+
+            if (fecha == "" || fecha == null || fecha == undefined) {
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
+                $("#<%= lblMsgError.ClientID %>").text(msg);
+                 return false;
+            }
+
+            return true;
+
+        }
+
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
-    
     
     <div id="page-wrapper">
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
@@ -270,7 +312,7 @@
 
                             <div class="col-lg-12">
                                  <div class="form-group">
-                                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClientClick="return fnc_Validar();" OnClick="btnGuardar_Click" CssClass="btn btn-default" ></asp:Button>
                                     <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
                                 </div>
                             </div>
@@ -310,12 +352,14 @@
                 <h3 id="msgContenido">¿Está seguro que desea eliminar el registro?</h3>
               </div>
               <div class="modal-footer">
-                <asp:Button ID="btnDel" OnClick="btnDel_Click" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
+                <asp:Button ID="btnDel" OnClientClick="return fnc_Eliminar();" OnClick="btnDel_Click" runat="server" CssClass="btn btn-default" Text="Aceptar"  />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
               </div>
         
             </div>
         </div>
     </div>
+
+
 
 </asp:Content>

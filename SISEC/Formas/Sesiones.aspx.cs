@@ -189,6 +189,19 @@ namespace SISEC.Formas
 
             txtFideicomiso.Value = fidei.Descripcion;
         }
+        private string ValidarEliminacion(Sesion obj)
+        {
+            string M = string.Empty;
+
+            if (obj.DetalleAcuerdos.Count > 0)
+                M = "Existen Acuerdos para esta Sesión. Elimine los Acuerdos y vuelva a intentarlo";
+            else if (obj.DetalleActas.Count>0)
+                M = "Existen Actas para esta Sesión. Elimine las Actas y vuelva a intentarlo";
+            else if (obj.DetalleNotas.Count>0)
+                M = "Existen Notas para esta Sesión. Elimine las Notas y vuelva a intentarlo";
+
+            return M;
+        }
 
         [WebMethod]
         public static List<string> GetDatosStatus(int _idStatus)
@@ -201,8 +214,6 @@ namespace SISEC.Formas
 
             return R;
         }
-
-
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idCalendario = BuscarCalendario();
@@ -271,6 +282,11 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
             _Accion.Value = "N"; //Sera una nueva sesion
+
+            //Por default, en una sesion nueva, el status va a ser programada
+            //Se inhabilita el combo de status y se coloca en el index cero
+            ddlStatus.Enabled = false;
+            ddlStatus.SelectedIndex = 0;
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -381,7 +397,6 @@ namespace SISEC.Formas
                 
             }
         }
-
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
         {
             GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
@@ -390,19 +405,35 @@ namespace SISEC.Formas
 
             BindControlesSesion();
 
-            //HABILTAR LA PARTE DE CONTROLES PARA DAR DE ALTA UN NUEVO REGISTRO DE SESION
+            //HABILTAR LA PARTE DE CONTROLES PARA DAR MODIFICACION A UN REGISTRO DE SESION
             divCapturaSesion.Style.Add("display", "block");
             divEncabezado.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            //Se habilita el combo de status de sesion
+            ddlStatus.Enabled = true;
         }
         protected void btnDel_Click(object sender, EventArgs e)
         {
-            string M = "Se ha eliminado correctamente";
+            string M = string.Empty;
 
             int idSesion = Utilerias.StrToInt(_IDSesion.Value);
 
             Sesion obj = uow.SesionBusinessLogic.GetByID(idSesion);
+
+            M = ValidarEliminacion(obj); //Se valida si se puede eliminar
+
+            if (!M.Equals(string.Empty))
+            {
+                lblMsgError.Text = M;
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                return;
+            }
+
+
+            M = "Se ha eliminado correctamente";
 
             //Se elimina el objeto
             uow.SesionBusinessLogic.Delete(obj);
@@ -440,7 +471,6 @@ namespace SISEC.Formas
 
             
         }
-
         protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idStatus = Utilerias.StrToInt(ddlStatus.SelectedValue);

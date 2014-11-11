@@ -12,6 +12,8 @@ namespace DAL.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SISEF : DbContext
     {
@@ -44,5 +46,27 @@ namespace DAL.Model
         public virtual DbSet<Notas> Notas { get; set; }
         public virtual DbSet<Actas> Actas { get; set; }
         public virtual DbSet<FichaTecnica> FichaTecnica { get; set; }
+        public virtual DbSet<Imagenes> Imagenes { get; set; }
+    
+        public virtual ObjectResult<pa_Acuerdos_Result> pa_Acuerdos(Nullable<int> fideicomiso, Nullable<int> ejercicio, Nullable<int> status, Nullable<int> sesion)
+        {
+            var fideicomisoParameter = fideicomiso.HasValue ?
+                new ObjectParameter("fideicomiso", fideicomiso) :
+                new ObjectParameter("fideicomiso", typeof(int));
+    
+            var ejercicioParameter = ejercicio.HasValue ?
+                new ObjectParameter("ejercicio", ejercicio) :
+                new ObjectParameter("ejercicio", typeof(int));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(int));
+    
+            var sesionParameter = sesion.HasValue ?
+                new ObjectParameter("sesion", sesion) :
+                new ObjectParameter("sesion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pa_Acuerdos_Result>("pa_Acuerdos", fideicomisoParameter, ejercicioParameter, statusParameter, sesionParameter);
+        }
     }
 }

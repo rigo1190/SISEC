@@ -45,6 +45,7 @@
         <EntityTypeShape EntityType="SISEFModel.FichaTecnica" Width="3.25" PointX="0.875" PointY="14.5" />
         <AssociationConnector Association="SISEFModel.DependenciaFideicomisoEjercicioFichaTecnica" />
         <AssociationConnector Association="SISEFModel.EjercicioNormatividad" />
+        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="1.375" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

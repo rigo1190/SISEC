@@ -85,6 +85,15 @@ namespace SISEC.Reports {
         protected global::System.Web.UI.WebControls.Label lblResultado;
         
         /// <summary>
+        /// Control btnVer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnVer;
+        
+        /// <summary>
         /// Control gridAcuerdos.
         /// </summary>
         /// <remarks>
@@ -110,5 +119,23 @@ namespace SISEC.Reports {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden _Consultado;
+        
+        /// <summary>
+        /// Control _Ejercicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _Ejercicio;
+        
+        /// <summary>
+        /// Control _URL.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _URL;
     }
 }

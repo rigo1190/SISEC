@@ -25,6 +25,7 @@
     <EntitySet Name="Notas" EntityType="SISEFModel.Store.Notas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Actas" EntityType="SISEFModel.Store.Actas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FichaTecnica" EntityType="SISEFModel.Store.FichaTecnica" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Imagenes" EntityType="SISEFModel.Store.Imagenes" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID" Association="SISEFModel.Store.FK_dbo_Acuerdo_dbo_Sesion_SesionID">
       <End Role="Sesion" EntitySet="Sesion" />
       <End Role="Acuerdo" EntitySet="Acuerdo" />
@@ -376,6 +377,15 @@
     <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
     <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
     <Property Name="UsuarioModifica" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Imagenes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Imagen" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="250" />
   </EntityType>
   <Association Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID">
     <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="1" />
@@ -1117,6 +1127,13 @@
             <End Role="Ejercicio" EntitySet="Ejercicio" />
             <End Role="Normatividad" EntitySet="Normatividad" />
           </AssociationSet>
+          <EntitySet Name="Imagenes" EntityType="SISEFModel.Imagenes" />
+          <FunctionImport Name="pa_Acuerdos" ReturnType="Collection(SISEFModel.pa_Acuerdos_Result)">
+            <Parameter Name="fideicomiso" Mode="In" Type="Int32" />
+            <Parameter Name="ejercicio" Mode="In" Type="Int32" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+            <Parameter Name="sesion" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="TipoUsuarioUsuario">
           <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
@@ -1299,6 +1316,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Imagenes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="pa_Acuerdos_Result">
+          <Property Type="Int32" Name="Calendario" Nullable="false" />
+          <Property Type="Int32" Name="FideicomisoID" Nullable="false" />
+          <Property Type="String" Name="Descripcion_Fideicomiso" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Numero_Sesion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="NumAcuerdo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Acuerdos" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SesionID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1588,6 +1624,16 @@
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
           <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
           <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Imagenes">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Imagenes)">
+        <MappingFragment StoreEntitySet="Imagenes">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

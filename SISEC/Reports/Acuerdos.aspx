@@ -1,5 +1,47 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="Acuerdos.aspx.cs" Inherits="SISEC.Reports.Acuerdos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <script type="text/javascript">
+        
+        function fnc_AbrirReporte() {
+
+            var izq = (screen.width - 750) / 2
+            var sup = (screen.height - 600) / 2
+            var param = "";
+            param = fnc_ArmarParamentros();
+            url = $("#<%= _URL.ClientID %>").val();
+            var argumentos = "?c=" + 1 + param;
+            url += argumentos;
+            window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
+        }
+
+
+        function fnc_ArmarParamentros() {
+            var p = "";
+
+            var fideicomiso=$("#<%= ddlFideicomisos.ClientID %>").val();
+            var ejercicio = $("#<%= _Ejercicio.ClientID %>").val();
+            var status=$("#<%= ddlStatusAcuerdo.ClientID %>").val();
+            var sesion = $("#<%= ddlSesiones.ClientID %>").val();
+
+            if (sesion == null || sesion == undefined)
+                sesion = 0;
+
+            p += "&p=" + ejercicio;
+            p += "-" + fideicomiso;
+            p += "-" + status;
+            p += "-" + sesion;
+
+            return p;
+
+        }
+
+
+
+
+
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -55,6 +97,7 @@
                  <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+                        <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -105,6 +148,8 @@
      <div runat="server" style="display:none">
         <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_Consultado" />
+         <input type="hidden" runat="server" id="_Ejercicio" />
+         <input type="hidden" runat="server" id="_URL" />
     </div>
 
 

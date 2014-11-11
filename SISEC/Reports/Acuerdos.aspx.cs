@@ -20,8 +20,9 @@ namespace SISEC.Reports
                 BindDropDownFideicomisos();
                 BindDropDownStatus();
                 BindGrid(true);
-
                 _Consultado.Value = "N";
+                _Ejercicio.Value = Session["Ejercicio"].ToString();
+                _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
             }
 
         }

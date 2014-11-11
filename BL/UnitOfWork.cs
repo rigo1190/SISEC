@@ -35,10 +35,25 @@ namespace BL
         private IBusinessLogic<Notas> notasBusinessLogic;
         private IBusinessLogic<FichaTecnica> fichaTecnicaBusinessLogic;
         private IBusinessLogic<StatusAcuerdo> statusAcuerdoBusinessLogic;
+        private IBusinessLogic<Imagenes> imagenesBusinessLogic;
+
 
         public UnitOfWork()
         {
             this.contexto = new SISEF();
+        }
+
+        public IBusinessLogic<Imagenes> ImagenesBusinessLogic
+        {
+            get
+            {
+                if (this.imagenesBusinessLogic == null)
+                {
+                    this.imagenesBusinessLogic = new GenericBusinessLogic<Imagenes>(contexto);
+                }
+
+                return imagenesBusinessLogic;
+            }
         }
 
         public IBusinessLogic<StatusAcuerdo> StatusAcuerdoBusinessLogic
@@ -387,6 +402,9 @@ namespace BL
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
+        
 
 
     }

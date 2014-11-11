@@ -84,6 +84,12 @@
                         </li>
                         <li>
                             <a href="<%=ResolveClientUrl("~/Formas/Fichas.aspx") %>"><i class="fa fa-gears fa-fw"></i> Ficha Técnica</a>
+
+                        </li>
+
+                        <li>
+                            <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Logos.aspx") %>"><i class="fa fa-gears fa-fw"></i> Test LOGOS</a>
+
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Consultas<span class="fa arrow"></span></a>

@@ -361,12 +361,12 @@ namespace BL
 
                             foreach (string propiedad in propiedades)
                             {
-                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
-                                string valActual = sesion.CurrentValues.GetValue<object>(propiedad) != null ? sesion.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
-
                                 if (propiedad.Equals("FechaModificacion") || propiedad.Equals("UsuarioModifica"))
                                     continue;
 
+                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
+                                string valActual = sesion.CurrentValues.GetValue<object>(propiedad) != null ? sesion.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
+                                
                                 if (!valActual.Equals(valAnterior))
                                 {
                                     copiar = true;
@@ -390,9 +390,10 @@ namespace BL
                                     sesionHistorico = new SesionHistorico();
                                     sesionHistorico.FechaCaptura = DateTime.Now;
                                     sesionHistorico.FechaCapturaCorta = DateTime.Now.ToShortDateString();
+                                    
                                 }
 
-
+                                sesionHistorico.UsuarioCaptura=valoresAnteriores.GetValue<string>("UsuarioModifica");
                                 sesionHistorico.Mes = valoresAnteriores.GetValue<object>("Mes") != null ? valoresAnteriores.GetValue<int>("Mes") : 0;
                                 sesionHistorico.Descripcion = valoresAnteriores.GetValue<object>("Descripcion") != null ? valoresAnteriores.GetValue<string>("Descripcion") : null;
                                 sesionHistorico.FechaProgramada = valoresAnteriores.GetValue<object>("FechaProgramada") != null ? valoresAnteriores.GetValue<DateTime>("FechaProgramada") : Utilerias.StrToDate("null");
@@ -434,7 +435,7 @@ namespace BL
                 {
                     foreach (DbEntityEntry ficha in changedEntities)
                     {
-
+                        
                         if (ficha.Entity != null && ficha.Entity is FichaTecnica)
                         {
                             bool copiar = false;
@@ -444,12 +445,12 @@ namespace BL
 
                             foreach (string propiedad in propiedades)
                             {
-                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
-                                string valActual = ficha.CurrentValues.GetValue<object>(propiedad) != null ? ficha.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
-
                                 if (propiedad.Equals("FechaModificacion") || propiedad.Equals("UsuarioModifica"))
                                     continue;
 
+                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
+                                string valActual = ficha.CurrentValues.GetValue<object>(propiedad) != null ? ficha.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
+                                
                                 if (!valActual.Equals(valAnterior))
                                 {
                                     copiar = true;
@@ -473,8 +474,10 @@ namespace BL
                                     fichaHistorico = new FichaTecnicaHistorico();
                                     fichaHistorico.FechaCaptura = DateTime.Now;
                                     fichaHistorico.FechaCapturaCorta = DateTime.Now.ToShortDateString();
+                                    
                                 }
- 
+
+                                fichaHistorico.UsuarioCaptura = valoresAnteriores.GetValue<string>("UsuarioModifica");
                                 fichaHistorico.Descripcion = valoresAnteriores.GetValue<object>("Descripcion") != null ? valoresAnteriores.GetValue<string>("Descripcion") : null;
                                 fichaHistorico.NombreArchivo = valoresAnteriores.GetValue<object>("NombreArchivo") != null ? valoresAnteriores.GetValue<string>("NombreArchivo") : null;
                                 fichaHistorico.TipoArchivo = valoresAnteriores.GetValue<object>("TipoArchivo") != null ? valoresAnteriores.GetValue<string>("TipoArchivo") : null;

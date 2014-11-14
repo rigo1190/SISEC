@@ -12,22 +12,14 @@ namespace DAL.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class FichaTecnica
+    public partial class FichaTecnicaHistorico
     {
-        public FichaTecnica()
-        {
-            this.DetalleFichasTecnicaHistorico = new HashSet<FichaTecnicaHistorico>();
-        }
-    
         public int ID { get; set; }
-        public int DependenciaFideicomisoEjercicioID { get; set; }
         public string Descripcion { get; set; }
         public string NombreArchivo { get; set; }
         public string TipoArchivo { get; set; }
         public Nullable<System.DateTime> FechaCaptura { get; set; }
-        public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
-        public string UsuarioModifica { get; set; }
         public string ResponsableOperativo { get; set; }
         public string Finalidad { get; set; }
         public string Creacion { get; set; }
@@ -40,8 +32,9 @@ namespace DAL.Model
         public string Calendario { get; set; }
         public string PresupuestoAnual { get; set; }
         public string SituacionPatrimonial { get; set; }
+        public int FichaTecnicaID { get; set; }
+        public string FechaCapturaCorta { get; set; }
     
-        public virtual DependenciaFideicomisoEjercicio DependenciaFideicomisoEjercicio { get; set; }
-        public virtual ICollection<FichaTecnicaHistorico> DetalleFichasTecnicaHistorico { get; set; }
+        public virtual FichaTecnica FichaTecnica { get; set; }
     }
 }

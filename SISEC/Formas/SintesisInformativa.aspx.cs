@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace SISEC.Formas
 {
-    public partial class Fichas : System.Web.UI.Page
+    public partial class SintesisInformativa : System.Web.UI.Page
     {
         private UnitOfWork uow;
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +23,7 @@ namespace SISEC.Formas
 
                 BindDropDownFideicomisos();
                 CargarGridPrimerFideicomiso();
-
+                
             }
         }
 
@@ -44,9 +44,22 @@ namespace SISEC.Formas
         {
             int id = Utilerias.StrToInt(_IDFicha.Value);
             FichaTecnica obj = uow.FichaTecnicaBusinessLogic.GetByID(id);
-            txtDescripcion.Value = obj.Descripcion;
+            //txtDescripcion.Value = obj.Descripcion;
             txtArchivoAdjunto.Value = obj.NombreArchivo != null && !obj.NombreArchivo.Equals(string.Empty) ? obj.NombreArchivo : "No existe archivo adjunto";
             txtFideicomiso.Value = GetClaveFideicomiso();
+            txtResponsable.Value = obj.ResponsableOperativo;
+            txtFinalidad.Value = obj.Finalidad;
+            txtCreacion.Value = obj.Creacion;
+            txtFormalizacion.Value = obj.Formalizacion;
+            txtPartes.Value = obj.Partes;
+            txtModificaciones.Value = obj.Modificaciones;
+            txtIntegracion.Value = obj.ComiteTecnico;
+            txtReglas.Value = obj.ReglasOperacion;
+            txtEstructura.Value = obj.EstructuraAdministrativa;
+            txtCalendario.Value = obj.Calendario;
+            txtPresupuesto.Value = obj.PresupuestoAnual;
+            txtSituacion.Value = obj.SituacionPatrimonial;
+
         }
         public string GuardarArchivo(HttpPostedFile postedFile, int idFicha)
         {
@@ -116,7 +129,11 @@ namespace SISEC.Formas
         private void CargarGridPrimerFideicomiso()
         {
             if (ddlFideicomisos.Items.Count > 0)
+            {
                 BindGridFichas();
+                txtFideicomiso.Value = GetClaveFideicomiso();
+            }
+                
 
         }
         private void BindDropDownFideicomisos()
@@ -212,9 +229,23 @@ namespace SISEC.Formas
             nomAnterior = obj.NombreArchivo;
 
             obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
-            obj.Descripcion = txtDescripcion.Value;
+            //obj.Descripcion = txtDescripcion.Value;
             obj.NombreArchivo = fileUpload.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUpload.FileName);
             obj.TipoArchivo = fileUpload.PostedFile.ContentType;
+
+            //Nuevos campos
+            obj.ResponsableOperativo = txtResponsable.Value;
+            obj.Finalidad = txtFinalidad.Value;
+            obj.Creacion = txtCreacion.Value;
+            obj.Formalizacion = txtFormalizacion.Value;
+            obj.Partes = txtPartes.Value;
+            obj.Modificaciones = txtModificaciones.Value;
+            obj.ComiteTecnico = txtIntegracion.Value;
+            obj.ReglasOperacion = txtReglas.Value;
+            obj.EstructuraAdministrativa = txtEstructura.Value;
+            obj.Calendario = txtCalendario.Value;
+            obj.PresupuestoAnual = txtPresupuesto.Value;
+            obj.SituacionPatrimonial = txtSituacion.Value;
 
             if (_Accion.Value.Equals("N"))
             {
@@ -318,6 +349,8 @@ namespace SISEC.Formas
                 divCaptura.Style.Add("display", "none");
                 divEncabezado.Style.Add("display", "block");
             }
+
+            txtFideicomiso.Value = GetClaveFideicomiso();
 
             divFideicomiso.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");

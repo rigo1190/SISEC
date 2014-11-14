@@ -653,7 +653,7 @@
     <Content Include="Formas\Catalogos\Dependencias.aspx" />
     <Content Include="Formas\Catalogos\Logos.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
-    <Content Include="Formas\Fichas.aspx" />
+    <Content Include="Formas\SintesisInformativa.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
     <Content Include="Formas\Seguimientos.aspx" />
@@ -772,12 +772,12 @@
     <Compile Include="Formas\Catalogos\TEST.aspx.designer.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Formas\Fichas.aspx.cs">
-      <DependentUpon>Fichas.aspx</DependentUpon>
+    <Compile Include="Formas\SintesisInformativa.aspx.cs">
+      <DependentUpon>SintesisInformativa.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Formas\Fichas.aspx.designer.cs">
-      <DependentUpon>Fichas.aspx</DependentUpon>
+    <Compile Include="Formas\SintesisInformativa.aspx.designer.cs">
+      <DependentUpon>SintesisInformativa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\Normatividad.aspx.cs">
       <DependentUpon>Normatividad.aspx</DependentUpon>

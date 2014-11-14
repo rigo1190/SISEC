@@ -58,6 +58,26 @@ namespace BL
             return result;
         }
 
+
+        public static DateTime? StrToDate(string valor)
+        {
+            DateTime result;
+
+            if (DateTime.TryParse(valor, out result))
+            {
+                return Convert.ToDateTime(valor);
+            }
+
+            if (result == DateTime.MinValue)
+            {
+                return null;
+            }
+
+            return result;
+
+
+        }
+
         /// <summary>
         /// Metodo encargado de cargar los combos para catalogos sencillos
         /// Creado por Rigoberto TS

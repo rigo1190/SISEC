@@ -69,6 +69,9 @@
     <Compile Include="Model\FichaTecnica.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\FichaTecnicaHistorico.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Fideicomiso.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -103,6 +106,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Sesion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SesionHistorico.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\StatusAcuerdo.cs">

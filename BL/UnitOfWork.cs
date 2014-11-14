@@ -4,6 +4,7 @@ using DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -36,12 +37,43 @@ namespace BL
         private IBusinessLogic<FichaTecnica> fichaTecnicaBusinessLogic;
         private IBusinessLogic<StatusAcuerdo> statusAcuerdoBusinessLogic;
         private IBusinessLogic<Imagenes> imagenesBusinessLogic;
+        private IBusinessLogic<SesionHistorico> sesionHistoricoBusinessLogic;
+        private IBusinessLogic<FichaTecnicaHistorico> fichaTecnicaHistoricoBusinessLogic;
+
 
 
         public UnitOfWork()
         {
             this.contexto = new SISEF();
         }
+
+        public IBusinessLogic<FichaTecnicaHistorico> FichaTecnicaHistoricoBusinessLogic
+        {
+            get
+            {
+                if (this.fichaTecnicaHistoricoBusinessLogic == null)
+                {
+                    this.fichaTecnicaHistoricoBusinessLogic = new GenericBusinessLogic<FichaTecnicaHistorico>(contexto);
+                }
+
+                return fichaTecnicaHistoricoBusinessLogic;
+            }
+        }
+
+
+        public IBusinessLogic<SesionHistorico> SesionHistoricoBusinessLogic
+        {
+            get
+            {
+                if (this.sesionHistoricoBusinessLogic == null)
+                {
+                    this.sesionHistoricoBusinessLogic = new GenericBusinessLogic<SesionHistorico>(contexto);
+                }
+
+                return sesionHistoricoBusinessLogic;
+            }
+        }
+
 
         public IBusinessLogic<Imagenes> ImagenesBusinessLogic
         {
@@ -310,7 +342,176 @@ namespace BL
             try
             {
                 errors.Clear();
+
+
+                #region GUARDAR HISTORICO PARA SESION
+
+                var changedEntries = contexto.ChangeTracker.Entries<Sesion>().Where(e => e.State == EntityState.Modified);
+                if (changedEntries.Count() > 0)
+                {
+                    foreach (DbEntityEntry sesion in changedEntries)
+                    {
+
+                        if (sesion.Entity != null && sesion.Entity is Sesion)
+                        {
+                            bool copiar = false;
+
+                            List<string> propiedades = sesion.CurrentValues.PropertyNames.ToList(); ;
+                            var valoresAnteriores = sesion.GetDatabaseValues();
+
+                            foreach (string propiedad in propiedades)
+                            {
+                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
+                                string valActual = sesion.CurrentValues.GetValue<object>(propiedad) != null ? sesion.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
+
+                                if (propiedad.Equals("FechaModificacion") || propiedad.Equals("UsuarioModifica"))
+                                    continue;
+
+                                if (!valActual.Equals(valAnterior))
+                                {
+                                    copiar = true;
+                                    break;
+                                }
+
+
+                            }
+
+                            if (copiar)
+                            {
+                                SesionHistorico sesionHistorico;
+                                string fechaModificacionCorta = sesion.CurrentValues.GetValue<DateTime>("FechaModificacion").ToShortDateString();
+                                bool nuevo = false;
+                                sesionHistorico = this.SesionHistoricoBusinessLogic.Get(e => e.FechaCapturaCorta == fechaModificacionCorta).FirstOrDefault();
+
+
+                                if (sesionHistorico == null)
+                                {
+                                    nuevo = true;
+                                    sesionHistorico = new SesionHistorico();
+                                    sesionHistorico.FechaCaptura = DateTime.Now;
+                                    sesionHistorico.FechaCapturaCorta = DateTime.Now.ToShortDateString();
+                                }
+
+
+                                sesionHistorico.Mes = valoresAnteriores.GetValue<object>("Mes") != null ? valoresAnteriores.GetValue<int>("Mes") : 0;
+                                sesionHistorico.Descripcion = valoresAnteriores.GetValue<object>("Descripcion") != null ? valoresAnteriores.GetValue<string>("Descripcion") : null;
+                                sesionHistorico.FechaProgramada = valoresAnteriores.GetValue<object>("FechaProgramada") != null ? valoresAnteriores.GetValue<DateTime>("FechaProgramada") : Utilerias.StrToDate("null");
+                                sesionHistorico.FechaCelebrada = valoresAnteriores.GetValue<object>("FechaCelebrada") != null ? valoresAnteriores.GetValue<DateTime>("FechaCelebrada") : Utilerias.StrToDate("null");
+                                sesionHistorico.FechaOficio = valoresAnteriores.GetValue<object>("FechaOficio") != null ? valoresAnteriores.GetValue<DateTime>("FechaOficio") : Utilerias.StrToDate("null");
+                                sesionHistorico.FechaReprogramada = valoresAnteriores.GetValue<object>("FechaReprogramada") != null ? valoresAnteriores.GetValue<DateTime>("FechaReprogramada") : Utilerias.StrToDate("null");
+                                sesionHistorico.HoraCelebrada = valoresAnteriores.GetValue<object>("HoraCelebrada") != null ? valoresAnteriores.GetValue<string>("HoraProgramada") : null;
+                                sesionHistorico.HoraProgramada = valoresAnteriores.GetValue<object>("HoraProgramada") != null ? valoresAnteriores.GetValue<string>("HoraCelebrada") : null;
+                                sesionHistorico.HoraReprogramada = valoresAnteriores.GetValue<object>("HoraReprogramada") != null ? valoresAnteriores.GetValue<string>("HoraReprogramada") : null;
+                                sesionHistorico.LugarReunion = valoresAnteriores.GetValue<object>("LugarReunion") != null ? valoresAnteriores.GetValue<string>("LugarReunion") : null;
+                                sesionHistorico.NumOficio = valoresAnteriores.GetValue<object>("NumOficio") != null ? valoresAnteriores.GetValue<string>("NumOficio") : null;
+                                sesionHistorico.NumSesion = valoresAnteriores.GetValue<object>("NumSesion") != null ? valoresAnteriores.GetValue<string>("NumSesion") : null;
+                                sesionHistorico.Observaciones = valoresAnteriores.GetValue<object>("Observaciones") != null ? valoresAnteriores.GetValue<string>("Observaciones") : null;
+                                sesionHistorico.SesionID = valoresAnteriores.GetValue<object>("ID") != null ? valoresAnteriores.GetValue<int>("ID") : 0;
+                                sesionHistorico.TipoSesionID = valoresAnteriores.GetValue<object>("TipoSesionID") != null ? valoresAnteriores.GetValue<int>("TipoSesionID") : 0;
+                                sesionHistorico.StatusSesionID = valoresAnteriores.GetValue<object>("StatusSesionID") != null ? valoresAnteriores.GetValue<int>("StatusSesionID") : 0;
+                                sesionHistorico.UsuarioCaptura = valoresAnteriores.GetValue<object>("UsuarioCaptura") != null ? valoresAnteriores.GetValue<string>("UsuarioCaptura") : null;
+
+                                if (nuevo)
+                                    this.SesionHistoricoBusinessLogic.Insert(sesionHistorico);
+                                else
+                                    this.SesionHistoricoBusinessLogic.Update(sesionHistorico);
+
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
+                #endregion
+
+                #region GUARDAR HISTORICO PARA FICHA TECNICA
+
+                var changedEntities = contexto.ChangeTracker.Entries<FichaTecnica>().Where(e => e.State == EntityState.Modified);
+                if (changedEntities.Count() > 0)
+                {
+                    foreach (DbEntityEntry ficha in changedEntities)
+                    {
+
+                        if (ficha.Entity != null && ficha.Entity is FichaTecnica)
+                        {
+                            bool copiar = false;
+
+                            List<string> propiedades = ficha.CurrentValues.PropertyNames.ToList(); ;
+                            var valoresAnteriores = ficha.GetDatabaseValues();
+
+                            foreach (string propiedad in propiedades)
+                            {
+                                string valAnterior = valoresAnteriores.GetValue<object>(propiedad) != null ? valoresAnteriores.GetValue<object>(propiedad).ToString() : string.Empty;
+                                string valActual = ficha.CurrentValues.GetValue<object>(propiedad) != null ? ficha.CurrentValues.GetValue<object>(propiedad).ToString() : string.Empty;
+
+                                if (propiedad.Equals("FechaModificacion") || propiedad.Equals("UsuarioModifica"))
+                                    continue;
+
+                                if (!valActual.Equals(valAnterior))
+                                {
+                                    copiar = true;
+                                    break;
+                                }
+
+
+                            }
+
+                            if (copiar)
+                            {
+                                FichaTecnicaHistorico fichaHistorico;
+                                string fechaModificacionCorta = ficha.CurrentValues.GetValue<DateTime>("FechaModificacion").ToShortDateString();
+                                bool nuevo = false;
+                                fichaHistorico = this.FichaTecnicaHistoricoBusinessLogic.Get(e => e.FechaCapturaCorta == fechaModificacionCorta).FirstOrDefault();
+
+
+                                if (fichaHistorico == null)
+                                {
+                                    nuevo = true;
+                                    fichaHistorico = new FichaTecnicaHistorico();
+                                    fichaHistorico.FechaCaptura = DateTime.Now;
+                                    fichaHistorico.FechaCapturaCorta = DateTime.Now.ToShortDateString();
+                                }
+ 
+                                fichaHistorico.Descripcion = valoresAnteriores.GetValue<object>("Descripcion") != null ? valoresAnteriores.GetValue<string>("Descripcion") : null;
+                                fichaHistorico.NombreArchivo = valoresAnteriores.GetValue<object>("NombreArchivo") != null ? valoresAnteriores.GetValue<string>("NombreArchivo") : null;
+                                fichaHistorico.TipoArchivo = valoresAnteriores.GetValue<object>("TipoArchivo") != null ? valoresAnteriores.GetValue<string>("TipoArchivo") : null;
+                                fichaHistorico.ResponsableOperativo = valoresAnteriores.GetValue<object>("ResponsableOperativo") != null ? valoresAnteriores.GetValue<string>("ResponsableOperativo") : null;
+                                fichaHistorico.Finalidad = valoresAnteriores.GetValue<object>("Finalidad") != null ? valoresAnteriores.GetValue<string>("Finalidad") : null;
+                                fichaHistorico.Creacion = valoresAnteriores.GetValue<object>("Creacion") != null ? valoresAnteriores.GetValue<string>("Creacion") : null;
+                                fichaHistorico.Formalizacion = valoresAnteriores.GetValue<object>("Formalizacion") != null ? valoresAnteriores.GetValue<string>("Formalizacion") : null;
+                                fichaHistorico.Partes = valoresAnteriores.GetValue<object>("Partes") != null ? valoresAnteriores.GetValue<string>("Partes") : null;
+                                fichaHistorico.Modificaciones = valoresAnteriores.GetValue<object>("Modificaciones") != null ? valoresAnteriores.GetValue<string>("Modificaciones") : null;
+                                fichaHistorico.ComiteTecnico = valoresAnteriores.GetValue<object>("ComiteTecnico") != null ? valoresAnteriores.GetValue<string>("ComiteTecnico") : null;
+                                fichaHistorico.FichaTecnicaID = valoresAnteriores.GetValue<object>("ID") != null ? valoresAnteriores.GetValue<int>("ID") : 0;
+                                fichaHistorico.UsuarioCaptura = valoresAnteriores.GetValue<object>("UsuarioCaptura") != null ? valoresAnteriores.GetValue<string>("UsuarioCaptura") : null;
+                                fichaHistorico.ReglasOperacion = valoresAnteriores.GetValue<object>("ReglasOperacion") != null ? valoresAnteriores.GetValue<string>("ReglasOperacion") : null;
+                                fichaHistorico.EstructuraAdministrativa = valoresAnteriores.GetValue<object>("EstructuraAdministrativa") != null ? valoresAnteriores.GetValue<string>("EstructuraAdministrativa") : null;
+                                fichaHistorico.Calendario = valoresAnteriores.GetValue<object>("Calendario") != null ? valoresAnteriores.GetValue<string>("Calendario") : null;
+                                fichaHistorico.PresupuestoAnual = valoresAnteriores.GetValue<object>("PresupuestoAnual") != null ? valoresAnteriores.GetValue<string>("PresupuestoAnual") : null;
+                                fichaHistorico.SituacionPatrimonial = valoresAnteriores.GetValue<object>("SituacionPatrimonial") != null ? valoresAnteriores.GetValue<string>("SituacionPatrimonial") : null;
+
+                                if (nuevo)
+                                    this.FichaTecnicaHistoricoBusinessLogic.Insert(fichaHistorico);
+                                else
+                                    this.FichaTecnicaHistoricoBusinessLogic.Update(fichaHistorico);
+
+                            }
+
+                        }
+
+
+                    }
+                }
+
+                #endregion
+
+
                 contexto.SaveChanges();
+
+
             }
             catch (DbEntityValidationException ex)
             {

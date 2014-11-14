@@ -4,642 +4,770 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SISEFModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="SISEFModelStoreContainer">
-    <EntitySet Name="Acuerdo" EntityType="SISEFModel.Store.Acuerdo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Calendario" EntityType="SISEFModel.Store.Calendario" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Dependencia" EntityType="SISEFModel.Store.Dependencia" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DependenciaFideicomisoEjercicio" EntityType="SISEFModel.Store.DependenciaFideicomisoEjercicio" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Ejercicio" EntityType="SISEFModel.Store.Ejercicio" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Fideicomiso" EntityType="SISEFModel.Store.Fideicomiso" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Normatividad" EntityType="SISEFModel.Store.Normatividad" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Seguimiento" EntityType="SISEFModel.Store.Seguimiento" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Sesion" EntityType="SISEFModel.Store.Sesion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StatusSesion" EntityType="SISEFModel.Store.StatusSesion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TipoCalendarizacion" EntityType="SISEFModel.Store.TipoCalendarizacion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TipoSesion" EntityType="SISEFModel.Store.TipoSesion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="TipoUsuario" EntityType="SISEFModel.Store.TipoUsuario" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Usuario" EntityType="SISEFModel.Store.Usuario" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UsuarioFideicomiso" EntityType="SISEFModel.Store.UsuarioFideicomiso" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StatusAcuerdo" EntityType="SISEFModel.Store.StatusAcuerdo" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Notas" EntityType="SISEFModel.Store.Notas" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Actas" EntityType="SISEFModel.Store.Actas" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="FichaTecnica" EntityType="SISEFModel.Store.FichaTecnica" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Imagenes" EntityType="SISEFModel.Store.Imagenes" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID" Association="SISEFModel.Store.FK_dbo_Acuerdo_dbo_Sesion_SesionID">
-      <End Role="Sesion" EntitySet="Sesion" />
-      <End Role="Acuerdo" EntitySet="Acuerdo" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" Association="SISEFModel.Store.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-      <End Role="Calendario" EntitySet="Calendario" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" Association="SISEFModel.Store.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID">
-      <End Role="Ejercicio" EntitySet="Ejercicio" />
-      <End Role="Calendario" EntitySet="Calendario" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Sesion_dbo_Calendario_CalendarioID" Association="SISEFModel.Store.FK_dbo_Sesion_dbo_Calendario_CalendarioID">
-      <End Role="Calendario" EntitySet="Calendario" />
-      <End Role="Sesion" EntitySet="Sesion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" Association="SISEFModel.Store.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID">
-      <End Role="Dependencia" EntitySet="Dependencia" />
-      <End Role="Dependencia1" EntitySet="Dependencia" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" Association="SISEFModel.Store.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-      <End Role="Dependencia" EntitySet="Dependencia" />
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" Association="SISEFModel.Store.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
-      <End Role="Ejercicio" EntitySet="Ejercicio" />
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" Association="SISEFModel.Store.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID">
-      <End Role="Fideicomiso" EntitySet="Fideicomiso" />
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" Association="SISEFModel.Store.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-      <End Role="Normatividad" EntitySet="Normatividad" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" Association="SISEFModel.Store.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID">
-      <End Role="Fideicomiso" EntitySet="Fideicomiso" />
-      <End Role="Fideicomiso1" EntitySet="Fideicomiso" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" Association="SISEFModel.Store.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID">
-      <End Role="StatusSesion" EntitySet="StatusSesion" />
-      <End Role="Sesion" EntitySet="Sesion" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" Association="SISEFModel.Store.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
-      <End Role="TipoSesion" EntitySet="TipoSesion" />
-      <End Role="Sesion" EntitySet="Sesion" />
-    </AssociationSet>
-    <AssociationSet Name="TipoUsuarioUsuario" Association="SISEFModel.Store.TipoUsuarioUsuario">
-      <End Role="TipoUsuario" EntitySet="TipoUsuario" />
-      <End Role="Usuario" EntitySet="Usuario" />
-    </AssociationSet>
-    <AssociationSet Name="UsuarioUsuarioFideicomiso" Association="SISEFModel.Store.UsuarioUsuarioFideicomiso">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="UsuarioFideicomiso" EntitySet="UsuarioFideicomiso" />
-    </AssociationSet>
-    <AssociationSet Name="DependenciaFideicomisoEjercicioUsuarioFideicomiso" Association="SISEFModel.Store.DependenciaFideicomisoEjercicioUsuarioFideicomiso">
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-      <End Role="UsuarioFideicomiso" EntitySet="UsuarioFideicomiso" />
-    </AssociationSet>
-    <AssociationSet Name="AcuerdoSeguimiento" Association="SISEFModel.Store.AcuerdoSeguimiento">
-      <End Role="Acuerdo" EntitySet="Acuerdo" />
-      <End Role="Seguimiento" EntitySet="Seguimiento" />
-    </AssociationSet>
-    <AssociationSet Name="StatusAcuerdoAcuerdo" Association="SISEFModel.Store.StatusAcuerdoAcuerdo">
-      <End Role="StatusAcuerdo" EntitySet="StatusAcuerdo" />
-      <End Role="Acuerdo" EntitySet="Acuerdo" />
-    </AssociationSet>
-    <AssociationSet Name="SesionNotas" Association="SISEFModel.Store.SesionNotas">
-      <End Role="Sesion" EntitySet="Sesion" />
-      <End Role="Notas" EntitySet="Notas" />
-    </AssociationSet>
-    <AssociationSet Name="SesionActas" Association="SISEFModel.Store.SesionActas">
-      <End Role="Sesion" EntitySet="Sesion" />
-      <End Role="Actas" EntitySet="Actas" />
-    </AssociationSet>
-    <AssociationSet Name="DependenciaFideicomisoEjercicioFichaTecnica" Association="SISEFModel.Store.DependenciaFideicomisoEjercicioFichaTecnica">
-      <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-      <End Role="FichaTecnica" EntitySet="FichaTecnica" />
-    </AssociationSet>
-    <AssociationSet Name="EjercicioNormatividad" Association="SISEFModel.Store.EjercicioNormatividad">
-      <End Role="Ejercicio" EntitySet="Ejercicio" />
-      <End Role="Normatividad" EntitySet="Normatividad" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Acuerdo">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SesionID" Type="int" Nullable="false" />
-    <Property Name="Notas" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="NumAcuerdo" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="StatusAcuerdoID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Calendario">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
-    <Property Name="EjercicioID" Type="int" Nullable="false" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Dependencia">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="500" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="1000" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="DependeDeID" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="DependenciaFideicomisoEjercicio">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DependenciaID" Type="int" Nullable="false" />
-    <Property Name="FideicomisoID" Type="int" Nullable="false" />
-    <Property Name="EjercicioID" Type="int" Nullable="false" />
-    <Property Name="Activo" Type="bit" Nullable="false" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Ejercicio">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Anio" Type="int" Nullable="false" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Fideicomiso">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="500" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="2000" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="DependeDeID" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Normatividad">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="RutaArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="TipoArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="TipoNormatividad" Type="int" Nullable="false" />
-    <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="NombreArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="EjercicioID" Type="int" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Seguimiento">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="AcuerdoID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Sesion">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CalendarioID" Type="int" Nullable="false" />
-    <Property Name="Mes" Type="int" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="FechaProgramada" Type="datetime" Nullable="true" />
-    <Property Name="FechaCelebrada" Type="datetime" Nullable="true" />
-    <Property Name="FechaReprogramada" Type="datetime" Nullable="true" />
-    <Property Name="TipoSesionID" Type="int" Nullable="false" />
-    <Property Name="StatusSesionID" Type="int" Nullable="false" />
-    <Property Name="Observaciones" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="FechaOficio" Type="datetime" Nullable="true" />
-    <Property Name="NumOficio" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="LugarReunion" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="NumSesion" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="HoraProgramada" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="HoraReprogramada" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="HoraCelebrada" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="StatusSesion">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="TipoCalendarizacion">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="TipoSesion">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="TipoUsuario">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Usuario">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Login" Type="nvarchar" Nullable="true" MaxLength="20" />
-    <Property Name="Password" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Nombre" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
-    <Property Name="Activo" Type="bit" Nullable="true" />
-    <Property Name="Bloqueado" Type="bit" Nullable="true" />
-  </EntityType>
-  <EntityType Name="UsuarioFideicomiso">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UsuarioID" Type="int" Nullable="false" />
-    <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="StatusAcuerdo">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Clave" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="Orden" Type="int" Nullable="true" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Notas">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SesionID" Type="int" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="1000" />
-    <Property Name="NombreArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="TipoArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="Actas">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SesionID" Type="int" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="1000" />
-    <Property Name="NombreArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="TipoArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <EntityType Name="FichaTecnica">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
-    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="NombreArchivo" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="TipoArchivo" Type="nvarchar" Nullable="true" MaxLength="250" />
-    <Property Name="FechaCaptura" Type="datetime" Nullable="true" />
-    <Property Name="FechaModificacion" Type="datetime" Nullable="true" />
-    <Property Name="UsuarioCaptura" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="UsuarioModifica" Type="nvarchar(max)" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Imagenes">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="250" />
-    <Property Name="Imagen" Type="varbinary(max)" Nullable="true" />
-    <Property Name="Descripcion" Type="nvarchar" Nullable="true" MaxLength="250" />
-  </EntityType>
-  <Association Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID">
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="1" />
-    <End Role="Acuerdo" Type="SISEFModel.Store.Acuerdo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sesion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Acuerdo">
-        <PropertyRef Name="SesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="1" />
-    <End Role="Calendario" Type="SISEFModel.Store.Calendario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Calendario">
-        <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Calendario_dbo_Ejercicio_EjercicioID">
-    <End Role="Ejercicio" Type="SISEFModel.Store.Ejercicio" Multiplicity="1" />
-    <End Role="Calendario" Type="SISEFModel.Store.Calendario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Ejercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Calendario">
-        <PropertyRef Name="EjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Sesion_dbo_Calendario_CalendarioID">
-    <End Role="Calendario" Type="SISEFModel.Store.Calendario" Multiplicity="1" />
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Calendario">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Sesion">
-        <PropertyRef Name="CalendarioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Dependencia_dbo_Dependencia_DependeDeID">
-    <End Role="Dependencia" Type="SISEFModel.Store.Dependencia" Multiplicity="0..1" />
-    <End Role="Dependencia1" Type="SISEFModel.Store.Dependencia" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Dependencia">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Dependencia1">
-        <PropertyRef Name="DependeDeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-    <End Role="Dependencia" Type="SISEFModel.Store.Dependencia" Multiplicity="1" />
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Dependencia">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="DependenciaID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
-    <End Role="Ejercicio" Type="SISEFModel.Store.Ejercicio" Multiplicity="1" />
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Ejercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="EjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID">
-    <End Role="Fideicomiso" Type="SISEFModel.Store.Fideicomiso" Multiplicity="1" />
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Fideicomiso">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="FideicomisoID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="0..1" />
-    <End Role="Normatividad" Type="SISEFModel.Store.Normatividad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Normatividad">
-        <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID">
-    <End Role="Fideicomiso" Type="SISEFModel.Store.Fideicomiso" Multiplicity="0..1" />
-    <End Role="Fideicomiso1" Type="SISEFModel.Store.Fideicomiso" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Fideicomiso">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Fideicomiso1">
-        <PropertyRef Name="DependeDeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID">
-    <End Role="StatusSesion" Type="SISEFModel.Store.StatusSesion" Multiplicity="1" />
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StatusSesion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Sesion">
-        <PropertyRef Name="StatusSesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
-    <End Role="TipoSesion" Type="SISEFModel.Store.TipoSesion" Multiplicity="1" />
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TipoSesion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Sesion">
-        <PropertyRef Name="TipoSesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="TipoUsuarioUsuario">
-    <End Role="TipoUsuario" Type="SISEFModel.Store.TipoUsuario" Multiplicity="1" />
-    <End Role="Usuario" Type="SISEFModel.Store.Usuario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TipoUsuario">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Usuario">
-        <PropertyRef Name="TipoUsuarioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UsuarioUsuarioFideicomiso">
-    <End Role="Usuario" Type="SISEFModel.Store.Usuario" Multiplicity="1" />
-    <End Role="UsuarioFideicomiso" Type="SISEFModel.Store.UsuarioFideicomiso" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="UsuarioFideicomiso">
-        <PropertyRef Name="UsuarioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="DependenciaFideicomisoEjercicioUsuarioFideicomiso">
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="1" />
-    <End Role="UsuarioFideicomiso" Type="SISEFModel.Store.UsuarioFideicomiso" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="UsuarioFideicomiso">
-        <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="AcuerdoSeguimiento">
-    <End Role="Acuerdo" Type="SISEFModel.Store.Acuerdo" Multiplicity="1" />
-    <End Role="Seguimiento" Type="SISEFModel.Store.Seguimiento" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Acuerdo">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Seguimiento">
-        <PropertyRef Name="AcuerdoID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="StatusAcuerdoAcuerdo">
-    <End Role="StatusAcuerdo" Type="SISEFModel.Store.StatusAcuerdo" Multiplicity="1" />
-    <End Role="Acuerdo" Type="SISEFModel.Store.Acuerdo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StatusAcuerdo">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Acuerdo">
-        <PropertyRef Name="StatusAcuerdoID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SesionNotas">
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="1" />
-    <End Role="Notas" Type="SISEFModel.Store.Notas" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sesion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Notas">
-        <PropertyRef Name="SesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SesionActas">
-    <End Role="Sesion" Type="SISEFModel.Store.Sesion" Multiplicity="1" />
-    <End Role="Actas" Type="SISEFModel.Store.Actas" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Sesion">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Actas">
-        <PropertyRef Name="SesionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="DependenciaFideicomisoEjercicioFichaTecnica">
-    <End Role="DependenciaFideicomisoEjercicio" Type="SISEFModel.Store.DependenciaFideicomisoEjercicio" Multiplicity="1" />
-    <End Role="FichaTecnica" Type="SISEFModel.Store.FichaTecnica" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DependenciaFideicomisoEjercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="FichaTecnica">
-        <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="EjercicioNormatividad">
-    <End Role="Ejercicio" Type="SISEFModel.Store.Ejercicio" Multiplicity="0..1" />
-    <End Role="Normatividad" Type="SISEFModel.Store.Normatividad" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Ejercicio">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Normatividad">
-        <PropertyRef Name="EjercicioID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="SISEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SesionID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Acuerdo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SesionID" Type="int" Nullable="false" />
+          <Property Name="Notas" Type="nvarchar(max)" />
+          <Property Name="NumAcuerdo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusAcuerdoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Calendario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
+          <Property Name="EjercicioID" Type="int" Nullable="false" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Dependencia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="500" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="DependeDeID" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DependenciaFideicomisoEjercicio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DependenciaID" Type="int" Nullable="false" />
+          <Property Name="FideicomisoID" Type="int" Nullable="false" />
+          <Property Name="EjercicioID" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ejercicio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FichaTecnica">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsableOperativo" Type="nvarchar(max)" />
+          <Property Name="Finalidad" Type="nvarchar(max)" />
+          <Property Name="Creacion" Type="nvarchar(max)" />
+          <Property Name="Formalizacion" Type="nvarchar(max)" />
+          <Property Name="Partes" Type="nvarchar(max)" />
+          <Property Name="Modificaciones" Type="nvarchar(max)" />
+          <Property Name="ComiteTecnico" Type="nvarchar(max)" />
+          <Property Name="ReglasOperacion" Type="nvarchar(max)" />
+          <Property Name="EstructuraAdministrativa" Type="nvarchar(max)" />
+          <Property Name="Calendario" Type="nvarchar(max)" />
+          <Property Name="PresupuestoAnual" Type="nvarchar(max)" />
+          <Property Name="SituacionPatrimonial" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FichaTecnicaHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsableOperativo" Type="nvarchar(max)" />
+          <Property Name="Finalidad" Type="nvarchar(max)" />
+          <Property Name="Creacion" Type="nvarchar(max)" />
+          <Property Name="Formalizacion" Type="nvarchar(max)" />
+          <Property Name="Partes" Type="nvarchar(max)" />
+          <Property Name="Modificaciones" Type="nvarchar(max)" />
+          <Property Name="ComiteTecnico" Type="nvarchar(max)" />
+          <Property Name="ReglasOperacion" Type="nvarchar(max)" />
+          <Property Name="EstructuraAdministrativa" Type="nvarchar(max)" />
+          <Property Name="Calendario" Type="nvarchar(max)" />
+          <Property Name="PresupuestoAnual" Type="nvarchar(max)" />
+          <Property Name="SituacionPatrimonial" Type="nvarchar(max)" />
+          <Property Name="FichaTecnicaID" Type="int" Nullable="false" />
+          <Property Name="FechaCapturaCorta" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Fideicomiso">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="500" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="DependeDeID" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Imagenes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Imagen" Type="varbinary(max)" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Normatividad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
+          <Property Name="RutaArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="TipoNormatividad" Type="int" Nullable="false" />
+          <Property Name="DependenciaFideicomisoEjercicioID" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="EjercicioID" Type="int" />
+        </EntityType>
+        <EntityType Name="Notas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SesionID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NombreArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="TipoArchivo" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="AcuerdoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sesion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CalendarioID" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="FechaProgramada" Type="datetime" />
+          <Property Name="FechaCelebrada" Type="datetime" />
+          <Property Name="FechaReprogramada" Type="datetime" />
+          <Property Name="TipoSesionID" Type="int" Nullable="false" />
+          <Property Name="StatusSesionID" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="nvarchar(max)" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaOficio" Type="datetime" />
+          <Property Name="NumOficio" Type="nvarchar" MaxLength="250" />
+          <Property Name="LugarReunion" Type="nvarchar" MaxLength="250" />
+          <Property Name="NumSesion" Type="nvarchar" MaxLength="250" />
+          <Property Name="HoraProgramada" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoraReprogramada" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoraCelebrada" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SesionHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="FechaProgramada" Type="datetime" />
+          <Property Name="FechaCelebrada" Type="datetime" />
+          <Property Name="FechaReprogramada" Type="datetime" />
+          <Property Name="FechaOficio" Type="datetime" />
+          <Property Name="Observaciones" Type="nvarchar(max)" />
+          <Property Name="NumOficio" Type="nvarchar" MaxLength="250" />
+          <Property Name="LugarReunion" Type="nvarchar" MaxLength="250" />
+          <Property Name="NumSesion" Type="nvarchar" MaxLength="250" />
+          <Property Name="HoraProgramada" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoraReprogramada" Type="nvarchar" MaxLength="50" />
+          <Property Name="HoraCelebrada" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaCaptura" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoSesionID" Type="int" Nullable="false" />
+          <Property Name="StatusSesionID" Type="int" Nullable="false" />
+          <Property Name="SesionID" Type="int" Nullable="false" />
+          <Property Name="FechaCapturaCorta" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StatusAcuerdo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StatusSesion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoCalendarizacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoSesion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoUsuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoUsuarioID" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="Bloqueado" Type="bit" />
+        </EntityType>
+        <EntityType Name="UsuarioFideicomiso">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="DependenciaFideicomisoEjercicioID" Type="int" Nullable="false" />
+          <Property Name="FechaCaptura" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AcuerdoSeguimiento">
+          <End Role="Acuerdo" Type="Self.Acuerdo" Multiplicity="1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Acuerdo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="AcuerdoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1" />
+          <End Role="Acuerdo" Type="Self.Acuerdo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Acuerdo">
+              <PropertyRef Name="SesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="1" />
+          <End Role="Calendario" Type="Self.Calendario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Calendario">
+              <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Calendario_dbo_Ejercicio_EjercicioID">
+          <End Role="Ejercicio" Type="Self.Ejercicio" Multiplicity="1" />
+          <End Role="Calendario" Type="Self.Calendario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ejercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Calendario">
+              <PropertyRef Name="EjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Dependencia_dbo_Dependencia_DependeDeID">
+          <End Role="Dependencia" Type="Self.Dependencia" Multiplicity="0..1" />
+          <End Role="Dependencia1" Type="Self.Dependencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dependencia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Dependencia1">
+              <PropertyRef Name="DependeDeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
+          <End Role="Dependencia" Type="Self.Dependencia" Multiplicity="1" />
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dependencia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="DependenciaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
+          <End Role="Ejercicio" Type="Self.Ejercicio" Multiplicity="1" />
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ejercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="EjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID">
+          <End Role="Fideicomiso" Type="Self.Fideicomiso" Multiplicity="1" />
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fideicomiso">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="FideicomisoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID">
+          <End Role="Fideicomiso" Type="Self.Fideicomiso" Multiplicity="0..1" />
+          <End Role="Fideicomiso1" Type="Self.Fideicomiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fideicomiso">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fideicomiso1">
+              <PropertyRef Name="DependeDeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="0..1" />
+          <End Role="Normatividad" Type="Self.Normatividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Normatividad">
+              <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sesion_dbo_Calendario_CalendarioID">
+          <End Role="Calendario" Type="Self.Calendario" Multiplicity="1" />
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Calendario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sesion">
+              <PropertyRef Name="CalendarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID">
+          <End Role="StatusSesion" Type="Self.StatusSesion" Multiplicity="1" />
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sesion">
+              <PropertyRef Name="StatusSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
+          <End Role="TipoSesion" Type="Self.TipoSesion" Multiplicity="1" />
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sesion">
+              <PropertyRef Name="TipoSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DependenciaFideicomisoEjercicioFichaTecnica">
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="1" />
+          <End Role="FichaTecnica" Type="Self.FichaTecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichaTecnica">
+              <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DependenciaFideicomisoEjercicioUsuarioFideicomiso">
+          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="1" />
+          <End Role="UsuarioFideicomiso" Type="Self.UsuarioFideicomiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DependenciaFideicomisoEjercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioFideicomiso">
+              <PropertyRef Name="DependenciaFideicomisoEjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EjercicioNormatividad">
+          <End Role="Ejercicio" Type="Self.Ejercicio" Multiplicity="0..1" />
+          <End Role="Normatividad" Type="Self.Normatividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ejercicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Normatividad">
+              <PropertyRef Name="EjercicioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FichaTecnicaFichaTecnicaHistorico">
+          <End Role="FichaTecnica" Type="Self.FichaTecnica" Multiplicity="1" />
+          <End Role="FichaTecnicaHistorico" Type="Self.FichaTecnicaHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FichaTecnica">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichaTecnicaHistorico">
+              <PropertyRef Name="FichaTecnicaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SesionActas">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1" />
+          <End Role="Actas" Type="Self.Actas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Actas">
+              <PropertyRef Name="SesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SesionNotas">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1" />
+          <End Role="Notas" Type="Self.Notas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notas">
+              <PropertyRef Name="SesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SesionSesionHistorico">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1" />
+          <End Role="SesionHistorico" Type="Self.SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="SesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusAcuerdoAcuerdo">
+          <End Role="StatusAcuerdo" Type="Self.StatusAcuerdo" Multiplicity="1" />
+          <End Role="Acuerdo" Type="Self.Acuerdo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAcuerdo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Acuerdo">
+              <PropertyRef Name="StatusAcuerdoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusSesionSesionHistorico">
+          <End Role="StatusSesion" Type="Self.StatusSesion" Multiplicity="1" />
+          <End Role="SesionHistorico" Type="Self.SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="StatusSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoSesionSesionHistorico">
+          <End Role="TipoSesion" Type="Self.TipoSesion" Multiplicity="1" />
+          <End Role="SesionHistorico" Type="Self.SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="TipoSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoUsuarioUsuario">
+          <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoUsuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="TipoUsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioUsuarioFideicomiso">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioFideicomiso" Type="Self.UsuarioFideicomiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsuarioFideicomiso">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SISEFModelStoreContainer">
+          <EntitySet Name="Actas" EntityType="Self.Actas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Acuerdo" EntityType="Self.Acuerdo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calendario" EntityType="Self.Calendario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dependencia" EntityType="Self.Dependencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DependenciaFideicomisoEjercicio" EntityType="Self.DependenciaFideicomisoEjercicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ejercicio" EntityType="Self.Ejercicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FichaTecnica" EntityType="Self.FichaTecnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FichaTecnicaHistorico" EntityType="Self.FichaTecnicaHistorico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fideicomiso" EntityType="Self.Fideicomiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagenes" EntityType="Self.Imagenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Normatividad" EntityType="Self.Normatividad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sesion" EntityType="Self.Sesion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SesionHistorico" EntityType="Self.SesionHistorico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusAcuerdo" EntityType="Self.StatusAcuerdo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusSesion" EntityType="Self.StatusSesion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoCalendarizacion" EntityType="Self.TipoCalendarizacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoSesion" EntityType="Self.TipoSesion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioFideicomiso" EntityType="Self.UsuarioFideicomiso" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AcuerdoSeguimiento" Association="Self.FK_AcuerdoSeguimiento">
+            <End Role="Acuerdo" EntitySet="Acuerdo" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Acuerdo_dbo_Sesion_SesionID" Association="Self.FK_dbo_Acuerdo_dbo_Sesion_SesionID">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="Acuerdo" EntitySet="Acuerdo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" Association="Self.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+            <End Role="Calendario" EntitySet="Calendario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" Association="Self.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID">
+            <End Role="Ejercicio" EntitySet="Ejercicio" />
+            <End Role="Calendario" EntitySet="Calendario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" Association="Self.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID">
+            <End Role="Dependencia" EntitySet="Dependencia" />
+            <End Role="Dependencia1" EntitySet="Dependencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
+            <End Role="Dependencia" EntitySet="Dependencia" />
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
+            <End Role="Ejercicio" EntitySet="Ejercicio" />
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID">
+            <End Role="Fideicomiso" EntitySet="Fideicomiso" />
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" Association="Self.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID">
+            <End Role="Fideicomiso" EntitySet="Fideicomiso" />
+            <End Role="Fideicomiso1" EntitySet="Fideicomiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" Association="Self.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID">
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+            <End Role="Normatividad" EntitySet="Normatividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sesion_dbo_Calendario_CalendarioID" Association="Self.FK_dbo_Sesion_dbo_Calendario_CalendarioID">
+            <End Role="Calendario" EntitySet="Calendario" />
+            <End Role="Sesion" EntitySet="Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" Association="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID">
+            <End Role="StatusSesion" EntitySet="StatusSesion" />
+            <End Role="Sesion" EntitySet="Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" Association="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
+            <End Role="TipoSesion" EntitySet="TipoSesion" />
+            <End Role="Sesion" EntitySet="Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DependenciaFideicomisoEjercicioFichaTecnica" Association="Self.FK_DependenciaFideicomisoEjercicioFichaTecnica">
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+            <End Role="FichaTecnica" EntitySet="FichaTecnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DependenciaFideicomisoEjercicioUsuarioFideicomiso" Association="Self.FK_DependenciaFideicomisoEjercicioUsuarioFideicomiso">
+            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
+            <End Role="UsuarioFideicomiso" EntitySet="UsuarioFideicomiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EjercicioNormatividad" Association="Self.FK_EjercicioNormatividad">
+            <End Role="Ejercicio" EntitySet="Ejercicio" />
+            <End Role="Normatividad" EntitySet="Normatividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FichaTecnicaFichaTecnicaHistorico" Association="Self.FK_FichaTecnicaFichaTecnicaHistorico">
+            <End Role="FichaTecnica" EntitySet="FichaTecnica" />
+            <End Role="FichaTecnicaHistorico" EntitySet="FichaTecnicaHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SesionActas" Association="Self.FK_SesionActas">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="Actas" EntitySet="Actas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SesionNotas" Association="Self.FK_SesionNotas">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="Notas" EntitySet="Notas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SesionSesionHistorico" Association="Self.FK_SesionSesionHistorico">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusAcuerdoAcuerdo" Association="Self.FK_StatusAcuerdoAcuerdo">
+            <End Role="StatusAcuerdo" EntitySet="StatusAcuerdo" />
+            <End Role="Acuerdo" EntitySet="Acuerdo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusSesionSesionHistorico" Association="Self.FK_StatusSesionSesionHistorico">
+            <End Role="StatusSesion" EntitySet="StatusSesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoSesionSesionHistorico" Association="Self.FK_TipoSesionSesionHistorico">
+            <End Role="TipoSesion" EntitySet="TipoSesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoUsuarioUsuario" Association="Self.FK_TipoUsuarioUsuario">
+            <End Role="TipoUsuario" EntitySet="TipoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioUsuarioFideicomiso" Association="Self.FK_UsuarioUsuarioFideicomiso">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioFideicomiso" EntitySet="UsuarioFideicomiso" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SISEFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -809,6 +937,7 @@
           <NavigationProperty Name="DetalleActas" Relationship="SISEFModel.SesionActas" FromRole="Sesion" ToRole="Actas" />
           <Property Name="HoraReprogramada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HoraCelebrada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DetalleSesionesHistorico" Relationship="SISEFModel.SesionSesionHistorico" FromRole="Sesion" ToRole="SesionHistorico" />
         </EntityType>
         <EntityType Name="StatusSesion">
           <Key>
@@ -823,6 +952,7 @@
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_StatusSesion_StatusSesionID" FromRole="StatusSesion" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesionesHistorico" Relationship="SISEFModel.StatusSesionSesionHistorico" FromRole="StatusSesion" ToRole="SesionHistorico" />
         </EntityType>
         <EntityType Name="TipoCalendarizacion">
           <Key>
@@ -850,6 +980,7 @@
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleSesiones" Relationship="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" FromRole="TipoSesion" ToRole="Sesion" />
+          <NavigationProperty Name="DetalleSesionesHistorico" Relationship="SISEFModel.TipoSesionSesionHistorico" FromRole="TipoSesion" ToRole="SesionHistorico" />
         </EntityType>
         <EntityType Name="TipoUsuario">
           <Key>
@@ -1134,6 +1265,24 @@
             <Parameter Name="status" Mode="In" Type="Int32" />
             <Parameter Name="sesion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="SesionHistorico" EntityType="SISEFModel.SesionHistorico" />
+          <AssociationSet Name="TipoSesionSesionHistorico" Association="SISEFModel.TipoSesionSesionHistorico">
+            <End Role="TipoSesion" EntitySet="TipoSesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="StatusSesionSesionHistorico" Association="SISEFModel.StatusSesionSesionHistorico">
+            <End Role="StatusSesion" EntitySet="StatusSesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="SesionSesionHistorico" Association="SISEFModel.SesionSesionHistorico">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="SesionHistorico" EntitySet="SesionHistorico" />
+          </AssociationSet>
+          <EntitySet Name="FichaTecnicaHistorico" EntityType="SISEFModel.FichaTecnicaHistorico" />
+          <AssociationSet Name="FichaTecnicaFichaTecnicaHistorico" Association="SISEFModel.FichaTecnicaFichaTecnicaHistorico">
+            <End Role="FichaTecnica" EntitySet="FichaTecnica" />
+            <End Role="FichaTecnicaHistorico" EntitySet="FichaTecnicaHistorico" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="TipoUsuarioUsuario">
           <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
@@ -1290,7 +1439,20 @@
           <Property Name="FechaCaptura" Type="DateTime" Precision="3" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
           <Property Name="UsuarioCaptura" Type="String" FixedLength="false" MaxLength="50" Unicode="true" Nullable="true" />
-          <Property Name="UsuarioModifica" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="UsuarioModifica" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ResponsableOperativo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Finalidad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Formalizacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Partes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Modificaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ComiteTecnico" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReglasOperacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EstructuraAdministrativa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Calendario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PresupuestoAnual" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SituacionPatrimonial" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DetalleFichasTecnicaHistorico" Relationship="SISEFModel.FichaTecnicaFichaTecnicaHistorico" FromRole="FichaTecnica" ToRole="FichaTecnicaHistorico" />
         </EntityType>
         <Association Name="DependenciaFideicomisoEjercicioFichaTecnica">
           <End Type="SISEFModel.DependenciaFideicomisoEjercicio" Role="DependenciaFideicomisoEjercicio" Multiplicity="1" />
@@ -1335,6 +1497,108 @@
           <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="SesionID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="SesionHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Descripcion" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FechaProgramada" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="FechaCelebrada" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="FechaReprogramada" Type="DateTime" Precision="3" />
+          <Property Name="FechaOficio" Type="DateTime" Precision="3" />
+          <Property Name="Observaciones" Type="String" Unicode="true" Nullable="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="NumOficio" Type="String" FixedLength="false" MaxLength="250" Nullable="true" Unicode="true" />
+          <Property Name="LugarReunion" Type="String" Nullable="true" FixedLength="false" MaxLength="250" Unicode="true" />
+          <Property Name="NumSesion" Type="String" FixedLength="false" MaxLength="250" Nullable="true" Unicode="true" />
+          <Property Name="HoraProgramada" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
+          <Property Name="HoraReprogramada" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
+          <Property Name="HoraCelebrada" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioCaptura" Type="String" Nullable="true" FixedLength="false" MaxLength="50" Unicode="true" />
+          <NavigationProperty Name="TipoSesion" Relationship="SISEFModel.TipoSesionSesionHistorico" FromRole="SesionHistorico" ToRole="TipoSesion" />
+          <Property Name="TipoSesionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StatusSesion" Relationship="SISEFModel.StatusSesionSesionHistorico" FromRole="SesionHistorico" ToRole="StatusSesion" />
+          <Property Name="StatusSesionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sesion" Relationship="SISEFModel.SesionSesionHistorico" FromRole="SesionHistorico" ToRole="Sesion" />
+          <Property Name="SesionID" Type="Int32" Nullable="false" />
+          <Property Name="FechaCapturaCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="TipoSesionSesionHistorico">
+          <End Type="SISEFModel.TipoSesion" Role="TipoSesion" Multiplicity="1" />
+          <End Type="SISEFModel.SesionHistorico" Role="SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="TipoSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusSesionSesionHistorico">
+          <End Type="SISEFModel.StatusSesion" Role="StatusSesion" Multiplicity="1" />
+          <End Type="SISEFModel.SesionHistorico" Role="SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusSesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="StatusSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SesionSesionHistorico">
+          <End Type="SISEFModel.Sesion" Role="Sesion" Multiplicity="1" />
+          <End Type="SISEFModel.SesionHistorico" Role="SesionHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SesionHistorico">
+              <PropertyRef Name="SesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FichaTecnicaHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NombreArchivo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoArchivo" Type="String" Nullable="true" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCaptura" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioCaptura" Type="String" Nullable="true" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsableOperativo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Finalidad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Formalizacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Partes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Modificaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ComiteTecnico" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReglasOperacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EstructuraAdministrativa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Calendario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PresupuestoAnual" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SituacionPatrimonial" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FichaTecnica" Relationship="SISEFModel.FichaTecnicaFichaTecnicaHistorico" FromRole="FichaTecnicaHistorico" ToRole="FichaTecnica" />
+          <Property Name="FichaTecnicaID" Type="Int32" Nullable="false" />
+          <Property Name="FechaCapturaCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FichaTecnicaFichaTecnicaHistorico">
+          <End Type="SISEFModel.FichaTecnica" Role="FichaTecnica" Multiplicity="1" />
+          <End Type="SISEFModel.FichaTecnicaHistorico" Role="FichaTecnicaHistorico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FichaTecnica">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichaTecnicaHistorico">
+              <PropertyRef Name="FichaTecnicaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1624,6 +1888,18 @@
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
           <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
           <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+          <ScalarProperty Name="ResponsableOperativo" ColumnName="ResponsableOperativo" />
+          <ScalarProperty Name="Finalidad" ColumnName="Finalidad" />
+          <ScalarProperty Name="Creacion" ColumnName="Creacion" />
+          <ScalarProperty Name="Formalizacion" ColumnName="Formalizacion" />
+          <ScalarProperty Name="Partes" ColumnName="Partes" />
+          <ScalarProperty Name="Modificaciones" ColumnName="Modificaciones" />
+          <ScalarProperty Name="ComiteTecnico" ColumnName="ComiteTecnico" />
+          <ScalarProperty Name="ReglasOperacion" ColumnName="ReglasOperacion" />
+          <ScalarProperty Name="EstructuraAdministrativa" ColumnName="EstructuraAdministrativa" />
+          <ScalarProperty Name="Calendario" ColumnName="Calendario" />
+          <ScalarProperty Name="PresupuestoAnual" ColumnName="PresupuestoAnual" />
+          <ScalarProperty Name="SituacionPatrimonial" ColumnName="SituacionPatrimonial" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1634,6 +1910,58 @@
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Imagen" ColumnName="Imagen" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SesionHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.SesionHistorico)">
+        <MappingFragment StoreEntitySet="SesionHistorico">
+          <ScalarProperty Name="FechaCapturaCorta" ColumnName="FechaCapturaCorta" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaProgramada" ColumnName="FechaProgramada" />
+          <ScalarProperty Name="FechaCelebrada" ColumnName="FechaCelebrada" />
+          <ScalarProperty Name="FechaReprogramada" ColumnName="FechaReprogramada" />
+          <ScalarProperty Name="FechaOficio" ColumnName="FechaOficio" />
+          <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+          <ScalarProperty Name="NumOficio" ColumnName="NumOficio" />
+          <ScalarProperty Name="LugarReunion" ColumnName="LugarReunion" />
+          <ScalarProperty Name="NumSesion" ColumnName="NumSesion" />
+          <ScalarProperty Name="HoraProgramada" ColumnName="HoraProgramada" />
+          <ScalarProperty Name="HoraReprogramada" ColumnName="HoraReprogramada" />
+          <ScalarProperty Name="HoraCelebrada" ColumnName="HoraCelebrada" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="TipoSesionID" ColumnName="TipoSesionID" />
+          <ScalarProperty Name="StatusSesionID" ColumnName="StatusSesionID" />
+          <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FichaTecnicaHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.FichaTecnicaHistorico)">
+        <MappingFragment StoreEntitySet="FichaTecnicaHistorico">
+          <ScalarProperty Name="FechaCapturaCorta" ColumnName="FechaCapturaCorta" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+          <ScalarProperty Name="TipoArchivo" ColumnName="TipoArchivo" />
+          <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+          <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
+          <ScalarProperty Name="ResponsableOperativo" ColumnName="ResponsableOperativo" />
+          <ScalarProperty Name="Finalidad" ColumnName="Finalidad" />
+          <ScalarProperty Name="Creacion" ColumnName="Creacion" />
+          <ScalarProperty Name="Formalizacion" ColumnName="Formalizacion" />
+          <ScalarProperty Name="Partes" ColumnName="Partes" />
+          <ScalarProperty Name="Modificaciones" ColumnName="Modificaciones" />
+          <ScalarProperty Name="ComiteTecnico" ColumnName="ComiteTecnico" />
+          <ScalarProperty Name="ReglasOperacion" ColumnName="ReglasOperacion" />
+          <ScalarProperty Name="EstructuraAdministrativa" ColumnName="EstructuraAdministrativa" />
+          <ScalarProperty Name="Calendario" ColumnName="Calendario" />
+          <ScalarProperty Name="PresupuestoAnual" ColumnName="PresupuestoAnual" />
+          <ScalarProperty Name="SituacionPatrimonial" ColumnName="SituacionPatrimonial" />
+          <ScalarProperty Name="FichaTecnicaID" ColumnName="FichaTecnicaID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

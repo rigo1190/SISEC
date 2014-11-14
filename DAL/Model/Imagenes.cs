@@ -14,7 +14,6 @@ namespace DAL.Model
     
     public partial class Imagenes
     {
-
         public int ID { get; set; }
         public string Nombre { get; set; }
         public byte[] Imagen { get; set; }

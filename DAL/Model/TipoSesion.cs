@@ -17,6 +17,7 @@ namespace DAL.Model
         public TipoSesion()
         {
             this.DetalleSesiones = new HashSet<Sesion>();
+            this.DetalleSesionesHistorico = new HashSet<SesionHistorico>();
         }
     
         public int ID { get; set; }
@@ -29,5 +30,6 @@ namespace DAL.Model
         public string UsuarioModifica { get; set; }
     
         public virtual ICollection<Sesion> DetalleSesiones { get; set; }
+        public virtual ICollection<SesionHistorico> DetalleSesionesHistorico { get; set; }
     }
 }

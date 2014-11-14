@@ -19,6 +19,7 @@ namespace DAL.Model
             this.DetalleAcuerdos = new HashSet<Acuerdo>();
             this.DetalleNotas = new HashSet<Notas>();
             this.DetalleActas = new HashSet<Actas>();
+            this.DetalleSesionesHistorico = new HashSet<SesionHistorico>();
         }
     
         public int ID { get; set; }
@@ -49,5 +50,6 @@ namespace DAL.Model
         public virtual TipoSesion TipoSesion { get; set; }
         public virtual ICollection<Notas> DetalleNotas { get; set; }
         public virtual ICollection<Actas> DetalleActas { get; set; }
+        public virtual ICollection<SesionHistorico> DetalleSesionesHistorico { get; set; }
     }
 }

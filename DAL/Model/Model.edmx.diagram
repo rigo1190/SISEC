@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="3.5" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.DependenciaFideicomisoEjercicio" Width="2.625" PointX="6" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Ejercicio" Width="1.5" PointX="0.5" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.Fideicomiso" Width="1.5" PointX="1.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.Fideicomiso" Width="1.5" PointX="2.5" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Normatividad" Width="2.25" PointX="11.125" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Seguimiento" Width="1.5" PointX="15.375" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Sesion" Width="3.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
@@ -45,7 +45,13 @@
         <EntityTypeShape EntityType="SISEFModel.FichaTecnica" Width="3.25" PointX="0.875" PointY="14.5" />
         <AssociationConnector Association="SISEFModel.DependenciaFideicomisoEjercicioFichaTecnica" />
         <AssociationConnector Association="SISEFModel.EjercicioNormatividad" />
-        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="1.375" PointY="0.5" />
+        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="SISEFModel.SesionHistorico" Width="3" PointX="20.125" PointY="1.75" />
+        <AssociationConnector Association="SISEFModel.TipoSesionSesionHistorico" />
+        <AssociationConnector Association="SISEFModel.StatusSesionSesionHistorico" />
+        <AssociationConnector Association="SISEFModel.SesionSesionHistorico" />
+        <EntityTypeShape EntityType="SISEFModel.FichaTecnicaHistorico" Width="2.375" PointX="4.75" PointY="19.625" />
+        <AssociationConnector Association="SISEFModel.FichaTecnicaFichaTecnicaHistorico" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

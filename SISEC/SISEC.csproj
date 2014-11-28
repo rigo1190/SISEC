@@ -708,6 +708,7 @@
     <Content Include="Reports\Acuerdos.aspx" />
     <Content Include="Reports\Calendario.aspx" />
     <Content Include="Reports\ReportView.aspx" />
+    <Content Include="Reports\SintesisInformativa.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
@@ -850,11 +851,24 @@
     <Compile Include="Reports\ReportView.aspx.designer.cs">
       <DependentUpon>ReportView.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\rptAcuerdos1.cs">
+    <Compile Include="Reports\rptAcuerdos.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rptAcuerdos.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\rptSintesisInformativa.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptSintesisInformativa.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\SintesisInformativa.aspx.cs">
+      <DependentUpon>SintesisInformativa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\SintesisInformativa.aspx.designer.cs">
+      <DependentUpon>SintesisInformativa.aspx</DependentUpon>
     </Compile>
     <Compile Include="SeleccionarDependencia.aspx.cs">
       <DependentUpon>SeleccionarDependencia.aspx</DependentUpon>
@@ -910,7 +924,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Reports\rptAcuerdos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptAcuerdos1.cs</LastGenOutput>
+      <LastGenOutput>rptAcuerdos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptSintesisInformativa.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptSintesisInformativa.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

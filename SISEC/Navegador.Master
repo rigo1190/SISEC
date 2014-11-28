@@ -100,6 +100,10 @@
                                 <li>
                                     <a href="<%=ResolveClientUrl("~/Reports/Acuerdos.aspx") %>">Acuerdos</a>
                                 </li>
+
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Reports/SintesisInformativa.aspx") %>">Síntesis Informativa</a>
+                                </li>
                                 
                             </ul>
                         </li>

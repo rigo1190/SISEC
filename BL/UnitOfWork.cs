@@ -39,12 +39,26 @@ namespace BL
         private IBusinessLogic<Imagenes> imagenesBusinessLogic;
         private IBusinessLogic<SesionHistorico> sesionHistoricoBusinessLogic;
         private IBusinessLogic<FichaTecnicaHistorico> fichaTecnicaHistoricoBusinessLogic;
+        private IBusinessLogic<rptSintesisInformativa> rptSintesisInformativaBusinessLogic;
 
 
 
         public UnitOfWork()
         {
             this.contexto = new SISEF();
+        }
+
+        public IBusinessLogic<rptSintesisInformativa> RptSintesisInformativaBusinessLogic
+        {
+            get
+            {
+                if (this.rptSintesisInformativaBusinessLogic == null)
+                {
+                    this.rptSintesisInformativaBusinessLogic = new GenericBusinessLogic<rptSintesisInformativa>(contexto);
+                }
+
+                return rptSintesisInformativaBusinessLogic;
+            }
         }
 
         public IBusinessLogic<FichaTecnicaHistorico> FichaTecnicaHistoricoBusinessLogic

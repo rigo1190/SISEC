@@ -49,6 +49,7 @@ namespace DAL.Model
         public virtual DbSet<Imagenes> Imagenes { get; set; }
         public virtual DbSet<SesionHistorico> SesionHistorico { get; set; }
         public virtual DbSet<FichaTecnicaHistorico> FichaTecnicaHistorico { get; set; }
+        public virtual DbSet<rptSintesisInformativa> rptSintesisInformativa { get; set; }
     
         public virtual ObjectResult<pa_Acuerdos_Result> pa_Acuerdos(Nullable<int> fideicomiso, Nullable<int> ejercicio, Nullable<int> status, Nullable<int> sesion)
         {

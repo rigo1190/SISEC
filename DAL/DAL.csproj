@@ -102,6 +102,9 @@
     <Compile Include="Model\pa_Acuerdos_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\rptSintesisInformativa.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Seguimiento.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

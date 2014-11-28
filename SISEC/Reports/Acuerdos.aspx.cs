@@ -19,10 +19,12 @@ namespace SISEC.Reports
             {
                 BindDropDownFideicomisos();
                 BindDropDownStatus();
-                BindGrid(true);
                 _Consultado.Value = "N";
                 _Ejercicio.Value = Session["Ejercicio"].ToString();
                 _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
+                txtFechaInicio.Value = DateTime.Now.ToShortDateString();
+                txtFechaFin.Value = DateTime.Now.ToShortDateString();
+                BindGrid(true);
             }
 
         }
@@ -91,15 +93,21 @@ namespace SISEC.Reports
         {
             int idSesion=Utilerias.StrToInt(ddlSesiones.SelectedValue);
             int idStatus=Utilerias.StrToInt(ddlStatusAcuerdo.SelectedValue);
+            DateTime fechaInicio = Convert.ToDateTime(txtFechaInicio.Value);
+            DateTime fechaFin = Convert.ToDateTime(txtFechaFin.Value);
+
             
             List<Acuerdo> list=null;
 
             if (!todos)
             {
-                if (!txtNumAcuredo.Value.Trim().Equals(string.Empty))
-                    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.NumAcuerdo.Contains(txtNumAcuredo.Value)).ToList();
-                else
-                    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus).ToList();
+                //if (!txtNumAcuredo.Value.Trim().Equals(string.Empty))
+                //    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.NumAcuerdo.Contains(txtNumAcuredo.Value)).ToList();
+                //else
+                //    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus).ToList();
+                list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.FechaAcuerdo>=fechaInicio && e.FechaAcuerdo<=fechaFin).ToList();
+
+
             }else
                 list = uow.AcuerdoBusinessLogic.Get().ToList();
 
@@ -147,7 +155,12 @@ namespace SISEC.Reports
 
         protected void btnConsulta_Click(object sender, EventArgs e)
         {
-            BindGrid(false);
+
+            if (ddlFideicomisos.SelectedValue.Equals("0"))
+                BindGrid(true);
+            else
+                BindGrid(false);
+
             _Consultado.Value = "S";
         }
 
@@ -173,7 +186,11 @@ namespace SISEC.Reports
         protected void gridAcuerdos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gridAcuerdos.PageIndex = e.NewPageIndex;
-            if (_Consultado.Value.Equals("N"))
+            //if (_Consultado.Value.Equals("N"))
+            //    BindGrid(true);
+            //else
+            //    BindGrid(false);
+            if (ddlFideicomisos.SelectedValue.Equals("0"))
                 BindGrid(true);
             else
                 BindGrid(false);

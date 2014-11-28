@@ -27,10 +27,8 @@ namespace SISEC.Formas
                 {
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
-
-                    //Acuerdo obj = uow.AcuerdoBusinessLogic.GetByID(1);
-                    //Repeater1.DataSource = obj.DetalleSeguimientos.ToList();
-                    //Repeater1.DataBind();
+                    txtFideicomisoInfo.Value = GetClaveFideicomiso(idCalendario, uow);
+                    
                 }
                 
             }
@@ -200,6 +198,7 @@ namespace SISEC.Formas
         {
             int idCalendario = BuscarCalendario();
             BindGridSesiones(idCalendario);
+            txtFideicomisoInfo.Value = GetClaveFideicomiso(idCalendario, uow);
 
             divDetalleAcuerdos.Style.Add("display", "none");
             divEncabezado.Style.Add("display", "block");
@@ -308,6 +307,9 @@ namespace SISEC.Formas
 
             BindGridAcuerdos();
 
+            Sesion obj = uow.SesionBusinessLogic.GetByID(Utilerias.StrToInt(_IDSesion.Value));
+            txtNumeroSesion.Value = obj.NumSesion;
+
             divEncabezado.Style.Add("display", "none");
             divDetalleAcuerdos.Style.Add("display", "block");
             divEncabezadoDetalle.Style.Add("display", "block");
@@ -330,6 +332,7 @@ namespace SISEC.Formas
             obj.Notas = txtNotas.Value;
             obj.NumAcuerdo = txtNumAcuerdo.Value;
             obj.StatusAcuerdoID = Utilerias.StrToInt(ddlStatus.SelectedValue);
+            obj.FechaAcuerdo = Convert.ToDateTime(txtFechaAcuerdo.Value);
 
             if (_Accion.Value.Equals("N"))
             {
@@ -367,6 +370,7 @@ namespace SISEC.Formas
             //Se inhabilitan los controles
             txtNumAcuerdo.Disabled = true;
             txtNotas.Disabled = true;
+            txtFechaAcuerdo.Disabled = true;
             ddlStatus.Enabled = false;
             btnGuardar.Enabled = false;
 

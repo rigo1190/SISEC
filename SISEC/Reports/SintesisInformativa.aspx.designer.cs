@@ -10,7 +10,7 @@
 namespace SISEC.Reports {
     
     
-    public partial class Acuerdos {
+    public partial class SintesisInformativa {
         
         /// <summary>
         /// Control divFiltros.
@@ -29,42 +29,6 @@ namespace SISEC.Reports {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFideicomisos;
-        
-        /// <summary>
-        /// Control ddlSesiones.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSesiones;
-        
-        /// <summary>
-        /// Control ddlStatusAcuerdo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatusAcuerdo;
-        
-        /// <summary>
-        /// Control txtFechaInicio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaInicio;
-        
-        /// <summary>
-        /// Control txtFechaFin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaFin;
         
         /// <summary>
         /// Control btnConsulta.
@@ -103,49 +67,13 @@ namespace SISEC.Reports {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnVer;
         
         /// <summary>
-        /// Control gridAcuerdos.
+        /// Control gridSintesis.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridAcuerdos;
-        
-        /// <summary>
-        /// Control divMsgError.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMsgError;
-        
-        /// <summary>
-        /// Control lblMsgError.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsgError;
-        
-        /// <summary>
-        /// Control divMsgSuccess.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMsgSuccess;
-        
-        /// <summary>
-        /// Control lblMsgSuccess.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMsgSuccess;
+        protected global::System.Web.UI.WebControls.GridView gridSintesis;
         
         /// <summary>
         /// Control _IDCalendario.

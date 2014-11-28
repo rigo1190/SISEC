@@ -112,6 +112,24 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaDetalle;
         
         /// <summary>
+        /// Control txtFideicomisoInfo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFideicomisoInfo;
+        
+        /// <summary>
+        /// Control txtNumeroSesion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNumeroSesion;
+        
+        /// <summary>
         /// Control txtNumAcuerdo.
         /// </summary>
         /// <remarks>
@@ -137,6 +155,15 @@ namespace SISEC.Formas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+        
+        /// <summary>
+        /// Control txtFechaAcuerdo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaAcuerdo;
         
         /// <summary>
         /// Control btnGuardar.
@@ -343,7 +370,7 @@ namespace SISEC.Formas {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAcuerdo;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtAcuerdo;
         
         /// <summary>
         /// Control txtStatusAcuerdo.

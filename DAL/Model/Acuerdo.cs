@@ -28,6 +28,7 @@ namespace DAL.Model
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
         public int StatusAcuerdoID { get; set; }
+        public Nullable<System.DateTime> FechaAcuerdo { get; set; }
     
         public virtual Sesion Sesion { get; set; }
         public virtual ICollection<Seguimiento> DetalleSeguimientos { get; set; }

@@ -15,7 +15,7 @@ namespace SISEC.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
             int caller = Utilerias.StrToInt(Request.Params["c"].ToString());
-            string parametros=Request.Params["p"].ToString();
+            string parametros=Request.Params["p"] !=null ? Request.Params["p"].ToString() : string.Empty;
             string nomReporte=GetNombreReporte(caller);
             ReportDocument rdc = new ReportDocument();
 
@@ -39,6 +39,16 @@ namespace SISEC.Reports
                     rdc.SetParameterValue("@fideicomiso", primerArray[1]);
                     rdc.SetParameterValue("@status", primerArray[2]);
                     rdc.SetParameterValue("@sesion", primerArray[3]);
+                    
+                    //RAngo de Fechas
+                    DateTime fechaInicio = Convert.ToDateTime(primerArray[4]);
+                    DateTime fechaFin = Convert.ToDateTime(primerArray[5]);
+                    rdc.SetParameterValue("@fechaInicio", fechaInicio.ToString("yyyy-MM-dd") + " 00:00:00");
+                    rdc.SetParameterValue("@fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 00:00:00");
+
+                    break;
+
+                case 2: //SINTESIS INFORMATIVA
                     break;
             }
         }
@@ -94,6 +104,10 @@ namespace SISEC.Reports
             {
                 case 1:
                     nombreReporte = "rptAcuerdos.rpt";
+                    break;
+
+                case 2:
+                    nombreReporte = "rptSintesisInformativa.rpt";
                     break;
             }
 

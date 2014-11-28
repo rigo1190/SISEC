@@ -25,6 +25,11 @@
                 $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
             });
 
+            $('.datepicker').datepicker(
+            {
+                format: "dd/mm/yyyy"
+            });
+
         });
 
         function fnc_Cancelar() {
@@ -55,10 +60,17 @@
             $("#<%= txtNumAcuerdo.ClientID %>").val("");
             $("#<%= _Accion.ClientID %>").val("N");
 
+
+            $("#<%= txtFechaAcuerdo.ClientID %>").prop('disabled', false);
             $("#<%= txtNotas.ClientID %>").prop('disabled', false);
             $("#<%= txtNumAcuerdo.ClientID %>").prop('disabled', false);
             $("#<%= ddlStatus.ClientID %>").prop('disabled', false);
             $("#<%= btnGuardar.ClientID %>").prop('disabled', false);
+
+
+            var date = new Date();
+            $("#<%= txtFechaAcuerdo.ClientID %>").val(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+
 
             return false;
         }
@@ -289,6 +301,14 @@
                                 <div class="panel-body">
                                     <div class="col-lg-12">
                                         <div class="form-group">
+                                            <label>Fideicomiso:</label>
+                                            <input disabled="disabled" type="text" name="prueba" runat="server" class="form-control" id="txtFideicomisoInfo" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Número de Sesión:</label>
+                                            <input disabled="disabled" type="text" name="prueba" runat="server" class="form-control" id="txtNumeroSesion" />
+                                        </div>
+                                        <div class="form-group">
                                             <label>Número de Acuerdo:</label>
                                             <input type="text" name="prueba" runat="server" class="form-control" id="txtNumAcuerdo" />
                                         </div>
@@ -297,10 +317,23 @@
                                             <textarea type="text" name="prueba" style="height:250px" runat="server" class="form-control" id="txtNotas" />
                                         </div>
                                         <div class="form-group">
-                                            <label>Status:</label>
-                                            <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control" AutoPostBack="false"></asp:DropDownList>
+                                            <div class="col-lg-6">
+                                                <label>Status:</label>
+                                                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control" AutoPostBack="false"></asp:DropDownList>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>Fecha Acuerdo:</label>
+                                                <div class="input-group">
+                                                    <input class="form-control datepicker" runat="server" id="txtFechaAcuerdo"/>
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p>&nbsp;</p>
                                         </div>
                                         <div class="form-group">
+                                            <button type="button" id="btnCrearAcuerdo2" onclick="fnc_CrearNuevoAcuerdo();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                             <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-default" ></asp:Button>
                                             <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Lista Acuerdos</button> 
                                         </div>
@@ -452,34 +485,41 @@
                 <h4 class="modal-title" id="modalTitle">Datos del Acuerdo</h4>
               </div>
               <div class="modal-body">
-                     <div class="col-lg-12">
-                        <div class="form-group">
-                            <label>Fideicomiso</label>
-                             <input class="form-control" disabled="disabled" runat="server" id="txtFideicomiso"/>
+
+                 <div class="container">
+                    
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Fideicomiso</label>
+                                 <input class="form-control" disabled="disabled" runat="server" id="txtFideicomiso"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Número de Sesión:</label>
+                                <input class="form-control" disabled="disabled"  runat="server" id="txtSesion" />
+                            </div>
+                            <div class="form-group">
+                                <label>Número de Acuerdo:</label>
+                                <input class="form-control" disabled="disabled"  runat="server" id="txtNumeroAcuerdo" />
+                            </div>
+                            <div class="form-group">
+                                <label>Acuerdo</label>
+                                <textarea class="form-control" disabled="disabled"  runat="server" id="txtAcuerdo"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Status Acuerdo:</label>
+                                <input class="form-control" disabled="disabled"  runat="server" id="txtStatusAcuerdo"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Seguimientos:</label>
+                                 <div id="divSeguimientosDetalle">
+                                 </div> 
+                            </div>
                         </div>
-                         <div class="form-group">
-                            <label>Número de Sesión:</label>
-                            <input class="form-control" disabled="disabled"  runat="server" id="txtSesion" />
-                        </div>
-                        <div class="form-group">
-                            <label>Número de Acuerdo:</label>
-                            <input class="form-control" disabled="disabled"  runat="server" id="txtNumeroAcuerdo" />
-                        </div>
-                        <div class="form-group">
-                            <label>Acuerdo</label>
-                            <input class="form-control" disabled="disabled"  runat="server" id="txtAcuerdo"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Status Acuerdo:</label>
-                            <input class="form-control" disabled="disabled"  runat="server" id="txtStatusAcuerdo"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Seguimientos:</label>
-                             <div id="divSeguimientosDetalle">
-                             </div> 
-                        </div>
-                       
-                    </div>
+                    
+                </div>
+
+
+                     
                      
               </div>
               <div class="modal-footer">

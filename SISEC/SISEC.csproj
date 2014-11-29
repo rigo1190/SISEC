@@ -858,10 +858,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\rptCalendarioSesiones.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>rptCalendarioSesiones.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Reports\rptSintesisInformativa.cs">
       <AutoGen>True</AutoGen>

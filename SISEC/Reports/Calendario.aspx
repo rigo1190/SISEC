@@ -1,6 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="Calendario.aspx.cs" Inherits="SISEC.Reports.Calendario" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+        function fnc_AbrirReporte() {
+
+            var izq = (screen.width - 750) / 2
+            var sup = (screen.height - 600) / 2
+            var param = "";
+            param = fnc_ArmarParamentros();
+            url = $("#<%= _URL.ClientID %>").val();
+            var argumentos = "?c=" + 3 + param;
+            url += argumentos;
+            window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
+        }
+
+
+        function fnc_ArmarParamentros() {
+            var p = "";
+            var msg = "";
+            return p;
+
+        }
+
         function fnc_CargarDatos(idSesion) {
             
             PageMethods.GetDatosSesion(idSesion, fnc_ColocarDatosSesion);
@@ -84,7 +104,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Fideicomiso</label>
-                                    <asp:DropDownList ID="ddlFideicomisos" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
+                                    <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                                 </div>
                             </div>
 
@@ -110,8 +130,10 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                          <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa"></i>Agenda de sesiones</h3>
-                            
+                            <div class="col-md-11">
+                                <h3 class="panel-title"><i class="fa"></i>Agenda de sesiones</h3>
+                            </div>
+                             <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -143,6 +165,7 @@
     <div runat="server" style="display:none">
         <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_IDSesion" />
+        <input type="hidden" runat="server" id="_URL" />
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -232,4 +255,18 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-footer">
+                <div class="alert alert-danger" runat="server" id="divMsgError" style="display:none">
+                    <asp:Label ID="lblMsgError" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                </div>
+                <div class="alert alert-success" runat="server" id="divMsgSuccess" style="display:none">
+                    <asp:Label ID="lblMsgSuccess" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>

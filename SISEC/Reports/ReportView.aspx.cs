@@ -50,6 +50,9 @@ namespace SISEC.Reports
 
                 case 2: //SINTESIS INFORMATIVA
                     break;
+
+                case 3: //AGENDA DE SESIONES
+                    break;
             }
         }
 
@@ -59,10 +62,10 @@ namespace SISEC.Reports
         private void CargarReporte(ReportDocument rdc)
         {
             CrystalReportViewer1.ReportSource = rdc;
-            string user = "sa";
-            string pass = "081995";
-            string server = @"RIGO-PC\SQLEXPRESS";
-            string db = "SISEF";
+            string user = System.Configuration.ConfigurationManager.AppSettings["user"];
+            string pass = System.Configuration.ConfigurationManager.AppSettings["pass"];
+            string server = @System.Configuration.ConfigurationManager.AppSettings["server"];
+            string db = System.Configuration.ConfigurationManager.AppSettings["db"];
 
 
             TableLogOnInfo Logon = new TableLogOnInfo();
@@ -102,12 +105,16 @@ namespace SISEC.Reports
 
             switch (caller)
             {
-                case 1:
+                case 1: //ACUERDOS
                     nombreReporte = "rptAcuerdos.rpt";
                     break;
 
-                case 2:
+                case 2: //FICHAS TECNICAS
                     nombreReporte = "rptSintesisInformativa.rpt";
+                    break;
+
+                case 3: //AGENDA DE SESIONES
+                    nombreReporte = "rptCalendarioSesiones.rpt";
                     break;
             }
 

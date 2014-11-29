@@ -7,9 +7,9 @@
       <Diagram DiagramId="0156de5970dc474982d858d5d7688ec2" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="SISEFModel.Acuerdo" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Calendario" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="3.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.Dependencia" Width="1.5" PointX="4" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.DependenciaFideicomisoEjercicio" Width="2.625" PointX="6" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SISEFModel.Ejercicio" Width="1.5" PointX="0.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="SISEFModel.Ejercicio" Width="1.5" PointX="0.5" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Fideicomiso" Width="1.5" PointX="2.5" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Normatividad" Width="2.25" PointX="11.125" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="SISEFModel.Seguimiento" Width="1.5" PointX="15.375" PointY="10.875" IsExpanded="true" />
@@ -45,7 +45,7 @@
         <EntityTypeShape EntityType="SISEFModel.FichaTecnica" Width="3.25" PointX="0.875" PointY="14.5" />
         <AssociationConnector Association="SISEFModel.DependenciaFideicomisoEjercicioFichaTecnica" />
         <AssociationConnector Association="SISEFModel.EjercicioNormatividad" />
-        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="1.875" PointY="0.5" />
+        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="SISEFModel.SesionHistorico" Width="3" PointX="20.125" PointY="1.75" />
         <AssociationConnector Association="SISEFModel.TipoSesionSesionHistorico" />
         <AssociationConnector Association="SISEFModel.StatusSesionSesionHistorico" />
@@ -53,6 +53,7 @@
         <EntityTypeShape EntityType="SISEFModel.FichaTecnicaHistorico" Width="2.375" PointX="4.75" PointY="19.625" />
         <AssociationConnector Association="SISEFModel.FichaTecnicaFichaTecnicaHistorico" />
         <EntityTypeShape EntityType="SISEFModel.rptSintesisInformativa" Width="2" PointX="0.5" PointY="2.5" />
+        <EntityTypeShape EntityType="SISEFModel.rptSesiones" Width="1.875" PointX="0.5" PointY="5.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

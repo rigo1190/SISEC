@@ -184,7 +184,9 @@
                 
                  <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+                        <div class="col-md-11">
+                            <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+                        </div>
                         <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
@@ -242,7 +244,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
 
     </div>
 

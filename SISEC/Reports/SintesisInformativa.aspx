@@ -7,7 +7,6 @@
             var sup = (screen.height - 600) / 2
             var param = "";
             param = fnc_ArmarParamentros();
-
             url = $("#<%= _URL.ClientID %>").val();
             var argumentos = "?c=" + 2 + param;
             url += argumentos;
@@ -30,11 +29,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="page-wrapper">
         <div class="container-fluid">
+            
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="alert alert-success alert-dismissable">
-                        <h4><i class="fa fa-crosshairs"></i> <strong>Consulta de Sintesis informativa</strong></h4>  
-                    </div>
+                <div class="alert alert-success alert-dismissable">
+                    <h4><i class="fa fa-crosshairs"></i> <strong>Consulta de Síntesis Informativa</strong></h4>
+                      
                 </div>
             </div>
 
@@ -47,16 +46,16 @@
 
                         <div class="panel-body">
                             
-                            <div class="row col-lg-10">
+                            <div class="row col-lg-12">
                                 <div class="form-group">
                                     <label>Fideicomiso:</label>
-                                    <asp:DropDownList ID="ddlFideicomisos" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
+                                    <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <asp:Button ID="btnConsulta" CssClass="btn btn-default" runat="server" Text="Consultar" />
-                            </div>
+                           <%-- <div class="form-group">
+                                <asp:Button ID="btnConsulta" OnClick="btnConsulta_Click" CssClass="btn btn-default" runat="server" Text="Consultar" />
+                            </div>--%>
 
                         </div>
 
@@ -68,14 +67,16 @@
                 
                  <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+                        <div class="col-md-11">
+                            <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+                        </div>
                         <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                            <asp:GridView ID="gridSintesis" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
+                            <asp:GridView ID="gridSintesis" OnPageIndexChanging="gridSintesis_PageIndexChanging" OnRowDataBound="gridSintesis_RowDataBound" ShowHeaderWhenEmpty="true" DataKeyNames="ID,DependenciaFideicomisoEjercicioID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                 <Columns>
-                                    <asp:TemplateField HeaderText="Número de Sesión" SortExpression="Año">
+                                    <asp:TemplateField HeaderText="Nombre Fideicomiso" SortExpression="Año">
                                         <ItemTemplate>
                                             <asp:Label runat="server" id="lblFideicomiso"></asp:Label>
                                         </ItemTemplate>
@@ -106,10 +107,22 @@
 
     <div runat="server" style="display:none">
         <input type="hidden" runat="server" id="_IDCalendario" />
+        <input type="hidden" runat="server" id="_IDFideicomiso" />
         <input type="hidden" runat="server" id="_Consultado" />
-         <input type="hidden" runat="server" id="_Ejercicio" />
-         <input type="hidden" runat="server" id="_URL" />
+        <input type="hidden" runat="server" id="_Ejercicio" />
+        <input type="hidden" runat="server" id="_URL" />
     </div>
 
-
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-footer">
+                <div class="alert alert-danger" runat="server" id="divMsgError" style="display:none">
+                    <asp:Label ID="lblMsgError" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                </div>
+                <div class="alert alert-success" runat="server" id="divMsgSuccess" style="display:none">
+                    <asp:Label ID="lblMsgSuccess" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>

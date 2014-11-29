@@ -857,6 +857,12 @@
       <DependentUpon>rptAcuerdos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\rptCalendarioSesiones.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptCalendarioSesiones.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\rptSintesisInformativa.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -925,6 +931,10 @@
     <EmbeddedResource Include="Reports\rptAcuerdos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptAcuerdos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptCalendarioSesiones.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptCalendarioSesiones.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\rptSintesisInformativa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -31,15 +31,6 @@ namespace SISEC.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlFideicomisos;
         
         /// <summary>
-        /// Control btnConsulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConsulta;
-        
-        /// <summary>
         /// Control divResultado.
         /// </summary>
         /// <remarks>
@@ -85,6 +76,15 @@ namespace SISEC.Reports {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDCalendario;
         
         /// <summary>
+        /// Control _IDFideicomiso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDFideicomiso;
+        
+        /// <summary>
         /// Control _Consultado.
         /// </summary>
         /// <remarks>
@@ -110,5 +110,41 @@ namespace SISEC.Reports {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden _URL;
+        
+        /// <summary>
+        /// Control divMsgError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMsgError;
+        
+        /// <summary>
+        /// Control lblMsgError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsgError;
+        
+        /// <summary>
+        /// Control divMsgSuccess.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMsgSuccess;
+        
+        /// <summary>
+        /// Control lblMsgSuccess.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMsgSuccess;
     }
 }

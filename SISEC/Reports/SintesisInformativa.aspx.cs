@@ -21,20 +21,45 @@ namespace SISEC.Reports
                 BindDropDownFideicomisos();
                 _Ejercicio.Value = Session["Ejercicio"].ToString();
                 _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
-                CrearObjetoReporte();
+                
+                string M = string.Empty;
+                
                 BindGrid();
+                
+                M=CrearObjetoReporte();
+
+                if (!M.Equals(string.Empty))
+                {
+                    divMsgError.Attributes.Add("display", "block");
+                    lblMsgError.Text = M;
+                }
             }
         }
 
 
-        private void CrearObjetoReporte()
+        private string CrearObjetoReporte()
         {
             bool eliminados=uow.RptSintesisInformativaBusinessLogic.DeleteAll();
+            string M = string.Empty;
 
             if (eliminados)
             {
                 uow.SaveChanges();
 
+                //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                if (uow.Errors.Count > 0)
+                {
+                    foreach (string m in uow.Errors)
+                        M += m;
+
+                    return M;
+                }
+
+
+
+                int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+
+                //SE OBTIENEN TODOS LOS REGISTROS
                 var listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     join f in uow.FideicomisoBusinessLogic.Get()
                                     on dfe.FideicomisoID equals f.ID
@@ -58,6 +83,34 @@ namespace SISEC.Reports
                                         Presupuesto = si.PresupuestoAnual,
                                         Situacion = si.SituacionPatrimonial
                                     });
+
+                if (idFideicomiso > 0)//SE FILTRA POR EL FIDEICOMISO SELECCIONADO, SI ES QUE SE ELIGIO ALGUNO 
+                {
+                    
+                    listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.ID==idFideicomiso)
+                                        join f in uow.FideicomisoBusinessLogic.Get()
+                                        on dfe.FideicomisoID equals f.ID
+                                        join si in uow.FichaTecnicaBusinessLogic.Get()
+                                        on dfe.ID equals si.DependenciaFideicomisoEjercicioID
+                                        select new
+                                        {
+                                            FichaTecnicaID = si.ID, //ID de la ficha tecnica
+                                            FideicomisoID = f.ID,
+                                            Nombre = f.Descripcion, //Nombre del Fideicomiso
+                                            ResponsableOperativo = si.ResponsableOperativo,
+                                            Finalidad = si.Finalidad,
+                                            Creacion = si.Creacion,
+                                            Formalizacion = si.Formalizacion,
+                                            Partes = si.Partes,
+                                            Modificaciones = si.Modificaciones,
+                                            Integracion = si.ComiteTecnico,
+                                            Reglas = si.ReglasOperacion,
+                                            Estructura = si.EstructuraAdministrativa,
+                                            Calendario = si.Calendario,
+                                            Presupuesto = si.PresupuestoAnual,
+                                            Situacion = si.SituacionPatrimonial
+                                        });
+                }
 
                 
                 foreach (var item in listSintesis)
@@ -143,9 +196,13 @@ namespace SISEC.Reports
                             uow.RptSintesisInformativaBusinessLogic.Insert(rpt);
                             uow.SaveChanges();
 
+                            
                             if (uow.Errors.Count > 0)
                             {
+                                foreach (string m in uow.Errors)
+                                    M += m;
 
+                                return M;
                             }
 
        
@@ -156,32 +213,28 @@ namespace SISEC.Reports
 
             }
 
+            return M;
+
         }
 
-
-       
+        
 
         private void BindGrid()
         {
-            List<FichaTecnica> list = uow.FichaTecnicaBusinessLogic.Get().ToList();
+            int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+            List<FichaTecnica> list;
+
+            if (idFideicomiso == 0)
+                list = uow.FichaTecnicaBusinessLogic.Get().ToList();
+            else
+                list = uow.FichaTecnicaBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFideicomiso).ToList();
+
+            lblResultado.Text = "Resultado: " + list.Count.ToString() + " registros";
 
             gridSintesis.DataSource = list;
 
             gridSintesis.DataBind();
         }
-
-        //private string GetNombreCampo(int orden)
-        //{
-        //    string nombre = string.Empty;
-
-
-        //    switch (orden)
-        //    {
-
-        //    }
-        //}
-
-
 
         private void BindDropDownFideicomisos()
         {
@@ -204,23 +257,60 @@ namespace SISEC.Reports
             ddlFideicomisos.Items.Insert(0, new ListItem("Seleccione...", "0"));
 
             ddlFideicomisos.SelectedValue = "0";
+            _IDFideicomiso.Value = "0";
         }
 
-        private int BuscarCalendario()
+        private string GetClaveFideicomiso(int idDependenciaFideicomiso)
         {
-            int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
-            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
-            int idCalendario = 0;
+            Fideicomiso obj = (from d in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.ID == idDependenciaFideicomiso)
+                               join f in uow.FideicomisoBusinessLogic.Get()
+                               on d.FideicomisoID equals f.ID
+                               select f).FirstOrDefault();
+            
+            return obj != null ? obj.Clave : string.Empty;
 
-            DAL.Model.Calendario obj = uow.CalendarioBusinessLogic.Get(c => c.DependenciaFideicomisoEjercicioID == idFideicomiso && c.EjercicioID == idEjercicio).FirstOrDefault();
+        }
 
-            if (obj != null)
-                idCalendario = obj.ID;
+        protected void btnConsulta_Click(object sender, EventArgs e)
+        {
+            _IDFideicomiso.Value = ddlFideicomisos.SelectedValue;
+            BindGrid();
+            CrearObjetoReporte();
+        }
 
-            _IDCalendario.Value = idCalendario.ToString();
+        protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _IDFideicomiso.Value = ddlFideicomisos.SelectedValue;
+            BindGrid();
+            
+            string M = string.Empty;
+            divMsgError.Attributes.Add("display", "none");
+            
+            M=CrearObjetoReporte();
 
-            return idCalendario;
+            if (!M.Equals(string.Empty))
+            {
+                divMsgError.Attributes.Add("display", "block");
+                lblMsgError.Text = M;
+            }
+        }
 
+        protected void gridSintesis_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                int idDependenciaFideicomiso = Utilerias.StrToInt(gridSintesis.DataKeys[e.Row.RowIndex].Values["DependenciaFideicomisoEjercicioID"].ToString());
+                Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
+
+                lblFideicomiso.Text = GetClaveFideicomiso(idDependenciaFideicomiso);
+
+            }
+        }
+
+        protected void gridSintesis_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridSintesis.PageIndex = e.NewPageIndex;
+            BindGrid();
         }
     }
 }

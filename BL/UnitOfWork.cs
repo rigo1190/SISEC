@@ -40,6 +40,7 @@ namespace BL
         private IBusinessLogic<SesionHistorico> sesionHistoricoBusinessLogic;
         private IBusinessLogic<FichaTecnicaHistorico> fichaTecnicaHistoricoBusinessLogic;
         private IBusinessLogic<rptSintesisInformativa> rptSintesisInformativaBusinessLogic;
+        private IBusinessLogic<rptSesiones> rptSesionesBusinessLogic;
 
 
 
@@ -47,6 +48,21 @@ namespace BL
         {
             this.contexto = new SISEF();
         }
+
+
+        public IBusinessLogic<rptSesiones> RptSesionesBusinessLogic
+        {
+            get
+            {
+                if (this.rptSesionesBusinessLogic == null)
+                {
+                    this.rptSesionesBusinessLogic = new GenericBusinessLogic<rptSesiones>(contexto);
+                }
+
+                return rptSesionesBusinessLogic;
+            }
+        }
+
 
         public IBusinessLogic<rptSintesisInformativa> RptSintesisInformativaBusinessLogic
         {

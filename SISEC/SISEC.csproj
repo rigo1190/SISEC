@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AbrirDocto.aspx" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -665,6 +666,7 @@
     <Content Include="img\lista.png" />
     <Content Include="img\magnifier.png" />
     <Content Include="img\Reporte.png" />
+    <Content Include="img\sefiplan.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -709,7 +711,9 @@
     <Content Include="Reports\Calendario.aspx" />
     <Content Include="Reports\ReportView.aspx" />
     <Content Include="Reports\SintesisInformativa.aspx" />
+    <Content Include="Reports\Test.html" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -863,6 +867,12 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Reports\rptSeguimientos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptSeguimientos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\rptSintesisInformativa.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -935,6 +945,10 @@
     <EmbeddedResource Include="Reports\rptCalendarioSesiones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptCalendarioSesiones.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptSeguimientos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptSeguimientos.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\rptSintesisInformativa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

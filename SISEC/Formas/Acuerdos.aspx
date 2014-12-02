@@ -59,12 +59,12 @@
             $("#<%= txtNotas.ClientID %>").val("");
             $("#<%= txtNumAcuerdo.ClientID %>").val("");
             $("#<%= _Accion.ClientID %>").val("N");
-
+            $("#<%= _IDAcuerdo.ClientID %>").val("0");
 
             $("#<%= txtFechaAcuerdo.ClientID %>").prop('disabled', false);
             $("#<%= txtNotas.ClientID %>").prop('disabled', false);
             $("#<%= txtNumAcuerdo.ClientID %>").prop('disabled', false);
-            $("#<%= ddlStatus.ClientID %>").prop('disabled', false);
+            $("#<%= ddlStatus.ClientID %>").prop('disabled', true);
             $("#<%= btnGuardar.ClientID %>").prop('disabled', false);
 
 
@@ -209,7 +209,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Acuerdos" ItemStyle-CssClass="col-md-2" HeaderStyle-CssClass="panel-footer">
+                                        <asp:TemplateField HeaderText="Acuerdos">
                                             <ItemTemplate>
                                                     <button type="button" id="btnAcuerdos" onserverclick="btnAcuerdos_ServerClick" runat="server" class="btn btn-default"> <span class="glyphicon glyphicon-thumbs-up"></span></button> 
                                             </ItemTemplate>                          
@@ -266,13 +266,20 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
+                                                <asp:TemplateField HeaderText="Status Acuerdo" SortExpression="Año">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblStatusAcuerdo" runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+
                                             </Columns>
                                             <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
                                         </asp:GridView>
                                         </div>
 
                                     <div class="col-lg-3">
-                                        <button type="button" id="btnCrearAcuerdo" onclick="fnc_CrearNuevoAcuerdo();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                        <button type="button" id="btnCrearAcuerdo" runat="server" onclick="fnc_CrearNuevoAcuerdo();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                         <button type="button" id="btnVolver" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
                                     </div>
                                 
@@ -333,7 +340,7 @@
                                             <p>&nbsp;</p>
                                         </div>
                                         <div class="form-group">
-                                            <button type="button" id="btnCrearAcuerdo2" onclick="fnc_CrearNuevoAcuerdo();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                            <button type="button" id="btnCrearAcuerdo2" runat="server" onserverclick="btnCrearAcuerdo_ServerClick" onclick="fnc_CrearNuevoAcuerdo();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                             <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-default" ></asp:Button>
                                             <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Lista Acuerdos</button> 
                                         </div>

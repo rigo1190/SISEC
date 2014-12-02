@@ -94,6 +94,15 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.WebControls.GridView gridAcuerdos;
         
         /// <summary>
+        /// Control btnCrearAcuerdo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCrearAcuerdo;
+        
+        /// <summary>
         /// Control divMenu.
         /// </summary>
         /// <remarks>
@@ -164,6 +173,15 @@ namespace SISEC.Formas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaAcuerdo;
+        
+        /// <summary>
+        /// Control btnCrearAcuerdo2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCrearAcuerdo2;
         
         /// <summary>
         /// Control btnGuardar.

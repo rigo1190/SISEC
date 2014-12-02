@@ -13,17 +13,20 @@
      
     
     <script src="<%= ResolveClientUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
-   
+   <link href="<%= ResolveClientUrl("~/Content/bootstrap-datetimepicker.min.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveClientUrl("~/Scripts/bootstrap-datetimepicker.min.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/bootstrap-datepicker.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Content/bootstrap-theme.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/datepicker.css") %>" rel="stylesheet" />
-    <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/bootstrap.css")%>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/sb-admin-2.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/bootstrap-timepicker.min.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/fonts/font-awesome-4.1.0-2/css/font-awesome.min.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/bootstrap.js") %>"></script>
     <script src="<%= ResolveClientUrl("~/Scripts/bootstrap-timepicker.min.js") %>"></script>
-    <script src="<%= ResolveClientUrl("~/Scripts/bootstrap-datepicker.js") %>"></script>
+    
+    
     
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -104,7 +107,6 @@
                                 <li>
                                     <a href="<%=ResolveClientUrl("~/Reports/SintesisInformativa.aspx") %>">Síntesis Informativa</a>
                                 </li>
-                                
                             </ul>
                         </li>
                     </ul>

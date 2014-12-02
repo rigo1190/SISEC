@@ -49,6 +49,9 @@ namespace SISEC.Formas
             ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
         }
+
+       
+        
         private void BindGridSesiones(int idCalendario)
         {
             List<Sesion> list;
@@ -79,7 +82,8 @@ namespace SISEC.Formas
         {
             int id = Utilerias.StrToInt(_IDNota.Value);
             Notas obj = uow.NotasBusinessLogic.GetByID(id);
-
+            txtFideicomisoN.Value = GetClaveFideicomiso();
+            txtNumeroSesionN.Value = GetNumSesion();
             txtDescripcionN.Value = obj.Descripcion;
 
             if (obj.NombreArchivo != null)
@@ -95,6 +99,8 @@ namespace SISEC.Formas
             int id = Utilerias.StrToInt(_IDActa.Value);
             Actas obj = uow.ActasBusinessLogic.GetByID(id);
             txtDescripcionA.Value = obj.Descripcion;
+            txtFideicomisoA.Value = GetClaveFideicomiso();
+            txtNumeroSesionA.Value = GetNumSesion();
 
             if (obj.NombreArchivo != null)
                 if (!obj.NombreArchivo.Equals(string.Empty))
@@ -220,6 +226,11 @@ namespace SISEC.Formas
 
             BindGridNotas();
             BindGridActas();
+
+            txtFideicomisoN.Value = GetClaveFideicomiso();
+            txtFideicomisoA.Value = GetClaveFideicomiso();
+            txtNumeroSesionN.Value = GetNumSesion();
+            txtNumeroSesionA.Value = GetNumSesion();
 
             divEncabezado.Style.Add("display", "none");
             divNotasActas.Style.Add("display", "block");

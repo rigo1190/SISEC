@@ -254,6 +254,17 @@
                             </div>
                                 <div class="panel-body">
                                     <div class="col-md-12 ">
+
+                                        <div class="form-group">
+                                            <label>Fideicomiso</label>
+                                            <input type="text" disabled="disabled" name="prueba" id="txtFideicomisoN" runat="server" class="form-control"  />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Número de sesión</label>
+                                            <input type="text" disabled="disabled" name="prueba" id="txtNumeroSesionN" runat="server" class="form-control"  />
+                                        </div>
+
                                         <div class="form-group">
                                             <label>Descripción</label>
                                             <textarea type="text" name="prueba" runat="server" class="form-control" id="txtDescripcionN" />
@@ -359,6 +370,16 @@
                             </div>
                                 <div class="panel-body">
                                     <div class="col-md-12 ">
+
+                                        <div class="form-group">
+                                            <label>Fideicomiso</label>
+                                            <input type="text" disabled="disabled" name="prueba" id="txtFideicomisoA" runat="server" class="form-control"  />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Número de sesión</label>
+                                            <input type="text" disabled="disabled" name="prueba" id="txtNumeroSesionA" runat="server" class="form-control"  />
+                                        </div>
                                         <div class="form-group">
                                             <label>Descripción</label>
                                             <textarea type="text" name="prueba" runat="server" class="form-control" id="txtDescripcionA" />

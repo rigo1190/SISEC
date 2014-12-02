@@ -12,6 +12,17 @@
 
         });
 
+        function fnc_MostrarSeguimientos(idAcuerdo) {
+            var izq = (screen.width - 750) / 2
+            var sup = (screen.height - 600) / 2
+
+            var url = $("#<%= _URL.ClientID %>").val();
+            var argumentos = "?c=" + 4 + "&p="+idAcuerdo;
+            url += argumentos;
+            window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
+
+        }
+
         function fnc_AbrirReporte() {
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
@@ -186,7 +197,9 @@
                     <div class="panel-heading">
                         <div class="col-md-11">
                             <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
+ 
                         </div>
+                        
                         <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
@@ -218,6 +231,14 @@
                                             <%# DataBinder.Eval(Container.DataItem, "Notas")%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
+                                    <asp:TemplateField  HeaderText="Seguimientos" SortExpression="Año">
+                                        <ItemTemplate>
+                                             <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>  
+                                    </asp:TemplateField>
+
 
                                 </Columns> 
                                 <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />

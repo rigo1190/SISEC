@@ -112,6 +112,24 @@ namespace SISEC.Formas {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaNotas;
         
         /// <summary>
+        /// Control txtFideicomisoN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFideicomisoN;
+        
+        /// <summary>
+        /// Control txtNumeroSesionN.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNumeroSesionN;
+        
+        /// <summary>
         /// Control txtDescripcionN.
         /// </summary>
         /// <remarks>
@@ -182,6 +200,24 @@ namespace SISEC.Formas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCapturaActas;
+        
+        /// <summary>
+        /// Control txtFideicomisoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFideicomisoA;
+        
+        /// <summary>
+        /// Control txtNumeroSesionA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNumeroSesionA;
         
         /// <summary>
         /// Control txtDescripcionA.

@@ -53,6 +53,10 @@ namespace SISEC.Reports
 
                 case 3: //AGENDA DE SESIONES
                     break;
+
+                case 4: //SEGUIMIENTOS DE ACUERDOS
+                    rdc.SetParameterValue("@AcuerdoID", primerArray[0]);
+                    break;
             }
         }
 
@@ -115,6 +119,10 @@ namespace SISEC.Reports
 
                 case 3: //AGENDA DE SESIONES
                     nombreReporte = "rptCalendarioSesiones.rpt";
+                    break;
+
+                case 4: //SEGUIMIENTOS DE ACUERDO
+                    nombreReporte = "rptSeguimientos.rpt";
                     break;
             }
 

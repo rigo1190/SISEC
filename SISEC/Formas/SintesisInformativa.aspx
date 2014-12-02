@@ -92,9 +92,9 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                         <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
+                                         <asp:TemplateField HeaderText="Responsable Operativo" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
+                                                <%# DataBinder.Eval(Container.DataItem, "ResponsableOperativo")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -151,7 +151,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Responsable Operativo</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse1" class="panel-collapse collapse in">
+                                        <div id="collapse1" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtResponsable" />
                                             </div>
@@ -163,7 +163,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Finalidad del Fideicomiso</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse2" class="panel-collapse collapse in">
+                                        <div id="collapse2" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtFinalidad" />
                                             </div>
@@ -175,7 +175,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Creación</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse3" class="panel-collapse collapse in">
+                                        <div id="collapse3" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtCreacion" />
                                             </div>
@@ -187,7 +187,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Formalización</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse4" class="panel-collapse collapse in">
+                                        <div id="collapse4" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtFormalizacion" />
                                             </div>
@@ -199,7 +199,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Partes del Fideicomiso</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse5" class="panel-collapse collapse in">
+                                        <div id="collapse5" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtPartes" />
                                             </div>
@@ -210,7 +210,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Modificaciones al Decreto de Creación y Contrato de Fideicomiso</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse6" class="panel-collapse collapse in">
+                                        <div id="collapse6" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtModificaciones" />
                                             </div>
@@ -222,7 +222,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">Integración del Comité Técnico</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse7" class="panel-collapse collapse in">
+                                        <div id="collapse7" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtIntegracion" />
                                             </div>
@@ -233,7 +233,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">Reglas de Operación</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse8" class="panel-collapse collapse in">
+                                        <div id="collapse8" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtReglas" />
                                             </div>
@@ -245,7 +245,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">Estructura Administrativa</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse9" class="panel-collapse collapse in">
+                                        <div id="collapse9" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtEstructura" />
                                             </div>
@@ -257,7 +257,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">Calendario de Sesiones</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse10" class="panel-collapse collapse in">
+                                        <div id="collapse10" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtCalendario" />
                                             </div>
@@ -268,7 +268,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">Presupuesto Anual</></a>
                                             </h4>
                                         </div>
-                                        <div id="collapse11" class="panel-collapse collapse in">
+                                        <div id="collapse11" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtPresupuesto" />
                                             </div>
@@ -279,7 +279,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">Situación Patrimonial </a>
                                             </h4>
                                         </div>
-                                        <div id="collapse12" class="panel-collapse collapse in">
+                                        <div id="collapse12" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <textarea type="text" style="height:120px" name="prueba" runat="server" class="form-control" id="txtSituacion" />
                                             </div>
@@ -290,7 +290,7 @@
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse13">Adjuntar archivo</a>
                                             </h4>
                                         </div>
-                                        <div id="collapse13" class="panel-collapse collapse in">
+                                        <div id="collapse13" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <div class="form-group">
                                                     <label>Archivo adjunto actual:</label>

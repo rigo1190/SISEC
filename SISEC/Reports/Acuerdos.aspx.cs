@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace SISEC.Reports
@@ -100,18 +101,9 @@ namespace SISEC.Reports
             List<Acuerdo> list=null;
 
             if (!todos)
-            {
-                //if (!txtNumAcuredo.Value.Trim().Equals(string.Empty))
-                //    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.NumAcuerdo.Contains(txtNumAcuredo.Value)).ToList();
-                //else
-                //    list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus).ToList();
-                list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.FechaAcuerdo>=fechaInicio && e.FechaAcuerdo<=fechaFin).ToList();
-
-
-            }else
-                list = uow.AcuerdoBusinessLogic.Get().ToList();
-
-            
+                list = uow.AcuerdoBusinessLogic.Get(e => e.SesionID == idSesion && e.StatusAcuerdoID == idStatus && e.FechaAcuerdo >= fechaInicio && e.FechaAcuerdo <= fechaFin).ToList();
+            else
+                list = uow.AcuerdoBusinessLogic.Get(e => e.FechaAcuerdo >= fechaInicio && e.FechaAcuerdo <= fechaFin).ToList();
 
             gridAcuerdos.DataSource = list;
             gridAcuerdos.DataBind();
@@ -141,10 +133,9 @@ namespace SISEC.Reports
                                join f in uow.FideicomisoBusinessLogic.Get()
                                on d.FideicomisoID equals f.ID
                                select f).FirstOrDefault();
-            if (obj != null)
-                return obj.Clave;
-            else
-                return string.Empty;
+
+            return obj != null ? obj.Clave : string.Empty;
+
         }
 
 
@@ -173,6 +164,8 @@ namespace SISEC.Reports
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
                 Label lblSesion = (Label)e.Row.FindControl("lblSesion");
                 Label lblStatus = (Label)e.Row.FindControl("lblStatus");
+                HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
+                
 
                 Acuerdo obj = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
 
@@ -180,6 +173,10 @@ namespace SISEC.Reports
                 lblStatus.Text = GetClaveStatus(obj.StatusAcuerdoID);
                 lblSesion.Text = GetNumeroSesion(obj.SesionID);
 
+
+
+                //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
+                btnVer.Attributes["onclick"] = "fnc_MostrarSeguimientos(" + obj.ID +  ")";
             }
         }
 

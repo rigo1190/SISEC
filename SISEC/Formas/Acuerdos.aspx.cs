@@ -134,7 +134,7 @@ namespace SISEC.Formas
             txtNumAcuerdo.Value = obj.NumAcuerdo;
             txtNotas.Value = obj.Notas;
             ddlStatus.SelectedValue = obj.StatusAcuerdoID.ToString();
-
+            txtFechaAcuerdo.Value = obj.FechaAcuerdo.Value.ToShortDateString();
         }
 
         [WebMethod]
@@ -255,15 +255,19 @@ namespace SISEC.Formas
                 ImageButton imgDetalle = (ImageButton)e.Row.FindControl("imgDetalle");
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
                 Label lblSesion = (Label)e.Row.FindControl("lblSesion");
+                Label lblStatusAcuerdo = (Label)e.Row.FindControl("lblStatusAcuerdo");
 
                 int idAcuerdo = Utilerias.StrToInt(gridAcuerdos.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+                Acuerdo obj = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
+                StatusAcuerdo objStatus = uow.StatusAcuerdoBusinessLogic.GetByID(obj.StatusAcuerdoID);
+
 
                 if (imgBtnEliminar != null)
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDAcuerdo(" + idAcuerdo + ")");
 
                 lblFideicomiso.Text = GetClaveFideicomiso();
                 lblSesion.Text = GetNumSesion();
-
+                lblStatusAcuerdo.Text = objStatus.Descripcion;
                 
                 if (imgDetalle != null)
                     imgDetalle.Attributes["onclick"] = "fnc_CargarDetalleAcuerdo(" + idAcuerdo + ");return false;";
@@ -277,6 +281,7 @@ namespace SISEC.Formas
             _IDAcuerdo.Value = gridAcuerdos.DataKeys[row.RowIndex].Value.ToString();
             _Accion.Value = "A";
             _AccionS.Value =string.Empty;
+            txtFechaAcuerdo.Value = DateTime.Now.ToShortDateString();
 
             BindControlesAcuerdo();
             BindGridSeguimientos();
@@ -329,6 +334,19 @@ namespace SISEC.Formas
             else
                 obj = uow.AcuerdoBusinessLogic.GetByID(Utilerias.StrToInt(_IDAcuerdo.Value));
 
+            //SE VALIDA QUE EL STATUS DEL ACUERDO NO SEA PENDIENTE CUANDO HAYA SEGUIMIENTOS DE POR MEDIO
+            if (obj.DetalleSeguimientos.Count > 0)
+            {
+                if (Utilerias.StrToInt(ddlStatus.SelectedValue) == 1)
+                {
+                    divMsgError.Style.Add("display", "block");
+                    divMsgSuccess.Style.Add("display", "none");
+                    lblMsgError.Text = "El status del acuerdo no puede ser PENDIENTE, ya que cuenta con seguimientos registrados. Vuelva a intentarlo";
+                    return;
+                }
+            }
+
+
             obj.Notas = txtNotas.Value;
             obj.NumAcuerdo = txtNumAcuerdo.Value;
             obj.StatusAcuerdoID = Utilerias.StrToInt(ddlStatus.SelectedValue);
@@ -343,6 +361,7 @@ namespace SISEC.Formas
             }
             else
             {
+                
                 obj.FechaModificacion = DateTime.Now;
                 obj.UsuarioModifica = Session["Login"].ToString();
                 uow.AcuerdoBusinessLogic.Update(obj);
@@ -437,6 +456,32 @@ namespace SISEC.Formas
             divMsgSuccess.Style.Add("display", "block");
         }
 
+
+        protected void btnCrearAcuerdo_ServerClick(object sender, EventArgs e)
+        {
+            _IDAcuerdo.Value = "0";
+            BindGridSeguimientos();
+
+            txtNotas.Value = "";
+            txtNumAcuerdo.Value = "";
+            _Accion.Value = "N";
+            txtFechaAcuerdo.Value = DateTime.Now.ToShortDateString();
+            
+            txtFechaAcuerdo.Disabled = false;
+            txtNotas.Disabled = false;
+            txtNumAcuerdo.Disabled = false;
+            ddlStatus.Enabled = false;
+            btnGuardar.Enabled = true;
+
+            divCapturaDetalle.Style.Add("display", "block");
+            divSeguimiento.Style.Add("display", "none");
+            divEncabezadoDetalle.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+
+        }
+
+
         #endregion 
 
         #region EVENTOS SEGUIMIENTOS
@@ -501,6 +546,28 @@ namespace SISEC.Formas
                 lblMsgError.Text = M;
                 return;
             }
+
+
+            //ACTUALIZAR EL STATUS DEL ACUERDO, SE COLOCA A PROCESO
+            Acuerdo objAcuerdo = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
+            objAcuerdo.StatusAcuerdoID = 2;
+            ddlStatus.SelectedValue = "2";
+            uow.AcuerdoBusinessLogic.Update(objAcuerdo);
+
+            uow.SaveChanges();
+
+            if (uow.Errors.Count > 0)
+            {
+                foreach (string err in uow.Errors)
+                    M += err;
+
+                //MANEJAR EL ERROR
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                lblMsgError.Text = M;
+                return;
+            }
+
 
             BindGridSeguimientos();
             _AccionS.Value = string.Empty;
@@ -590,6 +657,8 @@ namespace SISEC.Formas
 
 
         #endregion
+
+        
 
     }
 }

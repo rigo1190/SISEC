@@ -23,6 +23,7 @@ namespace SISEC.Reports
             if (!IsPostBack)
             {
                 BindDropDownFideicomisos();
+                BindDropDownMeses();
                 //BindDropDownTipoSesion();
                 //BindDropDownStatusSesion();
                 string M = string.Empty;
@@ -42,6 +43,21 @@ namespace SISEC.Reports
         }
 
 
+        private void BindDropDownMeses()
+        {
+            for (int i = 1; i <= 12; i++)
+            {
+                ListItem item = new ListItem();
+                item.Text = Utilerias.GetNombreMes(i);
+                item.Value = i.ToString();
+                ddlMes.Items.Add(item);
+            }
+
+            ddlMes.Items.Insert(0, new ListItem("Seleccione...", "0"));
+            ddlMes.SelectedValue = "0";
+        }
+
+
         private string CrearObjetoReporte()
         {
             bool eliminados = uow.RptSesionesBusinessLogic.DeleteAll();
@@ -49,6 +65,11 @@ namespace SISEC.Reports
 
             if (eliminados)
             {
+                #region CUANDO SE LIMPIO CORRECTAMENTE LA TABLA TEMPORAL DEL REPORTE, SE PROCEDE A LLENARLA NUEVAMENTE
+
+                int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+                Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
                 uow.SaveChanges();
 
                 //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
@@ -60,11 +81,11 @@ namespace SISEC.Reports
                     return M;
                 }
 
-
                 int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
                 int idCalendario = BuscarCalendario();
 
-                //SE OBTIENEN TODOS LOS REGISTROS
+                #region TODOS LOS REGISTROS, DE TODOS LOS FIDEICOMISOS Y DE TODO EL AÑO
+
                 var listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
                                     join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     on c.DependenciaFideicomisoEjercicioID equals dfe.ID
@@ -99,15 +120,20 @@ namespace SISEC.Reports
                                         HoraCelebrada = s.HoraCelebrada
                                     });
 
-                if (idFideicomiso > 0)//SE FILTRA POR EL FIDEICOMISO SELECCIONADO, SI ES QUE SE ELIGIO ALGUNO 
-                {
+                #endregion
 
-                    listSesiones = (from c in uow.CalendarioBusinessLogic.Get(e=>e.ID==idCalendario)
+                #region TODOS LOS REGISTROS, DE TODOS LOS FIDEICOMISOS, DE ALGUN MES EN PARTICULAR
+
+                if (!ddlMes.SelectedValue.Equals("0"))
+                {
+                    int mes = Utilerias.StrToInt(ddlMes.SelectedValue);
+
+                    listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
                                     join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     on c.DependenciaFideicomisoEjercicioID equals dfe.ID
                                     join f in uow.FideicomisoBusinessLogic.Get()
                                     on dfe.FideicomisoID equals f.ID
-                                    join s in uow.SesionBusinessLogic.Get()
+                                    join s in uow.SesionBusinessLogic.Get(e => e.Mes == mes)
                                     on c.ID equals s.CalendarioID
                                     join ts in uow.TipoSesionBusinessLogic.Get()
                                     on s.TipoSesionID equals ts.ID
@@ -115,7 +141,7 @@ namespace SISEC.Reports
                                     on s.StatusSesionID equals ss.ID
                                     select new
                                     {
-                                        SesionID=s.ID,
+                                        SesionID = s.ID,
                                         CalendarioID = c.ID,
                                         FideicomisoID = f.ID,
                                         NombreFideicomiso = f.Descripcion,
@@ -137,6 +163,96 @@ namespace SISEC.Reports
                                     });
                 }
 
+                #endregion
+
+                if (idFideicomiso > 0)//SE FILTRA POR EL FIDEICOMISO SELECCIONADO, SI ES QUE SE ELIGIO ALGUNO 
+                {
+                    if (!ddlMes.SelectedValue.Equals("0"))
+                    {
+                        int mes = Utilerias.StrToInt(ddlMes.SelectedValue);
+
+                        #region LOS REGISTROS DE ALGUN FIDEICOMISO EN PARTICULAR, DE ALGUN MES EN PARTICULAR
+
+                        listSesiones = (from c in uow.CalendarioBusinessLogic.Get(e => e.ID == idCalendario)
+                                        join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                                        on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                        join f in uow.FideicomisoBusinessLogic.Get()
+                                        on dfe.FideicomisoID equals f.ID
+                                        join s in uow.SesionBusinessLogic.Get(e => e.Mes == mes)
+                                        on c.ID equals s.CalendarioID
+                                        join ts in uow.TipoSesionBusinessLogic.Get()
+                                        on s.TipoSesionID equals ts.ID
+                                        join ss in uow.StatusSesionBusinessLogic.Get()
+                                        on s.StatusSesionID equals ss.ID
+                                        select new
+                                        {
+                                            SesionID = s.ID,
+                                            CalendarioID = c.ID,
+                                            FideicomisoID = f.ID,
+                                            NombreFideicomiso = f.Descripcion,
+                                            NumSesion = s.NumSesion,
+                                            NumOficio = s.NumOficio,
+                                            FechaOficio = s.FechaOficio,
+                                            TipoSesion = ts.Descripcion,
+                                            StatusSesion = ss.Descripcion,
+                                            Mes = s.Mes,
+                                            Descripcion = s.Descripcion,
+                                            FechaProgramada = s.FechaProgramada,
+                                            FechaCelebrada = s.FechaCelebrada,
+                                            FechaReprogamada = s.FechaReprogramada,
+                                            Observaciones = s.Observaciones,
+                                            LugarReunion = s.LugarReunion,
+                                            HoraProgramada = s.HoraProgramada,
+                                            HoraReprogramada = s.HoraReprogramada,
+                                            HoraCelebrada = s.HoraCelebrada
+                                        });
+
+                        #endregion
+
+                    }
+                    else
+                    {
+                        #region LOS REGISTROS DE ALGUN FIDEICOMISO EN PARTICULAR, DE TODO EL AÑO
+
+                        listSesiones = (from c in uow.CalendarioBusinessLogic.Get(e => e.ID == idCalendario)
+                                        join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                                        on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                        join f in uow.FideicomisoBusinessLogic.Get()
+                                        on dfe.FideicomisoID equals f.ID
+                                        join s in uow.SesionBusinessLogic.Get()
+                                        on c.ID equals s.CalendarioID
+                                        join ts in uow.TipoSesionBusinessLogic.Get()
+                                        on s.TipoSesionID equals ts.ID
+                                        join ss in uow.StatusSesionBusinessLogic.Get()
+                                        on s.StatusSesionID equals ss.ID
+                                        select new
+                                        {
+                                            SesionID = s.ID,
+                                            CalendarioID = c.ID,
+                                            FideicomisoID = f.ID,
+                                            NombreFideicomiso = f.Descripcion,
+                                            NumSesion = s.NumSesion,
+                                            NumOficio = s.NumOficio,
+                                            FechaOficio = s.FechaOficio,
+                                            TipoSesion = ts.Descripcion,
+                                            StatusSesion = ss.Descripcion,
+                                            Mes = s.Mes,
+                                            Descripcion = s.Descripcion,
+                                            FechaProgramada = s.FechaProgramada,
+                                            FechaCelebrada = s.FechaCelebrada,
+                                            FechaReprogamada = s.FechaReprogramada,
+                                            Observaciones = s.Observaciones,
+                                            LugarReunion = s.LugarReunion,
+                                            HoraProgramada = s.HoraProgramada,
+                                            HoraReprogramada = s.HoraReprogramada,
+                                            HoraCelebrada = s.HoraCelebrada
+                                        });
+
+                        #endregion
+                    }
+                }
+
+                #region SE LLENA LA TABLA TEMPORAL PARA EL REPORTE
 
                 foreach (var item in listSesiones)
                 {
@@ -188,7 +304,7 @@ namespace SISEC.Reports
                             case "FechaProgramada":
                                 rpt = new DAL.Model.rptSesiones();
                                 rpt.NombreCampo = "Fecha Programada";
-                                rpt.ValorCampo = item.FechaProgramada!=null ? item.FechaProgramada.Value.ToShortDateString():string.Empty;
+                                rpt.ValorCampo = item.FechaProgramada != null ? item.FechaProgramada.Value.ToShortDateString() : string.Empty;
                                 break;
                             case "FechaCelebrada":
                                 rpt = new DAL.Model.rptSesiones();
@@ -200,7 +316,7 @@ namespace SISEC.Reports
                                 rpt.NombreCampo = "Fecha Reprogramada";
                                 rpt.ValorCampo = item.FechaReprogamada != null ? item.FechaReprogamada.Value.ToShortDateString() : string.Empty;
                                 break;
-                            
+
                             case "Observaciones":
                                 rpt = new DAL.Model.rptSesiones();
                                 rpt.NombreCampo = "Observaciones";
@@ -238,6 +354,8 @@ namespace SISEC.Reports
                             rpt.SesionID = item.SesionID;
                             rpt.FideicomisoID = item.FideicomisoID;
                             rpt.NombreFideicomiso = item.NombreFideicomiso;
+                            rpt.Mes = item.Mes;
+                            rpt.Ejercicio = objEjercicio.Anio;
 
                             uow.RptSesionesBusinessLogic.Insert(rpt);
                             uow.SaveChanges();
@@ -256,7 +374,13 @@ namespace SISEC.Reports
 
                 }
 
+                #endregion
+
+
+                #endregion
             }
+            else
+                M = "No se pudo crear el reporte, intente nuevamente";
 
             return M;
 
@@ -331,6 +455,17 @@ namespace SISEC.Reports
 
         }
 
+        private int GetEjercicioAño()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio obj = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            return obj.Anio;
+
+        }
+
+
         [WebMethod]
         public static List<string> GetDatosSesion(string idSesion)
         {
@@ -398,6 +533,7 @@ namespace SISEC.Reports
             DateTime dayHold = DateTime.MinValue;
             bool multipleDayItem = false;
             bool dayTextHasChanged = false;
+            //DateTime dateVisible = new DateTime(GetEjercicioAño(), Utilerias.StrToInt(ddlMes.SelectedValue), 1);
 
             StringBuilder temp=null;
 
@@ -441,13 +577,27 @@ namespace SISEC.Reports
                     e.Cell.Controls.Add(new LiteralControl(temp.ToString()));
 
             }
+
         }
 
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
         {
             string M = string.Empty;
             divMsgError.Attributes.Add("display", "none");
-            
+
+            if (!ddlMes.SelectedValue.Equals("0"))
+            {
+                DateTime dateVisible;
+
+                if (!ddlMes.SelectedValue.Equals("0"))
+                    dateVisible = new DateTime(GetEjercicioAño(), Utilerias.StrToInt(ddlMes.SelectedValue), 1);
+                else
+                    dateVisible = DateTime.Now;
+
+                Calendar1.VisibleDate = dateVisible;
+
+            }
+
             M = CrearObjetoReporte();
 
             if (!M.Equals(string.Empty))
@@ -455,7 +605,36 @@ namespace SISEC.Reports
                 divMsgError.Attributes.Add("display", "block");
                 lblMsgError.Text = M;
             }
+
+
+            
         }
+
+        protected void ddlMes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string M = string.Empty;
+            DateTime dateVisible;
+
+            if (!ddlMes.SelectedValue.Equals("0"))
+                dateVisible = new DateTime(GetEjercicioAño(), Utilerias.StrToInt(ddlMes.SelectedValue), 1);
+            else
+                dateVisible = DateTime.Now;
+
+            Calendar1.VisibleDate = dateVisible;
+
+
+            M = CrearObjetoReporte();
+
+            if (!M.Equals(string.Empty))
+            {
+                divMsgError.Attributes.Add("display", "block");
+                lblMsgError.Text = M;
+            }
+
+
+        }
+
+        
         
     }
 

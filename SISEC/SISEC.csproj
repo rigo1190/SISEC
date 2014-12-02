@@ -652,6 +652,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formas\Acuerdos.aspx" />
     <Content Include="Formas\Catalogos\Dependencias.aspx" />
+    <Content Include="Formas\Catalogos\Fideicomisos.aspx" />
     <Content Include="Formas\Catalogos\Logos.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
     <Content Include="Formas\SintesisInformativa.aspx" />
@@ -711,7 +712,6 @@
     <Content Include="Reports\Calendario.aspx" />
     <Content Include="Reports\ReportView.aspx" />
     <Content Include="Reports\SintesisInformativa.aspx" />
-    <Content Include="Reports\Test.html" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
@@ -762,6 +762,13 @@
     </Compile>
     <Compile Include="Formas\Catalogos\Dependencias.aspx.designer.cs">
       <DependentUpon>Dependencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\Fideicomisos.aspx.cs">
+      <DependentUpon>Fideicomisos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\Fideicomisos.aspx.designer.cs">
+      <DependentUpon>Fideicomisos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\Catalogos\Logos.aspx.cs">
       <DependentUpon>Logos.aspx</DependentUpon>
@@ -868,10 +875,10 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Reports\rptSeguimientos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>rptSeguimientos.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Reports\rptSintesisInformativa.cs">
       <AutoGen>True</AutoGen>

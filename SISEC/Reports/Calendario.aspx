@@ -106,6 +106,11 @@
                                     <label>Fideicomiso</label>
                                     <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>                                         
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Mes</label>
+                                    <asp:DropDownList ID="ddlMes" OnSelectedIndexChanged="ddlMes_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>                                         
+                                </div>
                             </div>
 
                            <%-- <div class="col-lg-4">

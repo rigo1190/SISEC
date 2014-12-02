@@ -109,6 +109,11 @@
                                 </li>
                             </ul>
                         </li>
+
+                         <li>
+                            <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Fideicomisos.aspx") %>"><i class="fa fa-gears fa-fw"></i> Fideicomisos</a>
+                        </li>
+
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

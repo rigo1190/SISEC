@@ -21,5 +21,7 @@ namespace DAL.Model
         public Nullable<int> CalendarioID { get; set; }
         public string NombreCampo { get; set; }
         public string ValorCampo { get; set; }
+        public Nullable<int> Mes { get; set; }
+        public Nullable<int> Ejercicio { get; set; }
     }
 }

@@ -15,8 +15,24 @@
 <body>
     <form id="form1" runat="server" style="width:1000px">
         <div class="col-lg-12">
-            <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />
+            <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" Height="50px" Width="550px" />
         </div>
+
+
+       <%-- <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-footer">
+                    <div class="alert alert-danger" runat="server" id="divMsgError" style="display:none">
+                        <asp:Label ID="lblMsgError" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                    </div>
+                    <div class="alert alert-success" runat="server" id="divMsgSuccess" style="display:none">
+                        <asp:Label ID="lblMsgSuccess" EnableViewState="false" runat="server" Text="" CssClass="font-weight:bold"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </div>--%>
+
+
     </form>
 </body>
 </html>

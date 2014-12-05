@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -706,6 +707,17 @@
     <Content Include="fonts\font-awesome-4.1.0-2\scss\_variables.scss" />
     <Content Include="less\datepicker.less" />
     <Content Include="less\timepicker.less" />
+    <Content Include="dsAcuerdos.xsc">
+      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
+    </Content>
+    <None Include="dsAcuerdos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsAcuerdos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="dsAcuerdos.xss">
+      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\DEVELOP.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Reports\Acuerdos.aspx" />
@@ -748,6 +760,11 @@
     </Compile>
     <Compile Include="AbrirDocto.aspx.designer.cs">
       <DependentUpon>AbrirDocto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dsAcuerdos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
     </Compile>
     <Compile Include="Formas\Acuerdos.aspx.cs">
       <DependentUpon>Acuerdos.aspx</DependentUpon>
@@ -867,24 +884,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rptAcuerdos.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\rptCalendarioSesiones.cs">
       <DependentUpon>rptCalendarioSesiones.rpt</DependentUpon>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\rptSeguimientos.cs">
       <DependentUpon>rptSeguimientos.rpt</DependentUpon>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\rptSintesisInformativa.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rptSintesisInformativa.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\SintesisInformativa.aspx.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>
@@ -892,6 +913,12 @@
     </Compile>
     <Compile Include="Reports\SintesisInformativa.aspx.designer.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TestReports.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestReports.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SeleccionarDependencia.aspx.cs">
       <DependentUpon>SeleccionarDependencia.aspx</DependentUpon>
@@ -945,25 +972,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\rptAcuerdos.rpt">
+    <Content Include="Reports\rptAcuerdos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptAcuerdos.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptCalendarioSesiones.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\rptCalendarioSesiones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptCalendarioSesiones.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptSeguimientos.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\rptSeguimientos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptSeguimientos.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptSintesisInformativa.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\rptSintesisInformativa.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptSintesisInformativa.cs</LastGenOutput>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\TestReports.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TestReports.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

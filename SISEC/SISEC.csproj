@@ -707,17 +707,6 @@
     <Content Include="fonts\font-awesome-4.1.0-2\scss\_variables.scss" />
     <Content Include="less\datepicker.less" />
     <Content Include="less\timepicker.less" />
-    <Content Include="dsAcuerdos.xsc">
-      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
-    </Content>
-    <None Include="dsAcuerdos.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsAcuerdos.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="dsAcuerdos.xss">
-      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
-    </Content>
     <None Include="Properties\PublishProfiles\DEVELOP.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Reports\Acuerdos.aspx" />
@@ -760,11 +749,6 @@
     </Compile>
     <Compile Include="AbrirDocto.aspx.designer.cs">
       <DependentUpon>AbrirDocto.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="dsAcuerdos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsAcuerdos.xsd</DependentUpon>
     </Compile>
     <Compile Include="Formas\Acuerdos.aspx.cs">
       <DependentUpon>Acuerdos.aspx</DependentUpon>
@@ -914,12 +898,6 @@
     <Compile Include="Reports\SintesisInformativa.aspx.designer.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\TestReports.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestReports.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SeleccionarDependencia.aspx.cs">
       <DependentUpon>SeleccionarDependencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -995,12 +973,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Reports\TestReports.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>TestReports.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -20,22 +20,12 @@ namespace SISEC.Reports
             string nomReporte=GetNombreReporte(caller);
             ReportDocument rdc = new ReportDocument();
 
-            rdc.FileName = Server.MapPath("~/Reports/TestReports.rpt");
-            
-            //if (!parametros.Equals(string.Empty))
-            //    CargarParametros(caller, parametros,ref rdc);
+            rdc.FileName = Server.MapPath("~/Reports/"+nomReporte);
 
-            //CargarReporte(rdc);
-            
-            //if (!M.Equals(string.Empty))
-            //{
-            //    divMsgError.Attributes.Add("display", "block");
-            //    lblMsgError.Text = M;
-            //}
-            LlenarDSAcuerdos(ref rdc);
-            CrystalReportViewer1.ReportSource = rdc;
-            CrystalReportViewer1.DataBind();
+            if (!parametros.Equals(string.Empty))
+                CargarParametros(caller, parametros, ref rdc);
 
+            CargarReporte(rdc);
         }
 
         private void  CargarParametros(int caller,string parametros,ref ReportDocument rdc)
@@ -45,17 +35,17 @@ namespace SISEC.Reports
             switch (caller)
             {
                 case 1: //ACUERDOS
-                    LlenarDSAcuerdos(ref rdc);
-                    //rdc.SetParameterValue("@ejercicio", primerArray[0]);
-                    //rdc.SetParameterValue("@fideicomiso", primerArray[1]);
-                    //rdc.SetParameterValue("@status", primerArray[2]);
-                    //rdc.SetParameterValue("@sesion", primerArray[3]);
+
+                    rdc.SetParameterValue("@ejercicio", primerArray[0]);
+                    rdc.SetParameterValue("@fideicomiso", primerArray[1]);
+                    rdc.SetParameterValue("@status", primerArray[2]);
+                    rdc.SetParameterValue("@sesion", primerArray[3]);
                     
-                    ////RAngo de Fechas
-                    //DateTime fechaInicio = Convert.ToDateTime(primerArray[4]);
-                    //DateTime fechaFin = Convert.ToDateTime(primerArray[5]);
-                    //rdc.SetParameterValue("@fechaInicio", fechaInicio.ToString("yyyy-MM-dd") + " 00:00:00");
-                    //rdc.SetParameterValue("@fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 00:00:00");
+                    //RAngo de Fechas
+                    DateTime fechaInicio = Convert.ToDateTime(primerArray[4]);
+                    DateTime fechaFin = Convert.ToDateTime(primerArray[5]);
+                    rdc.SetParameterValue("@fechaInicio", fechaInicio.ToString("yyyy-MM-dd") + " 00:00:00");
+                    rdc.SetParameterValue("@fechaFin", fechaFin.ToString("yyyy-MM-dd") + " 00:00:00");
 
                     break;
 
@@ -85,7 +75,7 @@ namespace SISEC.Reports
                 string pass = System.Configuration.ConfigurationManager.AppSettings["pass"];
                 string server = System.Configuration.ConfigurationManager.AppSettings["server"];
                 string db = System.Configuration.ConfigurationManager.AppSettings["db"];
-                //string dbo = "dbo";
+                
 
                 rdc.SetDatabaseLogon(user, pass, server, db);
                 rdc.DataSourceConnections[0].SetConnection(server, db, false);
@@ -105,20 +95,6 @@ namespace SISEC.Reports
                     Logon.ConnectionInfo.IntegratedSecurity = false;
                     t.ApplyLogOnInfo(Logon);
 
-                    //bool location = true;
-
-                    //try
-                    //{
-                    //    t.Location = db + "." + dbo + "." + t.Location.Substring(t.Location.LastIndexOf('.') + 1);
-                    //}
-                    //catch (Exception x)
-                    //{
-                    //    location = false;
-                    //    M = x.Message;
-                    //}
-
-
-
                 }
 
                 foreach (ReportDocument subreport in rdc.Subreports)
@@ -134,26 +110,11 @@ namespace SISEC.Reports
                         Logon.ConnectionInfo.IntegratedSecurity = false;
                         t.ApplyLogOnInfo(Logon);
 
-                        bool location = true;
-
-                        //try
-                        //{
-                        //    t.Location = db + "." + dbo + "." + t.Location.Substring(t.Location.LastIndexOf('.') + 1);
-                        //}
-                        //catch (Exception x)
-                        //{
-                        //    location = false;
-                        //    M = x.Message;
-                        //}
-
                     }
                 }
-                //rdc.VerifyDatabase();
-                //rdc.Refresh();
+
                 CrystalReportViewer1.ReportSource = rdc;
-                //CrystalReportViewer1.RefreshReport();
                 CrystalReportViewer1.DataBind();
-            
 
         }
 
@@ -184,34 +145,9 @@ namespace SISEC.Reports
                     break;
             }
 
-
             return nombreReporte;
 
         }
-
-
-        private void LlenarDSAcuerdos(ref ReportDocument rdc)
-        {
-            string sqlImagenes = "select *from Imagenes";
-            dsAcuerdos ds = new dsAcuerdos();
-
-            SqlConnection conn = new SqlConnection("Data Source=GEVINVPUB\\GEVINVPUB;Initial Catalog=SISEF;Persist Security Info=True;User ID=inversionpub;Password=inversionpub2014;MultipleActiveResultSets=True;Application Name=EntityFramework");
-            SqlCommand cmd = new SqlCommand();
-
-            SqlDataAdapter daImagenes=new SqlDataAdapter(sqlImagenes,conn);
-
-            daImagenes.Fill(ds,"Imagenes");
-
-
-            rdc.SetDataSource(ds);
-
-
-        }
-
-
-
-
-
 
     }
 }

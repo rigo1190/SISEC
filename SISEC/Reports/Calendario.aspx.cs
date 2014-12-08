@@ -86,7 +86,7 @@ namespace SISEC.Reports
 
                 #region TODOS LOS REGISTROS, DE TODOS LOS FIDEICOMISOS Y DE TODO EL AÑO
 
-                var listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
+                var listSesiones = (from c in uow.CalendarioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
                                     join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     on c.DependenciaFideicomisoEjercicioID equals dfe.ID
                                     join f in uow.FideicomisoBusinessLogic.Get()

@@ -188,7 +188,8 @@ namespace SISEC.Formas
                                join f in uow.FideicomisoBusinessLogic.Get()
                                on d.FideicomisoID equals f.ID
                                select f).FirstOrDefault();
-            return obj.Clave; 
+            
+            return obj!=null?obj.Clave:string.Empty; 
         }
 
         #endregion

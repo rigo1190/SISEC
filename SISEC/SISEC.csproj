@@ -653,9 +653,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Formas\Acuerdos.aspx" />
     <Content Include="Formas\Catalogos\Dependencias.aspx" />
+    <Content Include="Formas\Catalogos\Ejercicios.aspx" />
     <Content Include="Formas\Catalogos\Fideicomisos.aspx" />
     <Content Include="Formas\Catalogos\Logos.aspx" />
+    <Content Include="Formas\Catalogos\StatusAcuerdos.aspx" />
+    <Content Include="Formas\Catalogos\StatusSesiones.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
+    <Content Include="Formas\Catalogos\TiposSesiones.aspx" />
     <Content Include="Formas\SintesisInformativa.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
@@ -764,6 +768,13 @@
     <Compile Include="Formas\Catalogos\Dependencias.aspx.designer.cs">
       <DependentUpon>Dependencias.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Formas\Catalogos\Ejercicios.aspx.cs">
+      <DependentUpon>Ejercicios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\Ejercicios.aspx.designer.cs">
+      <DependentUpon>Ejercicios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Catalogos\Fideicomisos.aspx.cs">
       <DependentUpon>Fideicomisos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -778,12 +789,33 @@
     <Compile Include="Formas\Catalogos\Logos.aspx.designer.cs">
       <DependentUpon>Logos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Formas\Catalogos\StatusAcuerdos.aspx.cs">
+      <DependentUpon>StatusAcuerdos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\StatusAcuerdos.aspx.designer.cs">
+      <DependentUpon>StatusAcuerdos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\StatusSesiones.aspx.cs">
+      <DependentUpon>StatusSesiones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\StatusSesiones.aspx.designer.cs">
+      <DependentUpon>StatusSesiones.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Catalogos\TEST.aspx.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Formas\Catalogos\TEST.aspx.designer.cs">
       <DependentUpon>TEST.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\TiposSesiones.aspx.cs">
+      <DependentUpon>TiposSesiones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\TiposSesiones.aspx.designer.cs">
+      <DependentUpon>TiposSesiones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\SintesisInformativa.aspx.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>

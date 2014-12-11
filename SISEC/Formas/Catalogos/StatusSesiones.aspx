@@ -1,10 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteAdmin.Master" AutoEventWireup="true" CodeBehind="Fideicomisos.aspx.cs" Inherits="SISEC.Formas.Catalogos.Fideicomisos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteAdmin.Master" AutoEventWireup="true" CodeBehind="StatusSesiones.aspx.cs" Inherits="SISEC.Formas.Catalogos.StatusSesiones" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+     <script type="text/javascript">
 
-    <script type="text/javascript">
-
-        function fnc_Nuevo() {
-            $("#<%= divCaptura.ClientID %>").css("display", "block");
+         function fnc_Nuevo() {
+             $("#<%= divCaptura.ClientID %>").css("display", "block");
             $("#<%= divEncabezado.ClientID %>").css("display", "none");
             $("#<%= txtDescripcion.ClientID %>").val("");
             $("#<%= txtClave.ClientID %>").val("");
@@ -22,24 +21,21 @@
         }
 
         function fnc_ColocarID(id) {
-            $("#<%= _IDFideicomiso.ClientID %>").val(id);
+            $("#<%= _IDStatus.ClientID %>").val(id);
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
         }
 
 
     </script>
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="alert alert-success alert-dismissable">
-                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Fideicomisos</strong></h4>  
+                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Status de Sesión</strong></h4>  
                     </div>
                 </div>
             </div>
@@ -49,11 +45,11 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <h3 class="panel-title"><i class="fa"></i> Lista de Fideicomisos</h3>
+                             <h3 class="panel-title"><i class="fa"></i> Lista de Status de Sesión</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:GridView ID="gridFideicomisos" OnRowDataBound="gridFideicomisos_RowDataBound" OnPageIndexChanging="gridFideicomisos_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
+                                <asp:GridView ID="gridStatus" OnRowDataBound="gridStatus_RowDataBound" OnPageIndexChanging="gridStatus_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Acciones">
                                             <ItemTemplate>
@@ -88,7 +84,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa"></i>Datos del Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Datos del Tipo de Sesión</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -147,8 +143,10 @@
         </div>
     </div>
 
+
     <div runat="server" style="display:none">
-        <input type="hidden" runat="server" id="_IDFideicomiso" />
+        <input type="hidden" runat="server" id="_IDStatus" />
         <input type="hidden" runat="server" id="_Accion" />
     </div>
+
 </asp:Content>

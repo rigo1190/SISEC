@@ -9,58 +9,95 @@ using System.Web.UI.WebControls;
 
 namespace SISEC.Formas.Catalogos
 {
-    public partial class Fideicomisos : System.Web.UI.Page
+    public partial class StatusSesiones : System.Web.UI.Page
     {
         private UnitOfWork uow;
         protected void Page_Load(object sender, EventArgs e)
         {
             uow = new UnitOfWork();
-            
+
             if (!IsPostBack)
             {
                 BindGrid();
             }
         }
 
-
         private void BindGrid()
         {
-            gridFideicomisos.DataSource = uow.FideicomisoBusinessLogic.Get().ToList();
-            gridFideicomisos.DataBind();
+            gridStatus.DataSource = uow.StatusSesionBusinessLogic.Get().ToList();
+            gridStatus.DataBind();
         }
 
 
         private void BindControles()
         {
-            int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+            int idStatus = Utilerias.StrToInt(_IDStatus.Value);
 
-            Fideicomiso obj = uow.FideicomisoBusinessLogic.GetByID(idFideicomiso);
+            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idStatus);
 
             txtClave.Value = obj.Clave;
             txtDescripcion.Value = obj.Descripcion;
 
         }
 
-        private bool ValidarEliminarFideicomiso(Fideicomiso obj)
+        private bool ValidarEliminarStatus(StatusSesion obj)
         {
-            if (obj.DetalleFideicomisos.Count() > 0)
+            if (obj.DetalleSesiones.Count > 0)
                 return false;
 
-            if (obj.DetalleSubFideicomisos.Count() > 0)
+            if (obj.DetalleSesionesHistorico.Count > 0)
                 return false;
 
             return true;
         }
+
+        protected void gridStatus_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
+
+                int id = Utilerias.StrToInt(gridStatus.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+
+                if (imgBtnEliminar != null)
+                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
+
+            }
+        }
+
+        protected void gridStatus_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridStatus.PageIndex = e.NewPageIndex;
+            BindGrid();
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
+        protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
+            _IDStatus.Value = gridStatus.DataKeys[row.RowIndex].Value.ToString();
+            _Accion.Value = "A";
+
+            BindControles();
+
+            divCaptura.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            Fideicomiso obj;
-            int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+            StatusSesion obj;
+            int idStatus = Utilerias.StrToInt(_IDStatus.Value);
             string M = string.Empty;
 
             if (_Accion.Value.Equals("N"))
-                obj = new Fideicomiso();
+                obj = new StatusSesion();
             else
-                obj = uow.FideicomisoBusinessLogic.GetByID(idFideicomiso);
+                obj = uow.StatusSesionBusinessLogic.GetByID(idStatus);
 
             obj.Clave = txtClave.Value;
             obj.Descripcion = txtDescripcion.Value;
@@ -69,13 +106,13 @@ namespace SISEC.Formas.Catalogos
             {
                 obj.FechaCaptura = DateTime.Now;
                 obj.UsuarioCaptura = Session["Login"].ToString();
-                uow.FideicomisoBusinessLogic.Insert(obj);
+                uow.StatusSesionBusinessLogic.Insert(obj);
             }
             else
             {
                 obj.FechaModificacion = DateTime.Now;
                 obj.UsuarioModifica = Session["Login"].ToString();
-                uow.FideicomisoBusinessLogic.Update(obj);
+                uow.StatusSesionBusinessLogic.Update(obj);
             }
 
             uow.SaveChanges();
@@ -105,30 +142,15 @@ namespace SISEC.Formas.Catalogos
 
         }
 
-        protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
-        {
-            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
-            _IDFideicomiso.Value = gridFideicomisos.DataKeys[row.RowIndex].Value.ToString();
-            _Accion.Value = "A";
-
-            BindControles();
-
-            divCaptura.Style.Add("display", "block");
-            divEncabezado.Style.Add("display", "none");
-            divMsgError.Style.Add("display", "none");
-            divMsgSuccess.Style.Add("display", "none");
-
-        }
-
         protected void btnDel_Click(object sender, EventArgs e)
         {
             string M = "Se ha eliminado correctamente";
 
-            int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+            int idStatus = Utilerias.StrToInt(_IDStatus.Value);
 
-            Fideicomiso obj = uow.FideicomisoBusinessLogic.GetByID(idFideicomiso);
+            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idStatus);
 
-            if (!ValidarEliminarFideicomiso(obj))
+            if (!ValidarEliminarStatus(obj))
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
@@ -137,7 +159,7 @@ namespace SISEC.Formas.Catalogos
                 return;
             }
 
-            uow.FideicomisoBusinessLogic.Delete(obj);
+            uow.StatusSesionBusinessLogic.Delete(obj);
             uow.SaveChanges();
 
             if (uow.Errors.Count > 0) //Si hubo errores
@@ -158,38 +180,6 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
-
-
         }
-
-
-        
-
-        protected void gridFideicomisos_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gridFideicomisos.PageIndex = e.NewPageIndex;
-            BindGrid();
-            divEncabezado.Style.Add("display", "block");
-            divMsgError.Style.Add("display", "none");
-            divMsgSuccess.Style.Add("display", "none");
-        }
-
-        protected void gridFideicomisos_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
-
-                int id = Utilerias.StrToInt(gridFideicomisos.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
-
-                if (imgBtnEliminar != null)
-                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
-
-            }
-        }
-
-        
-
-
     }
 }

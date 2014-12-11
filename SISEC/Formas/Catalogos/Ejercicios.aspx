@@ -1,20 +1,20 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteAdmin.Master" AutoEventWireup="true" CodeBehind="Fideicomisos.aspx.cs" Inherits="SISEC.Formas.Catalogos.Fideicomisos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteAdmin.Master" AutoEventWireup="true" CodeBehind="Ejercicios.aspx.cs" Inherits="SISEC.Formas.Catalogos.Ejercicios" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <script type="text/javascript">
 
         function fnc_Nuevo() {
             $("#<%= divCaptura.ClientID %>").css("display", "block");
-            $("#<%= divEncabezado.ClientID %>").css("display", "none");
-            $("#<%= txtDescripcion.ClientID %>").val("");
-            $("#<%= txtClave.ClientID %>").val("");
-            $("#<%= _Accion.ClientID %>").val("N");
-            $("#<%= divMsgError.ClientID %>").css("display", "none");
-            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
-        }
+             $("#<%= divEncabezado.ClientID %>").css("display", "none");
+             $("#<%= txtDescripcion.ClientID %>").val("");
+             $("#<%= txtAnio.ClientID %>").val("");
+             $("#<%= _Accion.ClientID %>").val("N");
+             $("#<%= divMsgError.ClientID %>").css("display", "none");
+             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+         }
 
-        function fnc_Cancelar() {
-            $("#<%= divCaptura.ClientID %>").css("display", "none");
+         function fnc_Cancelar() {
+             $("#<%= divCaptura.ClientID %>").css("display", "none");
             $("#<%= divEncabezado.ClientID %>").css("display", "block");
             $("#<%= _Accion.ClientID %>").val("");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
@@ -22,7 +22,7 @@
         }
 
         function fnc_ColocarID(id) {
-            $("#<%= _IDFideicomiso.ClientID %>").val(id);
+            $("#<%= _IDEjercicio.ClientID %>").val(id);
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
         }
@@ -33,13 +33,12 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <div id="page-wrapper">
+     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="alert alert-success alert-dismissable">
-                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Fideicomisos</strong></h4>  
+                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Ejercicios</strong></h4>  
                     </div>
                 </div>
             </div>
@@ -49,11 +48,11 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <h3 class="panel-title"><i class="fa"></i> Lista de Fideicomisos</h3>
+                             <h3 class="panel-title"><i class="fa"></i> Lista de Ejercicios</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:GridView ID="gridFideicomisos" OnRowDataBound="gridFideicomisos_RowDataBound" OnPageIndexChanging="gridFideicomisos_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
+                                <asp:GridView ID="gridEjercicios" OnRowDataBound="gridEjercicios_RowDataBound" OnPageIndexChanging="gridEjercicios_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Acciones">
                                             <ItemTemplate>
@@ -63,7 +62,7 @@
                                             <HeaderStyle BackColor="#EEEEEE" />
                                             <ItemStyle HorizontalAlign="right" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Clave" SortExpression="Año">
+                                        <asp:TemplateField HeaderText="Año" SortExpression="Año">
                                             <ItemTemplate>
                                                 <%# DataBinder.Eval(Container.DataItem, "Clave")%>
                                             </ItemTemplate>
@@ -88,13 +87,13 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa"></i>Datos del Fideicomiso</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Datos del Ejercicio</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Clave:</label>
-                                    <input type="text" name="prueba" runat="server" class="form-control" id="txtClave" />
+                                    <label>Año:</label>
+                                    <input type="number" name="prueba" runat="server" class="form-control" id="txtAnio" />
                                 </div>
                                 <div class="form-group">
                                     <label>Descripción:</label>
@@ -147,8 +146,9 @@
         </div>
     </div>
 
+
     <div runat="server" style="display:none">
-        <input type="hidden" runat="server" id="_IDFideicomiso" />
+        <input type="hidden" runat="server" id="_IDEjercicio" />
         <input type="hidden" runat="server" id="_Accion" />
     </div>
 </asp:Content>

@@ -12,7 +12,7 @@
 
 
         function fnc_NuevaNorma() {
-            $("#<%= divConsultar.ClientID %>").css("display", "none");
+            <%--$("#<%= divConsultar.ClientID %>").css("display", "none");--%>
             $("#<%= divGrid.ClientID %>").css("display", "none");
             $("#<%= divCapturaNormatividad.ClientID %>").css("display", "block");
             $("#<%= _Accion.ClientID %>").val("N");
@@ -54,7 +54,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:DropDownList ID="ddlTipoNormatividad" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlTipoNormatividad" OnSelectedIndexChanged="ddlTipoNormatividad_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control">
                                     <asp:ListItem Text="General" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Específica" Value="2"></asp:ListItem>
                                 </asp:DropDownList>                                         
@@ -67,14 +67,14 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                <asp:DropDownList ID="ddlFideicomisos" runat="server" CssClass="form-control" AutoPostBack="False"></asp:DropDownList>                                         
+                                <asp:DropDownList ID="ddlFideicomisos" OnSelectedIndexChanged="ddlFideicomisos_SelectedIndexChanged" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>                                         
                             </div>
                         </div>
                     </div>
 
-                    <div id="divConsultar" runat="server">
+                   <%-- <div id="divConsultar" style="display:none" runat="server">
                         <asp:Button ID="btnConsultar" OnClick="btnConsultar_Click" Text="Consultar" runat="server" CssClass="btn btn-default" />
-                    </div>
+                    </div>--%>
                     
 
                     <div><p>&nbsp;</p></div>

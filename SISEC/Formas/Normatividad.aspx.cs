@@ -22,7 +22,11 @@ namespace SISEC.Formas
             if (!IsPostBack)
             {
                 BindDropDownFideicomisos();
+                
                 gridNormatividad.Columns[2].Visible = false;
+
+                Consultar();
+
                 ddlTipoNormatividad.Attributes["onchange"] = "fnc_MostrarFideicomisos(this)";
             }
         }
@@ -218,7 +222,7 @@ namespace SISEC.Formas
         {
             Consultar();
             divCapturaNormatividad.Style.Add("display", "none");
-            divConsultar.Style.Add("display", "block");
+            //divConsultar.Style.Add("display", "block");
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -322,7 +326,7 @@ namespace SISEC.Formas
             Consultar();
             divCapturaNormatividad.Style.Add("display", "none");
             divGrid.Style.Add("display", "block");
-            divConsultar.Style.Add("display", "block");
+            //divConsultar.Style.Add("display", "block");
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
@@ -395,9 +399,19 @@ namespace SISEC.Formas
             
             divCapturaNormatividad.Style.Add("display", "block");
             divGrid.Style.Add("display", "none");
-            divConsultar.Style.Add("display", "none");
+            //divConsultar.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+        }
+
+        protected void ddlTipoNormatividad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Consultar();
+        }
+
+        protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Consultar();
         }
 
     }

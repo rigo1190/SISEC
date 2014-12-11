@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace SISEC.Formas.Catalogos
 {
-    public partial class TiposSesiones : System.Web.UI.Page
+    public partial class TiposUsuarios : System.Web.UI.Page
     {
         private UnitOfWork uow;
         protected void Page_Load(object sender, EventArgs e)
@@ -22,22 +22,44 @@ namespace SISEC.Formas.Catalogos
             }
         }
 
+
         private void BindGrid()
         {
-            gridTipos.DataSource = uow.TipoSesionBusinessLogic.Get().ToList();
+            gridTipos.DataSource = uow.TipoUsuarioBusinessLogic.Get().ToList();
             gridTipos.DataBind();
         }
-
 
         private void BindControles()
         {
             int idTipo = Utilerias.StrToInt(_IDTipo.Value);
 
-            TipoSesion obj = uow.TipoSesionBusinessLogic.GetByID(idTipo);
+            TipoUsuario obj = uow.TipoUsuarioBusinessLogic.GetByID(idTipo);
 
             txtClave.Value = obj.Clave;
             txtDescripcion.Value = obj.Descripcion;
 
+        }
+
+        private bool ValidarEliminarTipo(TipoUsuario obj)
+        {
+            if (obj.DetalleUsuarios.Count() > 0)
+                return false;
+
+            return true;
+        }
+
+        protected void gridTipos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
+
+                int id = Utilerias.StrToInt(gridTipos.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+
+                if (imgBtnEliminar != null)
+                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
+
+            }
         }
 
         protected void gridTipos_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -49,16 +71,30 @@ namespace SISEC.Formas.Catalogos
             divMsgSuccess.Style.Add("display", "none");
         }
 
+        protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
+        {
+            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
+            _IDTipo.Value = gridTipos.DataKeys[row.RowIndex].Value.ToString();
+            _Accion.Value = "A";
+
+            BindControles();
+
+            divCaptura.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            TipoSesion obj;
+            TipoUsuario obj;
             int idTipo = Utilerias.StrToInt(_IDTipo.Value);
             string M = string.Empty;
 
             if (_Accion.Value.Equals("N"))
-                obj = new TipoSesion();
+                obj = new TipoUsuario();
             else
-                obj = uow.TipoSesionBusinessLogic.GetByID(idTipo);
+                obj = uow.TipoUsuarioBusinessLogic.GetByID(idTipo);
 
             obj.Clave = txtClave.Value;
             obj.Descripcion = txtDescripcion.Value;
@@ -67,13 +103,13 @@ namespace SISEC.Formas.Catalogos
             {
                 obj.FechaCaptura = DateTime.Now;
                 obj.UsuarioCaptura = Session["Login"].ToString();
-                uow.TipoSesionBusinessLogic.Insert(obj);
+                uow.TipoUsuarioBusinessLogic.Insert(obj);
             }
             else
             {
                 obj.FechaModificacion = DateTime.Now;
                 obj.UsuarioModifica = Session["Login"].ToString();
-                uow.TipoSesionBusinessLogic.Update(obj);
+                uow.TipoUsuarioBusinessLogic.Update(obj);
             }
 
             uow.SaveChanges();
@@ -102,24 +138,13 @@ namespace SISEC.Formas.Catalogos
             divCaptura.Style.Add("display", "none");
         }
 
-        private bool ValidarEliminarTipo(TipoSesion obj)
-        {
-            if (obj.DetalleSesiones.Count() > 0)
-                return false;
-
-            if (obj.DetalleSesionesHistorico.Count() > 0)
-                return false;
-
-            return true;
-        }
-
         protected void btnDel_Click(object sender, EventArgs e)
         {
             string M = "Se ha eliminado correctamente";
 
             int idTipo = Utilerias.StrToInt(_IDTipo.Value);
 
-            TipoSesion obj = uow.TipoSesionBusinessLogic.GetByID(idTipo);
+            TipoUsuario obj = uow.TipoUsuarioBusinessLogic.GetByID(idTipo);
 
             if (!ValidarEliminarTipo(obj))
             {
@@ -130,7 +155,7 @@ namespace SISEC.Formas.Catalogos
                 return;
             }
 
-            uow.TipoSesionBusinessLogic.Delete(obj);
+            uow.TipoUsuarioBusinessLogic.Delete(obj);
             uow.SaveChanges();
 
             if (uow.Errors.Count > 0) //Si hubo errores
@@ -151,34 +176,6 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
-        }
-
-        protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
-        {
-            GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
-            _IDTipo.Value = gridTipos.DataKeys[row.RowIndex].Value.ToString();
-            _Accion.Value = "A";
-
-            BindControles();
-
-            divCaptura.Style.Add("display", "block");
-            divEncabezado.Style.Add("display", "none");
-            divMsgError.Style.Add("display", "none");
-            divMsgSuccess.Style.Add("display", "none");
-        }
-
-        protected void gridTipos_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
-
-                int id = Utilerias.StrToInt(gridTipos.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
-
-                if (imgBtnEliminar != null)
-                    imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
-
-            }
         }
     }
 }

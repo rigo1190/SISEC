@@ -9,57 +9,65 @@ using System.Web.UI.WebControls;
 
 namespace SISEC.Formas.Catalogos
 {
-    public partial class Ejercicios : System.Web.UI.Page
+    public partial class Usuarios : System.Web.UI.Page
     {
         private UnitOfWork uow;
         protected void Page_Load(object sender, EventArgs e)
         {
             uow = new UnitOfWork();
-
             if (!IsPostBack)
             {
                 BindGrid();
+                BindDropDownTipoUsuario();
             }
         }
 
         private void BindGrid()
         {
-            gridEjercicios.DataSource = uow.EjercicioBusinessLogic.Get().ToList();
-            gridEjercicios.DataBind();
+            gridUsuarios.DataSource = uow.UsuarioBusinessLogic.Get().ToList();
+            gridUsuarios.DataBind();
         }
 
+        private void BindDropDownTipoUsuario()
+        {
+            ddlTipoUsuario.DataSource = uow.TipoUsuarioBusinessLogic.Get().ToList();
+            ddlTipoUsuario.DataValueField = "ID";
+            ddlTipoUsuario.DataTextField = "Descripcion";
+            ddlTipoUsuario.DataBind();
+        }
 
         private void BindControles()
         {
-            int idEjercicio = Utilerias.StrToInt(_IDEjercicio.Value);
+            int idUsuario = Utilerias.StrToInt(_IDUsuario.Value);
 
-            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idEjercicio);
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUsuario);
 
-            txtAnio.Value = obj.Clave;
-            txtDescripcion.Value = obj.Descripcion;
+            txtNombre.Value = obj.Nombre;
+            txtPassword.Value = obj.Password;
+            txtLogin.Value = obj.Login;
+            chkActivo.Checked = Convert.ToBoolean(obj.Activo);
+            chkBloqueado.Checked = Convert.ToBoolean(obj.Bloqueado);
+            ddlTipoUsuario.SelectedValue = obj.TipoUsuarioID.ToString();
 
         }
 
-
-        private bool ValidarEliminarEjercicio(Ejercicio obj)
+        private bool ValidarEliminarUsuario(Usuario obj)
         {
-            if (obj.DetalleCalendarios.Count > 0)
-                return false;
+            List<Calendario> list= uow.CalendarioBusinessLogic.Get(e=>e.UsuarioCaptura==obj.Login || e.UsuarioModifica==obj.Login).ToList();
 
-            if (obj.DetalleFideicomisos.Count > 0)
+            if (list.Count > 0)
                 return false;
 
             return true;
-
         }
 
-        protected void gridEjercicios_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gridUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
 
-                int id = Utilerias.StrToInt(gridEjercicios.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+                int id = Utilerias.StrToInt(gridUsuarios.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
 
                 if (imgBtnEliminar != null)
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
@@ -67,9 +75,9 @@ namespace SISEC.Formas.Catalogos
             }
         }
 
-        protected void gridEjercicios_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void gridUsuarios_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gridEjercicios.PageIndex = e.NewPageIndex;
+            gridUsuarios.PageIndex = e.NewPageIndex;
             BindGrid();
             divEncabezado.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
@@ -79,7 +87,7 @@ namespace SISEC.Formas.Catalogos
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
         {
             GridViewRow row = (GridViewRow)((ImageButton)sender).NamingContainer;
-            _IDEjercicio.Value = gridEjercicios.DataKeys[row.RowIndex].Value.ToString();
+            _IDUsuario.Value = gridUsuarios.DataKeys[row.RowIndex].Value.ToString();
             _Accion.Value = "A";
 
             BindControles();
@@ -92,29 +100,27 @@ namespace SISEC.Formas.Catalogos
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            Ejercicio obj;
-            int idStatus = Utilerias.StrToInt(_IDEjercicio.Value);
+            Usuario obj;
+            int idUsuario = Utilerias.StrToInt(_IDUsuario.Value);
             string M = string.Empty;
 
             if (_Accion.Value.Equals("N"))
-                obj = new Ejercicio();
+                obj = new Usuario();
             else
-                obj = uow.EjercicioBusinessLogic.GetByID(idStatus);
+                obj = uow.UsuarioBusinessLogic.GetByID(idUsuario);
 
-            obj.Anio = Utilerias.StrToInt(txtAnio.Value);
-            obj.Descripcion = txtDescripcion.Value;
+            obj.Nombre = txtNombre.Value;
+            obj.Login = txtLogin.Value;
+            obj.Password = txtPassword.Value;
+            obj.TipoUsuarioID = Utilerias.StrToInt(ddlTipoUsuario.SelectedValue);
 
             if (_Accion.Value.Equals("N"))
             {
-                obj.FechaCaptura = DateTime.Now;
-                obj.UsuarioCaptura = Session["Login"].ToString();
-                uow.EjercicioBusinessLogic.Insert(obj);
+                uow.UsuarioBusinessLogic.Insert(obj);
             }
             else
             {
-                obj.FechaModificacion = DateTime.Now;
-                obj.UsuarioModifica = Session["Login"].ToString();
-                uow.EjercicioBusinessLogic.Update(obj);
+                uow.UsuarioBusinessLogic.Update(obj);
             }
 
             uow.SaveChanges();
@@ -131,8 +137,6 @@ namespace SISEC.Formas.Catalogos
                 return;
             }
 
-
-
             BindGrid();
 
             divMsgError.Style.Add("display", "none");
@@ -147,11 +151,11 @@ namespace SISEC.Formas.Catalogos
         {
             string M = "Se ha eliminado correctamente";
 
-            int idEjercicio = Utilerias.StrToInt(_IDEjercicio.Value);
+            int idTipo = Utilerias.StrToInt(_IDUsuario.Value);
 
-            Ejercicio obj = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idTipo);
 
-            if (!ValidarEliminarEjercicio(obj))
+            if (!ValidarEliminarUsuario(obj))
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
@@ -160,7 +164,7 @@ namespace SISEC.Formas.Catalogos
                 return;
             }
 
-            uow.EjercicioBusinessLogic.Delete(obj);
+            uow.UsuarioBusinessLogic.Delete(obj);
             uow.SaveChanges();
 
             if (uow.Errors.Count > 0) //Si hubo errores

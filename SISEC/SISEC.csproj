@@ -660,6 +660,8 @@
     <Content Include="Formas\Catalogos\StatusSesiones.aspx" />
     <Content Include="Formas\Catalogos\TEST.aspx" />
     <Content Include="Formas\Catalogos\TiposSesiones.aspx" />
+    <Content Include="Formas\Catalogos\TiposUsuarios.aspx" />
+    <Content Include="Formas\Catalogos\Usuarios.aspx" />
     <Content Include="Formas\SintesisInformativa.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
@@ -816,6 +818,20 @@
     </Compile>
     <Compile Include="Formas\Catalogos\TiposSesiones.aspx.designer.cs">
       <DependentUpon>TiposSesiones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\TiposUsuarios.aspx.cs">
+      <DependentUpon>TiposUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\TiposUsuarios.aspx.designer.cs">
+      <DependentUpon>TiposUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\SintesisInformativa.aspx.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>

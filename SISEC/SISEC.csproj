@@ -655,6 +655,7 @@
     <Content Include="Formas\Catalogos\Dependencias.aspx" />
     <Content Include="Formas\Catalogos\Ejercicios.aspx" />
     <Content Include="Formas\Catalogos\Fideicomisos.aspx" />
+    <Content Include="Formas\Catalogos\FideicomisosEjercicio.aspx" />
     <Content Include="Formas\Catalogos\Logos.aspx" />
     <Content Include="Formas\Catalogos\StatusAcuerdos.aspx" />
     <Content Include="Formas\Catalogos\StatusSesiones.aspx" />
@@ -662,6 +663,7 @@
     <Content Include="Formas\Catalogos\TiposSesiones.aspx" />
     <Content Include="Formas\Catalogos\TiposUsuarios.aspx" />
     <Content Include="Formas\Catalogos\Usuarios.aspx" />
+    <Content Include="Formas\Catalogos\UsuariosFideicomisos.aspx" />
     <Content Include="Formas\SintesisInformativa.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
@@ -784,6 +786,13 @@
     <Compile Include="Formas\Catalogos\Fideicomisos.aspx.designer.cs">
       <DependentUpon>Fideicomisos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Formas\Catalogos\FideicomisosEjercicio.aspx.cs">
+      <DependentUpon>FideicomisosEjercicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\FideicomisosEjercicio.aspx.designer.cs">
+      <DependentUpon>FideicomisosEjercicio.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Formas\Catalogos\Logos.aspx.cs">
       <DependentUpon>Logos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -832,6 +841,13 @@
     </Compile>
     <Compile Include="Formas\Catalogos\Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Catalogos\UsuariosFideicomisos.aspx.cs">
+      <DependentUpon>UsuariosFideicomisos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Catalogos\UsuariosFideicomisos.aspx.designer.cs">
+      <DependentUpon>UsuariosFideicomisos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\SintesisInformativa.aspx.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>

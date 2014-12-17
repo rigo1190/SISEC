@@ -8,6 +8,7 @@
              $("#<%= divEncabezado.ClientID %>").css("display", "none");
              $("#<%= txtDescripcion.ClientID %>").val("");
              $("#<%= txtAnio.ClientID %>").val("");
+             $("#<%= txtAnio.ClientID %>").prop('disabled', false);
              $("#<%= _Accion.ClientID %>").val("N");
              $("#<%= divMsgError.ClientID %>").css("display", "none");
              $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
@@ -25,6 +26,31 @@
             $("#<%= _IDEjercicio.ClientID %>").val(id);
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
+
+        function fnc_ValidarAnio() {
+            var anio = $("#<%= txtAnio.ClientID %>").val();
+            var valido = true;
+
+            if (!/^([0-9])*[.]?[0-9]*$/.test(anio)) 
+                valido = false;
+
+            if (isNaN(parseInt(anio))) 
+                valido = false;
+
+            if (anio.length != 4)
+                valido= false;
+
+            if (anio > 9999)
+                valido = false;
+
+            if (!valido) {
+                $("#<%= lblMsgError.ClientID %>").text("El campo Año no es un número válido");
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
+                $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            }
+            
+            return valido;
         }
 
 
@@ -64,7 +90,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Año" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "Clave")%>
+                                                <%# DataBinder.Eval(Container.DataItem, "Anio")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
@@ -101,7 +127,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <asp:Button OnClick="btnGuardar_Click" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button OnClick="btnGuardar_Click" OnClientClick="return fnc_ValidarAnio();" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
                                     <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
                                 </div>
                             </div>
@@ -129,6 +155,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
+            
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

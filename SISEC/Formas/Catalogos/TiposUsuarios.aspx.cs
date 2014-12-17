@@ -25,7 +25,19 @@ namespace SISEC.Formas.Catalogos
 
         private void BindGrid()
         {
+            //int idUsuario = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            //Usuario user = uow.UsuarioBusinessLogic.GetByID(idUsuario);
+            //TipoUsuario tipo = uow.TipoUsuarioBusinessLogic.GetByID(user.TipoUsuarioID);
+            
             gridTipos.DataSource = uow.TipoUsuarioBusinessLogic.Get().ToList();
+
+            //if (!Convert.ToBoolean(tipo.EsDesarrollador))
+            //{
+            //    gridTipos.DataSource = null;
+            //    gridTipos.DataSource = uow.TipoUsuarioBusinessLogic.Get(e => e.EsDesarrollador == false).ToList();
+            //}
+
             gridTipos.DataBind();
         }
 
@@ -122,6 +134,8 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 lblMsgError.Text = M;
                 return;
             }
@@ -150,7 +164,7 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
                 return;
             }
@@ -167,6 +181,8 @@ namespace SISEC.Formas.Catalogos
                 lblMsgError.Text = M;
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 return;
             }
 
@@ -176,6 +192,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
         }
     }
 }

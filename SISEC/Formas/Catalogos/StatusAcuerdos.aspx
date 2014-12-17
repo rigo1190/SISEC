@@ -3,6 +3,10 @@
     <script type="text/javascript">
 
         function fnc_Nuevo() {
+            PageMethods.GetValorNuevo("param", fnc_ActivarControlesNuevo);
+        }
+
+        function fnc_ActivarControlesNuevo(response) {
             $("#<%= divCaptura.ClientID %>").css("display", "block");
             $("#<%= divEncabezado.ClientID %>").css("display", "none");
             $("#<%= txtDescripcion.ClientID %>").val("");
@@ -10,7 +14,13 @@
             $("#<%= _Accion.ClientID %>").val("N");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+
+            if (response=="False")
+                $("#<%= chkInicio.ClientID %>").attr('disabled', '-1');
+            else
+                $("#<%= chkInicio.ClientID %>").removeAttr('disabled');
         }
+
 
         function fnc_Cancelar() {
             $("#<%= divCaptura.ClientID %>").css("display", "none");
@@ -30,7 +40,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server"></asp:ScriptManager>
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -65,6 +75,11 @@
                                                 <%# DataBinder.Eval(Container.DataItem, "Clave")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="¿Status de inicio?" SortExpression="Año">
+                                            <ItemTemplate>
+                                               <asp:CheckBox ID="chkInicio" runat="server" Enabled="false" Checked='<%#Convert.ToBoolean(Eval("Inicial")) %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                          <asp:TemplateField HeaderText="Descripción" SortExpression="Año">
                                             <ItemTemplate>
                                                 <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
@@ -92,6 +107,10 @@
                                 <div class="form-group">
                                     <label>Clave:</label>
                                     <input type="text" name="prueba" runat="server" class="form-control" id="txtClave" />
+                                </div>
+                                <div class="form-group">
+                                    <label>¿Status de Inicio?:</label>
+                                    <asp:CheckBox ID="chkInicio" runat="server" />
                                 </div>
                                 <div class="form-group">
                                     <label>Descripción:</label>

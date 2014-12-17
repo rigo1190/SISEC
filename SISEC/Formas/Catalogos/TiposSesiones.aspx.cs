@@ -86,6 +86,8 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
                 lblMsgError.Text = M;
                 return;
             }
@@ -125,8 +127,10 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 

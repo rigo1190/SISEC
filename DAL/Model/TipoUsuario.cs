@@ -27,6 +27,7 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
+        public Nullable<bool> EsDesarrollador { get; set; }
     
         public virtual ICollection<Usuario> DetalleUsuarios { get; set; }
     }

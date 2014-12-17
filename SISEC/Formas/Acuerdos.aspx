@@ -52,6 +52,10 @@
         }
 
         function fnc_CrearNuevoAcuerdo() {
+            PageMethods.GetValorItemStatus("param", fnc_NuevoAcuerdo)
+        }
+
+        function fnc_NuevoAcuerdo(response) {
             $("#<%= divEncabezadoDetalle.ClientID %>").css("display", "none");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
@@ -66,14 +70,15 @@
             $("#<%= txtNumAcuerdo.ClientID %>").prop('disabled', false);
             $("#<%= ddlStatus.ClientID %>").prop('disabled', true);
             $("#<%= btnGuardar.ClientID %>").prop('disabled', false);
-
+            $("#<%=ddlStatus.ClientID%>").val(response);
 
             var date = new Date();
             $("#<%= txtFechaAcuerdo.ClientID %>").val(date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
 
-
-            return false;
         }
+
+
+
 
         function fnc_Volver() {
             $("#<%= divEncabezado.ClientID %>").css("display", "block");

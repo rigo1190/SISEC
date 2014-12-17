@@ -28,16 +28,31 @@ namespace SISEC.Formas.Catalogos
             gridEjercicios.DataBind();
         }
 
+        private bool ValidarInsercion(int añoSeñalado, Ejercicio objEjercicio=null)
+        {
+            Ejercicio obj=null;
+
+            if (objEjercicio==null)
+                obj= uow.EjercicioBusinessLogic.Get(e => e.Anio == añoSeñalado).FirstOrDefault();
+            else
+                if (añoSeñalado != objEjercicio.Anio)
+                    obj = uow.EjercicioBusinessLogic.Get(e => e.Anio == añoSeñalado).FirstOrDefault();
+                
+
+            return obj == null;
+        }
 
         private void BindControles()
         {
             int idEjercicio = Utilerias.StrToInt(_IDEjercicio.Value);
 
-            StatusSesion obj = uow.StatusSesionBusinessLogic.GetByID(idEjercicio);
+            Ejercicio obj = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
 
-            txtAnio.Value = obj.Clave;
+            txtAnio.Value = obj.Anio.ToString();
             txtDescripcion.Value = obj.Descripcion;
 
+            txtAnio.Disabled = !ValidarEliminarEjercicio(obj);
+            
         }
 
 
@@ -71,7 +86,9 @@ namespace SISEC.Formas.Catalogos
         {
             gridEjercicios.PageIndex = e.NewPageIndex;
             BindGrid();
+
             divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
@@ -96,10 +113,24 @@ namespace SISEC.Formas.Catalogos
             int idStatus = Utilerias.StrToInt(_IDEjercicio.Value);
             string M = string.Empty;
 
-            if (_Accion.Value.Equals("N"))
+            if (_Accion.Value.Equals("N")){
                 obj = new Ejercicio();
+            }
             else
                 obj = uow.EjercicioBusinessLogic.GetByID(idStatus);
+
+            if (!ValidarInsercion(Utilerias.StrToInt(txtAnio.Value),!_Accion.Value.Equals("N") ? obj : null))
+            {
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
+
+                lblMsgError.Text = "Ya existe registro para el año escrito. Intente con otros valores.";
+
+                return;
+            }
+
 
             obj.Anio = Utilerias.StrToInt(txtAnio.Value);
             obj.Descripcion = txtDescripcion.Value;
@@ -155,8 +186,10 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 
@@ -181,6 +214,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
         }
     }
 }

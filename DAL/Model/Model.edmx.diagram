@@ -45,7 +45,7 @@
         <EntityTypeShape EntityType="SISEFModel.FichaTecnica" Width="3.25" PointX="0.875" PointY="14.5" />
         <AssociationConnector Association="SISEFModel.DependenciaFideicomisoEjercicioFichaTecnica" />
         <AssociationConnector Association="SISEFModel.EjercicioNormatividad" />
-        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="SISEFModel.Imagenes" Width="1.5" PointX="0.875" PointY="0.5" />
         <EntityTypeShape EntityType="SISEFModel.SesionHistorico" Width="3" PointX="20.125" PointY="1.75" />
         <AssociationConnector Association="SISEFModel.TipoSesionSesionHistorico" />
         <AssociationConnector Association="SISEFModel.StatusSesionSesionHistorico" />

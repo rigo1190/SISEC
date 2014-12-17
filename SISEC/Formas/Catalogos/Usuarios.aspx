@@ -68,12 +68,12 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Login" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "Clave")%>
+                                                <%# DataBinder.Eval(Container.DataItem, "Login")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText="Nombre" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
+                                                <%# DataBinder.Eval(Container.DataItem, "Nombre")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -84,13 +84,13 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Activo" SortExpression="Año">
                                             <ItemTemplate>
-                                               <asp:CheckBox ID="chkActivo" runat="server" />
+                                               <asp:CheckBox ID="chkActivo" Enabled="false"  Checked='<%#Convert.ToBoolean(Eval("Activo")) %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
                                          <asp:TemplateField HeaderText="Bloqueado" SortExpression="Año">
                                             <ItemTemplate>
-                                               <asp:CheckBox ID="chkBloqueado" runat="server" />
+                                               <asp:CheckBox ID="chkBloqueado" Enabled="false"  Checked='<%#Convert.ToBoolean(Eval("Bloqueado")) %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 

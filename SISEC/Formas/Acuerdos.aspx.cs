@@ -138,6 +138,15 @@ namespace SISEC.Formas
         }
 
         [WebMethod]
+        public static string GetValorItemStatus(string param)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            StatusAcuerdo obj = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == true).FirstOrDefault();
+            return obj.ID.ToString();
+
+        }
+
+        [WebMethod]
         public static List<object> GetDatosAcuerdos(int idAcuerdo)
         {
             List<object> R = new List<object>();
@@ -338,7 +347,9 @@ namespace SISEC.Formas
             //SE VALIDA QUE EL STATUS DEL ACUERDO NO SEA PENDIENTE CUANDO HAYA SEGUIMIENTOS DE POR MEDIO
             if (obj.DetalleSeguimientos.Count > 0)
             {
-                if (Utilerias.StrToInt(ddlStatus.SelectedValue) == 1)
+
+                StatusAcuerdo status = uow.StatusAcuerdoBusinessLogic.GetByID(Utilerias.StrToInt(ddlStatus.SelectedValue));
+                if (Convert.ToBoolean(status.Inicial))
                 {
                     divMsgError.Style.Add("display", "block");
                     divMsgSuccess.Style.Add("display", "none");
@@ -473,6 +484,9 @@ namespace SISEC.Formas
             txtNumAcuerdo.Disabled = false;
             ddlStatus.Enabled = false;
             btnGuardar.Enabled = true;
+
+            StatusAcuerdo objStatus = uow.StatusAcuerdoBusinessLogic.Get(s => s.Inicial == true).FirstOrDefault();
+            ddlStatus.SelectedValue = objStatus.ID.ToString();
 
             divCapturaDetalle.Style.Add("display", "block");
             divSeguimiento.Style.Add("display", "none");

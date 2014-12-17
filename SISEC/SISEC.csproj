@@ -664,6 +664,7 @@
     <Content Include="Formas\Catalogos\TiposUsuarios.aspx" />
     <Content Include="Formas\Catalogos\Usuarios.aspx" />
     <Content Include="Formas\Catalogos\UsuariosFideicomisos.aspx" />
+    <Content Include="Formas\Hash.aspx" />
     <Content Include="Formas\SintesisInformativa.aspx" />
     <Content Include="Formas\Normatividad.aspx" />
     <Content Include="Formas\NotasActas.aspx" />
@@ -848,6 +849,13 @@
     </Compile>
     <Compile Include="Formas\Catalogos\UsuariosFideicomisos.aspx.designer.cs">
       <DependentUpon>UsuariosFideicomisos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formas\Hash.aspx.cs">
+      <DependentUpon>Hash.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formas\Hash.aspx.designer.cs">
+      <DependentUpon>Hash.aspx</DependentUpon>
     </Compile>
     <Compile Include="Formas\SintesisInformativa.aspx.cs">
       <DependentUpon>SintesisInformativa.aspx</DependentUpon>

@@ -72,40 +72,49 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        
-                        <li>
-                            <a class="active" href="<%=ResolveClientUrl("~/Formas/Sesiones.aspx") %>"><i class="fa fa-dashboard fa-fw"></i> Calendario</a>
-                        </li>
-                        <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/Acuerdos.aspx") %>"><i class="fa fa-bar-chart-o fa-fw"></i> Acuerdos</a>
-                        </li>
-                        <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/Normatividad.aspx") %>"><i class="fa fa-edit fa-fw"></i> Normatividad</a>
-                        </li>
-                        <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/NotasActas.aspx") %>"><i class="fa fa-wrench fa-fw"></i>  Notas y Actas</a>
-                        </li>
-                        <li>
-                            <a href="<%=ResolveClientUrl("~/Formas/SintesisInformativa.aspx") %>"><i class="fa fa-gears fa-fw"></i> Síntesis Informativa</a>
-
-                        </li>
-
                         <%--<li>
                             <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Logos.aspx") %>"><i class="fa fa-gears fa-fw"></i> Test LOGOS</a>
 
                         </li>--%>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Consultas<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Catálogos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<%=ResolveClientUrl("~/Reports/Calendario.aspx") %>">Agenda</a>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Ejercicios.aspx") %>">Ejercicios</a>
                                 </li>
                                 <li>
-                                    <a href="<%=ResolveClientUrl("~/Reports/Acuerdos.aspx") %>">Acuerdos</a>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/StatusAcuerdos.aspx") %>">Status del Acuerdo</a>
+                                </li>
+
+                                 <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/StatusSesiones.aspx") %>">Status de la Sesión</a>
                                 </li>
 
                                 <li>
-                                    <a href="<%=ResolveClientUrl("~/Reports/SintesisInformativa.aspx") %>">Síntesis Informativa</a>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/TiposSesiones.aspx") %>">Tipos de la Sesión</a>
+                                </li>
+
+                                 <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/TiposUsuarios.aspx") %>">Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Usuarios.aspx") %>">Usuarios</a>
+                                </li>
+
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Fideicomisos.aspx") %>">Fideicomisos</a>
+                                </li>
+
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/FideicomisosEjercicio.aspx") %>">Fideicomisos por Ejercicio</a>
+                                </li>
+
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/UsuariosFideicomisos.aspx") %>">Fideicomisos por Usuario</a>
+                                </li>
+
+                                <li>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Logos.aspx") %>">Logo Reportes</a>
                                 </li>
                             </ul>
                         </li>

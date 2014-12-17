@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -35,10 +36,30 @@ namespace SISEC.Formas.Catalogos
             int idStatus = Utilerias.StrToInt(_IDStatus.Value);
 
             StatusAcuerdo obj = uow.StatusAcuerdoBusinessLogic.GetByID(idStatus);
-
             txtClave.Value = obj.Clave;
+            chkInicio.Checked = Convert.ToBoolean(obj.Inicial);
             txtDescripcion.Value = obj.Descripcion;
+            chkInicio.Enabled = false;
 
+            StatusAcuerdo objInicial = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == true).FirstOrDefault();
+
+            if (objInicial != null)
+            {
+                if (obj.ID == objInicial.ID)
+                    chkInicio.Enabled = true;
+            }
+            else
+                chkInicio.Enabled = true;
+
+        }
+
+        [WebMethod]
+        public static string GetValorNuevo(string param)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            StatusAcuerdo obj = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == true).FirstOrDefault();
+            return (obj == null).ToString();
+            
         }
 
         private bool ValidarEliminarStatus(StatusAcuerdo obj)
@@ -49,6 +70,18 @@ namespace SISEC.Formas.Catalogos
             return true;
         }
 
+        private bool ValidarInsercion(bool inicial,StatusAcuerdo objStatus = null)
+        {
+            StatusAcuerdo obj = null;
+
+            if (objStatus == null)
+                obj = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == inicial).FirstOrDefault();
+            else
+                if (inicial != objStatus.Inicial)
+                    obj = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == inicial).FirstOrDefault();
+
+            return obj == null;
+        }
 
         protected void gridStatus_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -86,6 +119,7 @@ namespace SISEC.Formas.Catalogos
 
             obj.Clave = txtClave.Value;
             obj.Descripcion = txtDescripcion.Value;
+            obj.Inicial = chkInicio.Checked;
 
             if (_Accion.Value.Equals("N"))
             {
@@ -110,6 +144,8 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
                 lblMsgError.Text = M;
                 return;
             }
@@ -138,8 +174,10 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 return;
             }
 
@@ -164,6 +202,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
         }
 
         protected void gridStatus_RowDataBound(object sender, GridViewRowEventArgs e)

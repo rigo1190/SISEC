@@ -19,7 +19,7 @@
             }
 
             function fnc_ColocarID(id) {
-                $("#<%= _IDTipo.ClientID %>").val(id);
+                $("#<%= _IDUsuario.ClientID %>").val(id);
                 $("#<%= divMsgError.ClientID %>").css("display", "none");
                 $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
             }

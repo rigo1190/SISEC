@@ -27,6 +27,27 @@
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
         }
 
+        function fnc_Validar() {
+            var descripcion= $("#<%= txtDescripcion.ClientID %>").val();
+            var clave = $("#<%= txtClave.ClientID %>").val();
+            var valido=true;
+
+            if (descripcion == "")
+                valido = false;
+            else if (clave == "")
+                valido = false;
+
+            if (!valido) {
+                $("#<%=lblMsgError.ClientID %>").text("Los datos de Clave y Descripción no pueden ir vacíos. Intente de nuevo");
+
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
+                $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            }
+
+            return valido;
+
+        }
+
 
     </script>
 
@@ -52,7 +73,14 @@
                              <h3 class="panel-title"><i class="fa"></i> Lista de Fideicomisos</h3>
                         </div>
                         <div class="panel-body">
+                            <div class="col-md-2">
+                                <label>Dependencia:</label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:DropDownList ID="ddlDependenciasFiltro" OnSelectedIndexChanged="ddlDependencia_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control"></asp:DropDownList>
+                            </div>
                             <div class="col-lg-12">
+                                <div><p>&nbsp;</p></div>
                                 <asp:GridView ID="gridFideicomisos" OnRowDataBound="gridFideicomisos_RowDataBound" OnPageIndexChanging="gridFideicomisos_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Acciones">
@@ -73,11 +101,19 @@
                                                 <%# DataBinder.Eval(Container.DataItem, "Descripcion")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Dependencia" SortExpression="Año">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblDependencias" runat="server"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
                                     </Columns> 
                                     <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
                                 </asp:GridView>
+                                <button type="button" onclick="fnc_Nuevo();" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
                             </div>
-                            <button type="button" onclick="fnc_Nuevo();" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
+                            
                         </div>
                     </div>
 
@@ -100,9 +136,14 @@
                                     <label>Descripción:</label>
                                     <textarea type="text" name="prueba" style="height:250px" runat="server" class="form-control" id="txtDescripcion" />
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Dependencia:</label>
+                                    <asp:DropDownList CssClass="form-control" ID="ddlDependencias" runat="server" AutoPostBack="false"></asp:DropDownList>
+                                </div>
                                 
                                 <div class="form-group">
-                                    <asp:Button OnClick="btnGuardar_Click" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button OnClick="btnGuardar_Click" OnClientClick="return fnc_Validar();" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
                                     <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
                                 </div>
                             </div>

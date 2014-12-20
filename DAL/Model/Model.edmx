@@ -65,7 +65,6 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DependenciaID" Type="int" Nullable="false" />
           <Property Name="FideicomisoID" Type="int" Nullable="false" />
           <Property Name="EjercicioID" Type="int" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
@@ -151,6 +150,7 @@
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="UsuarioCaptura" Type="nvarchar" MaxLength="50" />
           <Property Name="UsuarioModifica" Type="nvarchar" MaxLength="50" />
+          <Property Name="DependenciaID" Type="int" />
         </EntityType>
         <EntityType Name="Imagenes">
           <Key>
@@ -431,18 +431,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-          <End Role="Dependencia" Type="Self.Dependencia" Multiplicity="1" />
-          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dependencia">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DependenciaFideicomisoEjercicio">
-              <PropertyRef Name="DependenciaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
           <End Role="Ejercicio" Type="Self.Ejercicio" Multiplicity="1" />
           <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
@@ -524,6 +512,18 @@
             </Principal>
             <Dependent Role="Sesion">
               <PropertyRef Name="TipoSesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DependenciaFideicomiso">
+          <End Role="Dependencia" Type="Self.Dependencia" Multiplicity="0..1" />
+          <End Role="Fideicomiso" Type="Self.Fideicomiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dependencia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fideicomiso">
+              <PropertyRef Name="DependenciaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -716,10 +716,6 @@
             <End Role="Dependencia" EntitySet="Dependencia" />
             <End Role="Dependencia1" EntitySet="Dependencia" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-            <End Role="Dependencia" EntitySet="Dependencia" />
-            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
             <End Role="Ejercicio" EntitySet="Ejercicio" />
             <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
@@ -747,6 +743,10 @@
           <AssociationSet Name="FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID" Association="Self.FK_dbo_Sesion_dbo_TipoSesion_TipoSesionID">
             <End Role="TipoSesion" EntitySet="TipoSesion" />
             <End Role="Sesion" EntitySet="Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DependenciaFideicomiso" Association="Self.FK_DependenciaFideicomiso">
+            <End Role="Dependencia" EntitySet="Dependencia" />
+            <End Role="Fideicomiso" EntitySet="Fideicomiso" />
           </AssociationSet>
           <AssociationSet Name="FK_DependenciaFideicomisoEjercicioFichaTecnica" Association="Self.FK_DependenciaFideicomisoEjercicioFichaTecnica">
             <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
@@ -849,14 +849,13 @@
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleSubDependencias" Relationship="Self.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" FromRole="Dependencia" ToRole="Dependencia1" />
           <NavigationProperty Name="DependeDe" Relationship="Self.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" FromRole="Dependencia1" ToRole="Dependencia" />
-          <NavigationProperty Name="DetalleFideicomisos" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" FromRole="Dependencia" ToRole="DependenciaFideicomisoEjercicio" />
+          <NavigationProperty Name="Fideicomiso" Relationship="SISEFModel.FK_DependenciaFideicomiso" FromRole="Dependencia" ToRole="Fideicomiso" />
         </EntityType>
         <EntityType Name="DependenciaFideicomisoEjercicio">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DependenciaID" Type="Int32" Nullable="false" />
           <Property Name="FideicomisoID" Type="Int32" Nullable="false" />
           <Property Name="EjercicioID" Type="Int32" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
@@ -865,7 +864,6 @@
           <Property Name="UsuarioCaptura" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UsuarioModifica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DetalleCalendarios" Relationship="Self.FK_dbo_Calendario_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Calendario" />
-          <NavigationProperty Name="Dependencia" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Dependencia" />
           <NavigationProperty Name="Ejercicio" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Ejercicio" />
           <NavigationProperty Name="Fideicomiso" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Fideicomiso" />
           <NavigationProperty Name="DetallesNormatividad" Relationship="Self.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" FromRole="DependenciaFideicomisoEjercicio" ToRole="Normatividad" />
@@ -904,6 +902,8 @@
           <NavigationProperty Name="DetalleFideicomisos" Relationship="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" FromRole="Fideicomiso" ToRole="DependenciaFideicomisoEjercicio" />
           <NavigationProperty Name="DetalleSubFideicomisos" Relationship="Self.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" FromRole="Fideicomiso" ToRole="Fideicomiso1" />
           <NavigationProperty Name="DependeDe" Relationship="Self.FK_dbo_Fideicomiso_dbo_Fideicomiso_DependeDeID" FromRole="Fideicomiso1" ToRole="Fideicomiso" />
+          <Property Name="DependenciaID" Type="Int32" />
+          <NavigationProperty Name="Dependencia" Relationship="SISEFModel.FK_DependenciaFideicomiso" FromRole="Fideicomiso" ToRole="Dependencia" />
         </EntityType>
         <EntityType Name="Normatividad">
           <Key>
@@ -1102,18 +1102,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-          <End Role="Dependencia" Type="Self.Dependencia" Multiplicity="1" />
-          <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dependencia">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DependenciaFideicomisoEjercicio">
-              <PropertyRef Name="DependenciaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
           <End Role="Ejercicio" Type="Self.Ejercicio" Multiplicity="1" />
           <End Role="DependenciaFideicomisoEjercicio" Type="Self.DependenciaFideicomisoEjercicio" Multiplicity="*" />
@@ -1221,10 +1209,6 @@
             <End Role="Dependencia" EntitySet="Dependencia" />
             <End Role="Dependencia1" EntitySet="Dependencia" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID">
-            <End Role="Dependencia" EntitySet="Dependencia" />
-            <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" Association="Self.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID">
             <End Role="Ejercicio" EntitySet="Ejercicio" />
             <End Role="DependenciaFideicomisoEjercicio" EntitySet="DependenciaFideicomisoEjercicio" />
@@ -1317,6 +1301,10 @@
           </AssociationSet>
           <EntitySet Name="rptSintesisInformativa" EntityType="SISEFModel.rptSintesisInformativa" />
           <EntitySet Name="rptSesiones" EntityType="SISEFModel.rptSesiones" />
+          <AssociationSet Name="FK_DependenciaFideicomiso" Association="SISEFModel.FK_DependenciaFideicomiso">
+            <End Role="Dependencia" EntitySet="Dependencia" />
+            <End Role="Fideicomiso" EntitySet="Fideicomiso" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="TipoUsuarioUsuario">
           <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
@@ -1659,6 +1647,18 @@
           <Property Name="Mes" Type="Int32" />
           <Property Name="Ejercicio" Type="Int32" />
         </EntityType>
+        <Association Name="FK_DependenciaFideicomiso">
+          <End Type="SISEFModel.Dependencia" Role="Dependencia" Multiplicity="0..1" />
+          <End Type="SISEFModel.Fideicomiso" Role="Fideicomiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dependencia">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Fideicomiso">
+              <PropertyRef Name="DependenciaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1713,7 +1713,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.DependenciaFideicomisoEjercicio)">
         <MappingFragment StoreEntitySet="DependenciaFideicomisoEjercicio">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
           <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
           <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
           <ScalarProperty Name="Activo" ColumnName="Activo" />
@@ -1741,7 +1740,8 @@
     <EntitySetMapping Name="Fideicomiso">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Fideicomiso)">
         <MappingFragment StoreEntitySet="Fideicomiso">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DependenciaID" ColumnName="DependenciaID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Clave" ColumnName="Clave" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -1856,8 +1856,7 @@
     <EntitySetMapping Name="TipoUsuario">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.TipoUsuario)">
         <MappingFragment StoreEntitySet="TipoUsuario">
-          <ScalarProperty Name="EsDesarrollador" ColumnName="EsDesarrollador" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Clave" ColumnName="Clave" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -1865,6 +1864,7 @@
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
           <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
           <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+          <ScalarProperty Name="EsDesarrollador" ColumnName="EsDesarrollador" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1897,8 +1897,7 @@
     <EntitySetMapping Name="StatusAcuerdo">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.StatusAcuerdo)">
         <MappingFragment StoreEntitySet="StatusAcuerdo">
-          <ScalarProperty Name="Inicial" ColumnName="Inicial" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Clave" ColumnName="Clave" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -1906,6 +1905,7 @@
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
           <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
           <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+          <ScalarProperty Name="Inicial" ColumnName="Inicial" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

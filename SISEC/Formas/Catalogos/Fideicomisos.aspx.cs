@@ -18,17 +18,41 @@ namespace SISEC.Formas.Catalogos
             
             if (!IsPostBack)
             {
+                BindDropDownDependencias();
                 BindGrid();
+                
             }
         }
 
 
         private void BindGrid()
         {
-            gridFideicomisos.DataSource = uow.FideicomisoBusinessLogic.Get().ToList();
+            int idDependencia = Utilerias.StrToInt(ddlDependenciasFiltro.SelectedValue);
+
+            if (idDependencia>0)
+                gridFideicomisos.DataSource = uow.FideicomisoBusinessLogic.Get(e=>e.DependenciaID==idDependencia).ToList();
+            else
+                gridFideicomisos.DataSource = uow.FideicomisoBusinessLogic.Get().ToList();
+
+
             gridFideicomisos.DataBind();
         }
 
+        private void BindDropDownDependencias()
+        {
+            ddlDependencias.DataSource = uow.DependenciaBusinessLogic.Get().ToList();
+            ddlDependencias.DataValueField = "ID";
+            ddlDependencias.DataTextField = "Clave";
+            ddlDependencias.DataBind();
+
+
+            ddlDependenciasFiltro.DataSource = uow.DependenciaBusinessLogic.Get().ToList();
+            ddlDependenciasFiltro.DataValueField = "ID";
+            ddlDependenciasFiltro.DataTextField = "Clave";
+            ddlDependenciasFiltro.DataBind();
+            ddlDependenciasFiltro.Items.Insert(0, new ListItem("Seleccione...", "0"));
+
+        }
 
         private void BindControles()
         {
@@ -38,6 +62,7 @@ namespace SISEC.Formas.Catalogos
 
             txtClave.Value = obj.Clave;
             txtDescripcion.Value = obj.Descripcion;
+            ddlDependencias.SelectedValue = obj.DependenciaID.ToString();
 
         }
 
@@ -50,6 +75,17 @@ namespace SISEC.Formas.Catalogos
                 return false;
 
             return true;
+        }
+
+        private string GetClaveDependencia(int id)
+        {
+            Dependencia obj = (from f in uow.FideicomisoBusinessLogic.Get(e => e.ID == id)
+                               join d in uow.DependenciaBusinessLogic.Get()
+                               on f.DependenciaID equals d.ID
+                               select d).FirstOrDefault();
+
+            return obj != null ? obj.Clave : string.Empty;
+
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -64,6 +100,7 @@ namespace SISEC.Formas.Catalogos
 
             obj.Clave = txtClave.Value;
             obj.Descripcion = txtDescripcion.Value;
+            obj.DependenciaID = Utilerias.StrToInt(ddlDependencias.SelectedValue);
 
             if (_Accion.Value.Equals("N"))
             {
@@ -88,6 +125,8 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
                 lblMsgError.Text = M;
                 return;
             }
@@ -132,8 +171,10 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 
@@ -149,6 +190,8 @@ namespace SISEC.Formas.Catalogos
                 lblMsgError.Text = M;
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 
@@ -158,6 +201,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
 
 
         }
@@ -179,13 +224,29 @@ namespace SISEC.Formas.Catalogos
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
+                Label lblDependencias = (Label)e.Row.FindControl("lblDependencias");
 
                 int id = Utilerias.StrToInt(gridFideicomisos.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
+
+                lblDependencias.Text = GetClaveDependencia(id);
 
                 if (imgBtnEliminar != null)
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarID(" + id + ")");
 
             }
+        }
+
+        protected void ddlDependencia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGrid();
+
+            if (!ddlDependenciasFiltro.SelectedValue.Equals("0"))
+                ddlDependencias.SelectedValue = ddlDependenciasFiltro.SelectedValue;
+
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+            divCaptura.Style.Add("display", "none");
         }
 
         

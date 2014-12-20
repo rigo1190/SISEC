@@ -29,9 +29,11 @@ namespace DAL.Model
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string UsuarioCaptura { get; set; }
         public string UsuarioModifica { get; set; }
+        public Nullable<int> DependenciaID { get; set; }
     
         public virtual ICollection<DependenciaFideicomisoEjercicio> DetalleFideicomisos { get; set; }
         public virtual ICollection<Fideicomiso> DetalleSubFideicomisos { get; set; }
         public virtual Fideicomiso DependeDe { get; set; }
+        public virtual Dependencia Dependencia { get; set; }
     }
 }

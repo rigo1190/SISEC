@@ -23,7 +23,6 @@ namespace DAL.Model
         }
     
         public int ID { get; set; }
-        public int DependenciaID { get; set; }
         public int FideicomisoID { get; set; }
         public int EjercicioID { get; set; }
         public bool Activo { get; set; }
@@ -33,7 +32,6 @@ namespace DAL.Model
         public string UsuarioModifica { get; set; }
     
         public virtual ICollection<Calendario> DetalleCalendarios { get; set; }
-        public virtual Dependencia Dependencia { get; set; }
         public virtual Ejercicio Ejercicio { get; set; }
         public virtual Fideicomiso Fideicomiso { get; set; }
         public virtual ICollection<Normatividad> DetallesNormatividad { get; set; }

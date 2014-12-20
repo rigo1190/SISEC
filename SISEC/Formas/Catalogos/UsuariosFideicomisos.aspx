@@ -2,27 +2,50 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <script type="text/javascript">
-           function fnc_Nuevo() {
-                 $("#<%= divCaptura.ClientID %>").css("display", "block");
-                 $("#<%= divEncabezado.ClientID %>").css("display", "none");
-                 $("#<%= _Accion.ClientID %>").val("N");
-                 $("#<%= divMsgError.ClientID %>").css("display", "none");
-                 $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
-             }
+        function fnc_Nuevo() {
+            $("#<%= divCaptura.ClientID %>").css("display", "block");
+            $("#<%= divEncabezado.ClientID %>").css("display", "none");
+            $("#<%= _Accion.ClientID %>").val("N");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
 
-            function fnc_Cancelar() {
-                $("#<%= divCaptura.ClientID %>").css("display", "none");
-                $("#<%= divEncabezado.ClientID %>").css("display", "block");
-                $("#<%= _Accion.ClientID %>").val("");
-                $("#<%= divMsgError.ClientID %>").css("display", "none");
-                $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= ddlEjercicio.ClientID %>").prop('disabled', false);
+            $("#<%= ddlUsuario.ClientID %>").prop('disabled', false);
+               
+            $("#<%= ddlEjercicio.ClientID %>").prop('selectedIndex', 0);
+            $("#<%= ddlUsuario.ClientID %>").prop('selectedIndex', 0);
+            $("#<%= ddlFideicomiso.ClientID %>").prop('selectedIndex', 0);
+
             }
 
-            function fnc_ColocarID(id) {
-                $("#<%= _IDUsuario.ClientID %>").val(id);
-                $("#<%= divMsgError.ClientID %>").css("display", "none");
+        function fnc_Cancelar() {
+            $("#<%= divCaptura.ClientID %>").css("display", "none");
+            $("#<%= divEncabezado.ClientID %>").css("display", "block");
+            $("#<%= _Accion.ClientID %>").val("");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
+
+        function fnc_ColocarID(id) {
+            $("#<%= _IDUsuario.ClientID %>").val(id);
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
+
+         
+        function fnc_Validar() {
+            fideicomiso = $("#<%= ddlFideicomiso.ClientID %>").val();
+
+            if (fideicomiso == "" || fideicomiso == null || fideicomiso == undefined) {
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
                 $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+                $("#<%= lblMsgError.ClientID %>").text("El dato de Fideicomiso no debe de estar vacío. Intente nuevamente.");
+
+                return false;
             }
+
+            return true;
+        }
 
     </script>
 
@@ -33,7 +56,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="alert alert-success alert-dismissable">
-                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Tipos de Usuario</strong></h4>  
+                        <h4><i class="fa fa-crosshairs"></i> <strong>Catálogo de Fideicomisos asignados a analistas</strong></h4>  
                     </div>
                 </div>
             </div>
@@ -43,14 +66,25 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             <h3 class="panel-title"><i class="fa"></i> Lista de Tipos de Usuario</h3>
+                             <h3 class="panel-title"><i class="fa"></i> Lista de Fideicomisos asignados a analistas</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-6">
-                                <asp:DropDownList ID="ddlEjercicioFiltro" runat="server" CssClass="form-control"></asp:DropDownList>
+                            
+                            <div class="col-md-2">
+                                <label>Ejercicio:</label>
                             </div>
-
+                            <div class="col-md-10">
+                                <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlEjercicioFiltro_SelectedIndexChanged" ID="ddlEjercicioFiltro" runat="server" CssClass="form-control"></asp:DropDownList>
+                            </div>
+                            <div><p>&nbsp;</p></div>
+                            <div class="col-md-2">
+                                <label>Usuario:</label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlUsuariosFiltro_SelectedIndexChanged" ID="ddlUsuariosFiltro" runat="server" CssClass="form-control"></asp:DropDownList>
+                            </div>
                             <div class="col-lg-12">
+                                <div><p>&nbsp;</p></div>
                                 <asp:GridView ID="gridUsuarios" OnRowDataBound="gridUsuarios_RowDataBound" OnPageIndexChanging="gridUsuarios_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Acciones">
@@ -60,6 +94,11 @@
                                             </ItemTemplate>
                                             <HeaderStyle BackColor="#EEEEEE" />
                                             <ItemStyle HorizontalAlign="right" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Ejercicio" SortExpression="Año">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblEjercicio" runat="server"></asp:Label> 
+                                            </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Usuario" SortExpression="Año">
                                             <ItemTemplate>
@@ -72,16 +111,12 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Ejercicio" SortExpression="Año">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblEjercicio" runat="server"></asp:Label> 
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                        
                                     </Columns> 
                                     <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
                                 </asp:GridView>
                             </div>
-                            <button type="button" onclick="fnc_Nuevo();" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
+                            <button runat="server" onserverclick="btnNuevo_ServerClick" type="button" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
                         </div>
                     </div>
 
@@ -92,7 +127,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa"></i>Datos del Tipo de Usuario</h3>
+                            <h3 class="panel-title"><i class="fa"></i>Datos del Fideicomiso asignado al Analista</h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -102,7 +137,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Ejercicio:</label>
-                                    <asp:DropDownList ID="ddlEjercicio" runat="server" CssClass="form-control"></asp:DropDownList>
+                                    <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlEjercicio_SelectedIndexChanged" ID="ddlEjercicio" runat="server" CssClass="form-control"></asp:DropDownList>
                                 </div>
                                 <div class="form-group">
                                     <label>Fideicomiso a asignar:</label>
@@ -110,7 +145,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <asp:Button OnClick="btnGuardar_Click" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button OnClick="btnGuardar_Click" OnClientClick="return fnc_Validar();" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
                                     <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
                                 </div>
                             </div>

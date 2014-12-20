@@ -33,11 +33,18 @@ namespace SISEC.Formas
             int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
 
 
-            var list = (from d in uow.DependenciaBusinessLogic.Get(e => e.ID == idDependencia)
-                        join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
-                        on d.ID equals df.DependenciaID
+            //var list = (from d in uow.DependenciaBusinessLogic.Get(e => e.ID == idDependencia)
+            //            join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
+            //            on d.ID equals df.DependenciaID
+            //            join f in uow.FideicomisoBusinessLogic.Get()
+            //            on df.FideicomisoID equals f.ID
+            //            select new { df.ID, f.Descripcion }).ToList();
+
+            var list = (from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.EjercicioID==idEjercicio)
                         join f in uow.FideicomisoBusinessLogic.Get()
                         on df.FideicomisoID equals f.ID
+                        join d in uow.DependenciaBusinessLogic.Get(e=>e.ID==idDependencia)
+                        on f.DependenciaID equals d.ID
                         select new { df.ID, f.Descripcion }).ToList();
 
             ddlFideicomisos.DataSource = list;

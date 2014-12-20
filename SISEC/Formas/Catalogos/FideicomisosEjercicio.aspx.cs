@@ -19,8 +19,8 @@ namespace SISEC.Formas.Catalogos
             if (!IsPostBack)
             {
                 BindDropDownEjercicios();
-                BindDropDownFideicomisos();
                 ColocarEjercicioActual();
+                BindDropDownFideicomisos();
                 BindGrid();
             }
         }
@@ -64,9 +64,16 @@ namespace SISEC.Formas.Catalogos
             return ejercicio != null ? ejercicio.Anio.ToString() : string.Empty;
         }
 
-        private bool ValidarInsertado(int idFidiecomiso, int idEjercicio)
+        private bool ValidarInsertado(int idFidiecomiso, int idEjercicio, DependenciaFideicomisoEjercicio objFideicomiso=null)
         {
-            DependenciaFideicomisoEjercicio obj = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.ID == idFidiecomiso && e.EjercicioID == idEjercicio).FirstOrDefault();
+            DependenciaFideicomisoEjercicio obj = null;
+
+            if (objFideicomiso==null)
+                obj = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.ID == idFidiecomiso && e.EjercicioID == idEjercicio).FirstOrDefault();
+            else
+                if (idFidiecomiso != objFideicomiso.ID || idEjercicio != objFideicomiso.EjercicioID)
+                    obj = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.ID == idFidiecomiso && e.EjercicioID == idEjercicio).FirstOrDefault();
+
 
             return obj == null;
 
@@ -124,13 +131,16 @@ namespace SISEC.Formas.Catalogos
             if (objActual == null)
             {
                 lblMsgError.Text = "No se puede importar la información del ejercicio pasado. No existe un registro para el Ejercicio actual en el CATÁLOGO de EJERCICIOS. Captúrelo y vuelva a intentarlo.";
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 return;
             }
-
+            
             List<DependenciaFideicomisoEjercicio> listActual = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == objActual.ID).ToList();
-            Ejercicio objAnterior = uow.EjercicioBusinessLogic.Get(e => e.Anio == ejercicioActual - 1).FirstOrDefault();
+            ejercicioActual = ejercicioActual - 1;
+            Ejercicio objAnterior = uow.EjercicioBusinessLogic.Get(e => e.Anio == ejercicioActual).FirstOrDefault();
             List<DependenciaFideicomisoEjercicio>  listAnterior = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == objAnterior.ID).ToList();
 
 
@@ -143,8 +153,10 @@ namespace SISEC.Formas.Catalogos
             if (list.Count()==0)
             {
                 lblMsgError.Text = "La información de Fideicomisos del ejercicio anterior ya existe para el ejercicio actual. No es necesario importar.";
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 return;
             }
 
@@ -172,13 +184,20 @@ namespace SISEC.Formas.Catalogos
                     if (!M.Equals(string.Empty))
                     {
                         lblMsgError.Text = M;
-                        divMsgError.Style.Add("display", "none");
+                        divMsgError.Style.Add("display", "block");
                         divMsgSuccess.Style.Add("display", "none");
+                        divCaptura.Style.Add("display", "none");
+                        divEncabezado.Style.Add("display", "block");
                         return;
                     }
 
                 }
             }
+
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
 
         }
 
@@ -210,6 +229,7 @@ namespace SISEC.Formas.Catalogos
 
             ddlEjercicio.SelectedValue = obj.EjercicioID.ToString();
             ddlFideicomiso.SelectedValue = obj.FideicomisoID.ToString();
+            chkActivo.Checked = Convert.ToBoolean(obj.Activo);
 
         }
 
@@ -283,7 +303,13 @@ namespace SISEC.Formas.Catalogos
             int idUsuario = Utilerias.StrToInt(_IDFideicomiso.Value);
             string M = string.Empty;
 
-            if (!ValidarInsertado(Utilerias.StrToInt(ddlFideicomiso.SelectedValue), Utilerias.StrToInt(ddlEjercicio.SelectedValue)))
+            if (_Accion.Value.Equals("N"))
+                obj = new DependenciaFideicomisoEjercicio();
+            else
+                obj = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(idUsuario);
+
+
+            if (!ValidarInsertado(Utilerias.StrToInt(ddlFideicomiso.SelectedValue), Utilerias.StrToInt(ddlEjercicio.SelectedValue),!_Accion.Value.Equals("N")?obj:null))
             {
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
@@ -291,12 +317,6 @@ namespace SISEC.Formas.Catalogos
                 lblMsgError.Text = "Ya existe ese registro. Intente con otros valores.";
                 return;
             }
-
-
-            if (_Accion.Value.Equals("N"))
-                obj = new DependenciaFideicomisoEjercicio();
-            else
-                obj = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(idUsuario);
 
             obj.FideicomisoID = Utilerias.StrToInt(ddlFideicomiso.SelectedValue);
             obj.EjercicioID = Utilerias.StrToInt(ddlEjercicio.SelectedValue);
@@ -337,6 +357,26 @@ namespace SISEC.Formas.Catalogos
 
             divEncabezado.Style.Add("display", "block");
             divCaptura.Style.Add("display", "none");    
+        }
+
+        protected void ddlEjercicioFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGrid();
+
+            if (!ddlEjercicioFiltro.SelectedValue.Equals("0"))
+                ddlEjercicio.SelectedValue = ddlEjercicioFiltro.SelectedValue;
+
+
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+            divCaptura.Style.Add("display", "none");
+        }
+
+        protected void btnImportar_Click(object sender, EventArgs e)
+        {
+            ImportarFedeicomisosEjercicioPasado();
+            BindGrid();
         }
     }
 }

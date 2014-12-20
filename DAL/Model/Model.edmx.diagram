@@ -24,7 +24,6 @@
         <AssociationConnector Association="SISEFModel.FK_dbo_Calendario_dbo_Ejercicio_EjercicioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Sesion_dbo_Calendario_CalendarioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Dependencia_dbo_Dependencia_DependeDeID" ManuallyRouted="false" />
-        <AssociationConnector Association="SISEFModel.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Dependencia_DependenciaID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Ejercicio_EjercicioID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_DependenciaFideicomisoEjercicio_dbo_Fideicomiso_FideicomisoID" ManuallyRouted="false" />
         <AssociationConnector Association="SISEFModel.FK_dbo_Normatividad_dbo_DependenciaFideicomisoEjercicio_DependenciaFideicomisoEjercicioID" ManuallyRouted="false" />
@@ -54,6 +53,7 @@
         <AssociationConnector Association="SISEFModel.FichaTecnicaFichaTecnicaHistorico" />
         <EntityTypeShape EntityType="SISEFModel.rptSintesisInformativa" Width="2" PointX="0.5" PointY="2.5" />
         <EntityTypeShape EntityType="SISEFModel.rptSesiones" Width="1.875" PointX="0.5" PointY="5.125" />
+        <AssociationConnector Association="SISEFModel.FK_DependenciaFideicomiso" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

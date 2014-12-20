@@ -64,7 +64,7 @@ namespace SISEC.Formas.Catalogos {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPassword;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtPassword;
         
         /// <summary>
         /// Control ddlTipoUsuario.

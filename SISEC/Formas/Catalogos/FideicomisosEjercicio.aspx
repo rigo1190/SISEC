@@ -11,17 +11,17 @@
 
         function fnc_Cancelar() {
             $("#<%= divCaptura.ClientID %>").css("display", "none");
-               $("#<%= divEncabezado.ClientID %>").css("display", "block");
-               $("#<%= _Accion.ClientID %>").val("");
-               $("#<%= divMsgError.ClientID %>").css("display", "none");
-               $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
-           }
+            $("#<%= divEncabezado.ClientID %>").css("display", "block");
+            $("#<%= _Accion.ClientID %>").val("");
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
 
-           function fnc_ColocarID(id) {
-               $("#<%= _IDFideicomiso.ClientID %>").val(id);
-                $("#<%= divMsgError.ClientID %>").css("display", "none");
-                $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
-            }
+        function fnc_ColocarID(id) {
+            $("#<%= _IDFideicomiso.ClientID %>").val(id);
+            $("#<%= divMsgError.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
 
     </script>
 
@@ -46,11 +46,16 @@
                              <h3 class="panel-title"><i class="fa"></i> Lista de Fideicomisos por Ejercicio</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-6">
-                                <asp:DropDownList ID="ddlEjercicioFiltro" runat="server" CssClass="form-control"></asp:DropDownList>
+                            <div class="col-md-2">
+                                <label>Ejercicio:</label>
+                                
+                            </div>
+                            <div class="col-md-10">
+                                <asp:DropDownList ID="ddlEjercicioFiltro" OnSelectedIndexChanged="ddlEjercicioFiltro_SelectedIndexChanged" AutoPostBack="true" runat="server" CssClass="form-control"></asp:DropDownList>
                             </div>
 
                             <div class="col-lg-12">
+                                <div><p>&nbsp;</p></div>
                                 <asp:GridView ID="gridFideicomisos" OnRowDataBound="gridFideicomisos_RowDataBound" OnPageIndexChanging="gridFideicomisos_PageIndexChanging" ShowHeaderWhenEmpty="true" DataKeyNames="ID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Acciones">
@@ -75,14 +80,18 @@
 
                                         <asp:TemplateField HeaderText="Activo" SortExpression="Año">
                                             <ItemTemplate>
-                                                <asp:CheckBox ID="chkActivo" Checked="<%# DataBinder.Eval(Container.DataItem, "Activo")  %>" runat="server" />
+                                                <asp:CheckBox ID="chkActivo" Enabled="false" Checked='<%#Convert.ToBoolean(Eval("Activo")) %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns> 
                                     <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
                                 </asp:GridView>
+
+                                <button type="button" onclick="fnc_Nuevo();" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                <asp:Button OnClick="btnImportar_Click" class="btn btn-default" ID="btnImportar" runat="server" Text="Importar fideicomisos ejercicio anterior" />
+
                             </div>
-                            <button type="button" onclick="fnc_Nuevo();" id="btnNuevo" class="btn btn-default" value="Nuevo">Nuevo</button>
+                            
                         </div>
                     </div>
 

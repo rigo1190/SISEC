@@ -22,6 +22,15 @@ namespace SISEC.Formas.Catalogos {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEncabezado;
         
         /// <summary>
+        /// Control ddlDependenciasFiltro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDependenciasFiltro;
+        
+        /// <summary>
         /// Control gridFideicomisos.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace SISEC.Formas.Catalogos {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea txtDescripcion;
+        
+        /// <summary>
+        /// Control ddlDependencias.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDependencias;
         
         /// <summary>
         /// Control btnGuardar.

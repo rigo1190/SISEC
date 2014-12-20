@@ -31,6 +31,15 @@ namespace SISEC.Formas.Catalogos {
         protected global::System.Web.UI.WebControls.DropDownList ddlEjercicioFiltro;
         
         /// <summary>
+        /// Control ddlUsuariosFiltro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlUsuariosFiltro;
+        
+        /// <summary>
         /// Control gridUsuarios.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace SISEC.Formas.Catalogos {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gridUsuarios;
+        
+        /// <summary>
+        /// Control btnNuevo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnNuevo;
         
         /// <summary>
         /// Control divCaptura.

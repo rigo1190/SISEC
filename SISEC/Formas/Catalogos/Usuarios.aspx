@@ -14,6 +14,7 @@
             $("#<%= _Accion.ClientID %>").val("N");
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= txtPassword.ClientID %>").attr('type', 'password');
         }
 
         function fnc_Cancelar() {
@@ -28,6 +29,32 @@
             $("#<%= _IDUsuario.ClientID %>").val(id);
             $("#<%= divMsgError.ClientID %>").css("display", "none");
             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+        }
+
+        function fnc_Validar() {
+            var nombre= $("#<%= txtNombre.ClientID %>").val();
+            var login= $("#<%= txtLogin.ClientID %>").val();
+            var pass = $("#<%= txtPassword.ClientID %>").val();
+
+            var valido=true;
+
+            if (nombre == "")
+                valido = false;
+            else if (login == "")
+                valido = false;
+            else if (pass == "")
+                valido = false;
+
+            if (!valido) {
+                $("#<%=lblMsgError.ClientID %>").text("Los datos de Nombre, Login y Password no pueden ir vacíos. Intente de nuevo");
+
+                $("#<%= divMsgError.ClientID %>").css("display", "block");
+                $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            }
+                
+            
+            return valido;
+
         }
 
 
@@ -124,7 +151,7 @@
 
                                 <div class="form-group">
                                     <label>Password:</label>
-                                    <input type="password" name="prueba" runat="server" class="form-control" id="txtPassword" />
+                                    <input type="text" name="prueba" runat="server" class="form-control" id="txtPassword" />
                                 </div>
 
                                 <div class="form-group">
@@ -143,7 +170,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <asp:Button OnClick="btnGuardar_Click" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
+                                    <asp:Button OnClick="btnGuardar_Click" OnClientClick="return fnc_Validar();" ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-default" ></asp:Button>
                                     <button type="button" onclick="fnc_Cancelar();" class="btn btn-default">Cancelar</button> 
                                 </div>
                             </div>

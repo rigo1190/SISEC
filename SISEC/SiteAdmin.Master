@@ -95,7 +95,7 @@
                                 </li>
 
                                  <li>
-                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/TiposUsuarios.aspx") %>">Usuarios</a>
+                                    <a href="<%=ResolveClientUrl("~/Formas/Catalogos/TiposUsuarios.aspx") %>">Tipos de Usuario</a>
                                 </li>
                                 <li>
                                     <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Usuarios.aspx") %>">Usuarios</a>

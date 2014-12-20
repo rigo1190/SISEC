@@ -22,7 +22,7 @@ namespace SISEC.Formas.Catalogos
             {
                 BindGrid();
                 BindDropDownTipoUsuario();
-                EncriptarPasswordExistentes();
+                
             }
         }
 
@@ -74,7 +74,8 @@ namespace SISEC.Formas.Catalogos
             Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUsuario);
 
             txtNombre.Value = obj.Nombre;
-            txtPassword.Value = obj.Password;
+            txtPassword.Value = Desencriptar(obj.Password);
+            txtPassword.Attributes.Add("type", "password");
             txtLogin.Value = obj.Login;
             chkActivo.Checked = Convert.ToBoolean(obj.Activo);
             chkBloqueado.Checked = Convert.ToBoolean(obj.Bloqueado);

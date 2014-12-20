@@ -18,12 +18,112 @@ namespace SISEC.Formas.Catalogos
 
             if (!IsPostBack)
             {
-                BindGrid();
-                BindDropDownEjercicios();
                 BindDropDownUsuarios();
+                BindDropDownEjercicios();
                 BindDropDownFideicomisos();
-                ColocarEjercicioActual();
+                BindGrid();
+                //ImportarFideicomisosAsignadosEjercicioPasado();
             }   
+        }
+
+
+        private void ImportarFideicomisosAsignadosEjercicioPasado()
+        {
+            int ejercicioActual = DateTime.Now.Year;
+            string M = string.Empty;
+
+            Ejercicio objActual = uow.EjercicioBusinessLogic.Get(e => e.Anio == ejercicioActual).FirstOrDefault();
+
+            if (objActual == null)
+            {
+                lblMsgError.Text = "No se puede importar la información del ejercicio pasado. No existe un registro para el Ejercicio actual en el CATÁLOGO de EJERCICIOS. Captúrelo y vuelva a intentarlo.";
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                return;
+            }
+
+            if (uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == objActual.ID).Count() == 0)
+            {
+                lblMsgError.Text = "No se puede importar la información del ejercicio pasado. No existen FIDEICOMISOS relacionados al ejercicio actual. Captúrelos y vuelva a intentarlo.";
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                return;
+            }
+
+            var listActual = (from uf in uow.UsuarioFideicomisoBusinessLogic.Get()
+                              join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == objActual.ID)
+                              on uf.DependenciaFideicomisoEjercicioID equals df.ID
+                              join f in uow.FideicomisoBusinessLogic.Get()
+                              on df.FideicomisoID equals f.ID
+                              select new { uf.UsuarioID, FideicomisoID = f.ID });
+
+            ejercicioActual = ejercicioActual - 1;
+            Ejercicio objAnterior = uow.EjercicioBusinessLogic.Get(e => e.Anio == ejercicioActual).FirstOrDefault();
+
+            var listAnterior = (from uf in uow.UsuarioFideicomisoBusinessLogic.Get()
+                                join df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == objAnterior.ID)
+                                on uf.DependenciaFideicomisoEjercicioID equals df.ID
+                                join f in uow.FideicomisoBusinessLogic.Get()
+                                on df.FideicomisoID equals f.ID
+                                select new { uf.UsuarioID, FideicomisoID = f.ID });
+
+
+            var list = (from anterior in listAnterior
+                        join actual in listActual
+                        on anterior.FideicomisoID equals actual.FideicomisoID into temp
+                        from diferencia in temp.DefaultIfEmpty()
+                        select new { anterior.FideicomisoID, anterior.UsuarioID, UsuarioAnterior = (diferencia == null) ? 0 : diferencia.FideicomisoID });
+
+
+            if (list.Count() == 0)
+            {
+                lblMsgError.Text = "La información de Fideicomisos asignados a analistas del ejercicio anterior ya existe para el ejercicio actual. No es necesario importar.";
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                return;
+            }
+
+            //SE RECORRE EL RESULTADO PARA CREAR LOS FIDEICOMISOS ASIGNADOS ANTERIORES EN EL EJERCICIO ACTUAL
+            foreach (var f in list)
+            {
+                if (f.UsuarioAnterior == 0)
+                {
+                    UsuarioFideicomiso objUsuarioFideicomiso = new UsuarioFideicomiso();
+                    DependenciaFideicomisoEjercicio objDF = uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.FideicomisoID == f.FideicomisoID && e.EjercicioID == objActual.ID).FirstOrDefault();
+
+                    objUsuarioFideicomiso.UsuarioID = f.UsuarioID;
+                    objUsuarioFideicomiso.DependenciaFideicomisoEjercicioID = objDF.ID;
+
+                    uow.UsuarioFideicomisoBusinessLogic.Insert(objUsuarioFideicomiso);
+                    uow.SaveChanges();
+
+                    //SI HUBO ERRORES
+                    if (uow.Errors.Count > 0)
+                    {
+                        foreach (string err in uow.Errors)
+                            M += err;
+                    }
+
+                    if (!M.Equals(string.Empty))
+                    {
+                        lblMsgError.Text = M;
+                        divMsgError.Style.Add("display", "block");
+                        divMsgSuccess.Style.Add("display", "none");
+                        divCaptura.Style.Add("display", "none");
+                        divEncabezado.Style.Add("display", "block");
+                        return;
+                    }
+
+                }
+            }
+
+
         }
 
 
@@ -44,11 +144,22 @@ namespace SISEC.Formas.Catalogos
         private void BindGrid()
         {
             int ejercicio = Utilerias.StrToInt(ddlEjercicioFiltro.SelectedValue);
-            
-            List<UsuarioFideicomiso> list=(from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.EjercicioID==ejercicio)
-                                           join ud in uow.UsuarioFideicomisoBusinessLogic.Get()
-                                           on df.ID equals ud.DependenciaFideicomisoEjercicioID
-                                           select ud).ToList();
+
+            int idUsuario = Utilerias.StrToInt(ddlUsuariosFiltro.SelectedValue);
+
+            List<UsuarioFideicomiso> list=null;
+
+            if (idUsuario==0)
+                 list=(from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.EjercicioID==ejercicio)
+                        join ud in uow.UsuarioFideicomisoBusinessLogic.Get()
+                        on df.ID equals ud.DependenciaFideicomisoEjercicioID
+                       select ud).OrderBy(e => e.UsuarioID).ToList();
+            else
+                list = (from df in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e => e.EjercicioID == ejercicio)
+                        join ud in uow.UsuarioFideicomisoBusinessLogic.Get(e=>e.UsuarioID==idUsuario)
+                        on df.ID equals ud.DependenciaFideicomisoEjercicioID
+                        select ud).OrderBy(e=>e.UsuarioID).ToList();
+
 
             gridUsuarios.DataSource = list;
             gridUsuarios.DataBind();
@@ -61,10 +172,14 @@ namespace SISEC.Formas.Catalogos
 
             UsuarioFideicomiso obj = uow.UsuarioFideicomisoBusinessLogic.GetByID(idUsuario);
             ddlUsuario.SelectedValue = obj.UsuarioID.ToString();
-            ddlFideicomiso.SelectedValue = obj.DependenciaFideicomisoEjercicioID.ToString();
 
             DependenciaFideicomisoEjercicio objDependencia = uow.DependenciaFideicomisoEjercicioBusinessLogic.GetByID(obj.DependenciaFideicomisoEjercicioID);
             ddlEjercicio.SelectedValue = objDependencia.EjercicioID.ToString();
+            BindDropDownFideicomisos();
+
+            ddlFideicomiso.SelectedValue = obj.DependenciaFideicomisoEjercicioID.ToString();
+
+            
         }
 
 
@@ -80,6 +195,9 @@ namespace SISEC.Formas.Catalogos
             ddlEjercicioFiltro.DataValueField = "ID";
             ddlEjercicioFiltro.DataTextField = "Anio";
             ddlEjercicioFiltro.DataBind();
+
+            ColocarEjercicioActual();
+            ddlEjercicio.SelectedValue = ddlEjercicioFiltro.SelectedValue;
         }
 
         private void BindDropDownUsuarios()
@@ -88,6 +206,13 @@ namespace SISEC.Formas.Catalogos
             ddlUsuario.DataValueField = "ID";
             ddlUsuario.DataTextField = "Nombre";
             ddlUsuario.DataBind();
+
+            ddlUsuariosFiltro.DataSource = uow.UsuarioBusinessLogic.Get().ToList();
+            ddlUsuariosFiltro.DataValueField = "ID";
+            ddlUsuariosFiltro.DataTextField = "Nombre";
+            ddlUsuariosFiltro.DataBind();
+
+            ddlUsuariosFiltro.Items.Insert(0,new ListItem("Seleccione...", "0"));
         }
 
         private void BindDropDownFideicomisos()
@@ -167,15 +292,22 @@ namespace SISEC.Formas.Catalogos
         {
             gridUsuarios.PageIndex = e.NewPageIndex;
             BindGrid();
+            divCaptura.Style.Add("display", "none");
             divEncabezado.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
 
 
-        private bool ValidarInsertado(int idFidiecomiso, int idUsuario)
+        private bool ValidarInsertado(int idFidiecomiso, int idUsuario,UsuarioFideicomiso objUsuario=null)
         {
-            UsuarioFideicomiso obj = uow.UsuarioFideicomisoBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFidiecomiso && e.UsuarioID == idUsuario).FirstOrDefault();
+            UsuarioFideicomiso obj = null;
+
+            if (objUsuario==null)
+               obj = uow.UsuarioFideicomisoBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFidiecomiso && e.UsuarioID == idUsuario).FirstOrDefault();
+            else
+                if (idFidiecomiso!=objUsuario.DependenciaFideicomisoEjercicioID || idUsuario!=objUsuario.UsuarioID)
+                    obj = uow.UsuarioFideicomisoBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFidiecomiso && e.UsuarioID == idUsuario).FirstOrDefault();
 
             return obj == null;
 
@@ -187,20 +319,21 @@ namespace SISEC.Formas.Catalogos
             int idUsuario = Utilerias.StrToInt(_IDUsuario.Value);
             string M = string.Empty;
 
-            if (!ValidarInsertado(Utilerias.StrToInt(ddlFideicomiso.SelectedValue), Utilerias.StrToInt(ddlUsuario.SelectedValue)))
-            {
-                //MANEJAR EL ERROR
-                divMsgError.Style.Add("display", "block");
-                divMsgSuccess.Style.Add("display", "none");
-                lblMsgError.Text = "Ya existe ese registro. Intente con otros valores.";
-                return;
-            }
-
-
             if (_Accion.Value.Equals("N"))
                 obj = new UsuarioFideicomiso();
             else
                 obj = uow.UsuarioFideicomisoBusinessLogic.GetByID(idUsuario);
+
+            if (!ValidarInsertado(Utilerias.StrToInt(ddlFideicomiso.SelectedValue), Utilerias.StrToInt(ddlUsuario.SelectedValue),!_Accion.Value.Equals("N")?obj:null))
+            {
+                //MANEJAR EL ERROR
+                divMsgError.Style.Add("display", "block");
+                divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
+                divEncabezado.Style.Add("display", "none");
+                lblMsgError.Text = "Ya existe ese registro. Intente con otros valores.";
+                return;
+            }
 
             obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomiso.SelectedValue);
             obj.UsuarioID = Utilerias.StrToInt(ddlUsuario.SelectedValue);
@@ -229,11 +362,15 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "block");
+                divEncabezado.Style.Add("display", "none");
                 lblMsgError.Text = M;
                 return;
             }
 
             BindGrid();
+
+            
 
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
@@ -251,7 +388,7 @@ namespace SISEC.Formas.Catalogos
 
             UsuarioFideicomiso obj = uow.UsuarioFideicomisoBusinessLogic.GetByID(idUsuario);
 
-            uow.TipoUsuarioBusinessLogic.Delete(obj);
+            uow.UsuarioFideicomisoBusinessLogic.Delete(obj);
             uow.SaveChanges();
 
             if (uow.Errors.Count > 0) //Si hubo errores
@@ -263,6 +400,8 @@ namespace SISEC.Formas.Catalogos
                 lblMsgError.Text = M;
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divCaptura.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
                 return;
             }
 
@@ -272,6 +411,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
         }
 
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
@@ -282,10 +423,72 @@ namespace SISEC.Formas.Catalogos
 
             BindControles();
 
+            ddlEjercicio.Enabled = false;
+            ddlUsuario.Enabled = false;
+
             divCaptura.Style.Add("display", "block");
             divEncabezado.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
+
+        protected void ddlEjercicioFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlEjercicio.SelectedValue = ddlEjercicioFiltro.SelectedValue;
+            BindDropDownFideicomisos();
+            BindGrid();
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
+        protected void ddlUsuariosFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGrid();
+
+            divCaptura.Style.Add("display", "none");
+            divEncabezado.Style.Add("display", "block");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
+        protected void ddlEjercicio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindDropDownFideicomisos();
+            divCaptura.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+
+            
+
+
+        }
+
+        protected void btnNuevo_ServerClick(object sender, EventArgs e)
+        {
+            _Accion.Value = "N";
+
+            ddlEjercicio.SelectedValue = ddlEjercicioFiltro.SelectedValue;
+
+            BindDropDownFideicomisos();
+
+            if (ddlFideicomiso.Items.Count > 0)
+                ddlFideicomiso.SelectedValue = ddlFideicomiso.Items[0].Value;
+
+            ddlFideicomiso.Enabled = true;
+            ddlEjercicio.Enabled = true;
+            ddlUsuario.Enabled = true;
+
+            divCaptura.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "none");
+            divMsgError.Style.Add("display", "none");
+            divMsgSuccess.Style.Add("display", "none");
+        }
+
+        
+
+       
     }
 }

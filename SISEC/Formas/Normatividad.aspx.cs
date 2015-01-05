@@ -28,7 +28,25 @@ namespace SISEC.Formas
                 Consultar();
 
                 ddlTipoNormatividad.Attributes["onchange"] = "fnc_MostrarFideicomisos(this)";
+
+                ValidarEjercicioSeleccionado();
             }
+        }
+
+
+        private void ValidarEjercicioSeleccionado()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+            {
+                gridNormatividad.Columns[0].Visible = false;
+                
+            }
+
+
         }
         private void BindDropDownFideicomisos()
         {

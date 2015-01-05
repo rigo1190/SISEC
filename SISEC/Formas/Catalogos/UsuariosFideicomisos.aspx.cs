@@ -460,10 +460,6 @@ namespace SISEC.Formas.Catalogos
             divEncabezado.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
-
-            
-
-
         }
 
         protected void btnNuevo_ServerClick(object sender, EventArgs e)
@@ -476,6 +472,9 @@ namespace SISEC.Formas.Catalogos
 
             if (ddlFideicomiso.Items.Count > 0)
                 ddlFideicomiso.SelectedValue = ddlFideicomiso.Items[0].Value;
+
+            if (!ddlUsuariosFiltro.SelectedValue.Equals("0"))
+                ddlUsuario.SelectedValue = ddlUsuariosFiltro.SelectedValue;
 
             ddlFideicomiso.Enabled = true;
             ddlEjercicio.Enabled = true;

@@ -24,8 +24,23 @@ namespace SISEC.Formas
                 {
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
+                    ValidarEjercicioSeleccionado();
                 }
             }
+        }
+
+        private void ValidarEjercicioSeleccionado()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+            {
+                gridSeguimientos.Columns[0].Visible = false;
+            }
+
+
         }
         private void BindDropDownFideicomisos()
         {

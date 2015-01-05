@@ -108,9 +108,9 @@
                                     <a href="<%=ResolveClientUrl("~/Reports/SintesisInformativa.aspx") %>">Síntesis Informativa</a>
                                 </li>
 
-                                <li>
+                                <%--<li>
                                     <a href="<%=ResolveClientUrl("~/Formas/Catalogos/Ejercicios.aspx") %>">Ejercicios</a>
-                                </li>
+                                </li>--%>
                             </ul>
                         </li>
 

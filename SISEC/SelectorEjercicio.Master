@@ -6,10 +6,15 @@
 <head runat="server">
     <title>Secretaría de Finanzas y Planeación</title>
     <script src="<%= ResolveClientUrl("~/Scripts/jquery-1.9.1.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/jQuery.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/jquery.ui.draggable.js") %>"></script>
+    <script src="<%= ResolveClientUrl("~/Scripts/jQuery.alert.js") %>"></script>
     <link href="<%= ResolveClientUrl("~/Content/bootstrap-theme.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/bootstrap.css") %>" rel="stylesheet" />
     <link href="<%= ResolveClientUrl("~/Content/Site.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveClientUrl("~/Content/JQuery.alert.css") %>" rel="stylesheet" />
     <script src="<%= ResolveClientUrl("~/Scripts/bootstrap.js") %>"></script>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
    

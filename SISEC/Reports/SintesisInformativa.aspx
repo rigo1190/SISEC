@@ -74,7 +74,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                            <asp:GridView ID="gridSintesis" OnPageIndexChanging="gridSintesis_PageIndexChanging" OnRowDataBound="gridSintesis_RowDataBound" ShowHeaderWhenEmpty="true" DataKeyNames="ID,DependenciaFideicomisoEjercicioID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
+                            <asp:GridView ID="gridSintesis" OnPageIndexChanging="gridSintesis_PageIndexChanging" OnRowDataBound="gridSintesis_RowDataBound" ShowHeaderWhenEmpty="true" DataKeyNames="ID,FideicomisoID" AllowPaging="true" CssClass="table table-striped table-bordered table-hover" runat="server" AutoGenerateColumns="false" >
                                 <Columns>
                                     <asp:TemplateField HeaderText="Nombre Fideicomiso" SortExpression="Año">
                                         <ItemTemplate>

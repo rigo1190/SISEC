@@ -237,7 +237,7 @@
                                         </asp:GridView>
 
                                     </div>
-                                    <button type="button" id="btnCrearNota" onclick="fnc_CrearNuevaNota();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                    <button type="button" runat="server" id="btnCrearNota" onclick="fnc_CrearNuevaNota();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                     <button type="button" id="btnVolverN" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
                                 </div>
 
@@ -352,7 +352,7 @@
 
                                 </div>
                                  
-                                <button type="button" id="btnCrearActa" onclick="fnc_CrearNuevaActa();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                <button type="button" runat="server" id="btnCrearActa" onclick="fnc_CrearNuevaActa();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                 <button type="button" id="btnVolverA" onclick="fnc_Volver();" class="btn btn-default">Volver</button>
                             </div>
 

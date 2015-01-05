@@ -20,7 +20,6 @@ namespace DAL.Model
         }
     
         public int ID { get; set; }
-        public int DependenciaFideicomisoEjercicioID { get; set; }
         public string Descripcion { get; set; }
         public string NombreArchivo { get; set; }
         public string TipoArchivo { get; set; }
@@ -40,8 +39,9 @@ namespace DAL.Model
         public string Calendario { get; set; }
         public string PresupuestoAnual { get; set; }
         public string SituacionPatrimonial { get; set; }
+        public int FideicomisoID { get; set; }
     
-        public virtual DependenciaFideicomisoEjercicio DependenciaFideicomisoEjercicio { get; set; }
         public virtual ICollection<FichaTecnicaHistorico> DetalleFichasTecnicaHistorico { get; set; }
+        public virtual Fideicomiso Fideicomiso { get; set; }
     }
 }

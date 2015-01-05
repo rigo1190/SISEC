@@ -18,6 +18,7 @@ namespace DAL.Model
         {
             this.DetalleFideicomisos = new HashSet<DependenciaFideicomisoEjercicio>();
             this.DetalleSubFideicomisos = new HashSet<Fideicomiso>();
+            this.DetalleFichasTecnicas = new HashSet<FichaTecnica>();
         }
     
         public int ID { get; set; }
@@ -35,5 +36,6 @@ namespace DAL.Model
         public virtual ICollection<Fideicomiso> DetalleSubFideicomisos { get; set; }
         public virtual Fideicomiso DependeDe { get; set; }
         public virtual Dependencia Dependencia { get; set; }
+        public virtual ICollection<FichaTecnica> DetalleFichasTecnicas { get; set; }
     }
 }

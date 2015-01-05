@@ -11,7 +11,9 @@
              $("#<%= txtAnio.ClientID %>").prop('disabled', false);
              $("#<%= _Accion.ClientID %>").val("N");
              $("#<%= divMsgError.ClientID %>").css("display", "none");
-             $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+            $("#<%= divMsgSuccess.ClientID %>").css("display", "none");
+
+           
          }
 
          function fnc_Cancelar() {

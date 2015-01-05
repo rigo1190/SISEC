@@ -64,7 +64,7 @@ namespace SISEC.Reports
                                     join f in uow.FideicomisoBusinessLogic.Get()
                                     on dfe.FideicomisoID equals f.ID
                                     join si in uow.FichaTecnicaBusinessLogic.Get()
-                                    on dfe.ID equals si.DependenciaFideicomisoEjercicioID
+                                    on f.ID equals si.FideicomisoID
                                     select new
                                     {
                                         FichaTecnicaID = si.ID, //ID de la ficha tecnica
@@ -87,11 +87,11 @@ namespace SISEC.Reports
                 if (idFideicomiso > 0)//SE FILTRA POR EL FIDEICOMISO SELECCIONADO, SI ES QUE SE ELIGIO ALGUNO 
                 {
                     
-                    listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.ID==idFideicomiso)
-                                        join f in uow.FideicomisoBusinessLogic.Get()
+                    listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                                    join f in uow.FideicomisoBusinessLogic.Get(e => e.ID == idFideicomiso)
                                         on dfe.FideicomisoID equals f.ID
                                         join si in uow.FichaTecnicaBusinessLogic.Get()
-                                        on dfe.ID equals si.DependenciaFideicomisoEjercicioID
+                                        on f.ID equals si.FideicomisoID
                                         select new
                                         {
                                             FichaTecnicaID = si.ID, //ID de la ficha tecnica
@@ -227,7 +227,7 @@ namespace SISEC.Reports
             if (idFideicomiso == 0)
                 list = uow.FichaTecnicaBusinessLogic.Get().ToList();
             else
-                list = uow.FichaTecnicaBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFideicomiso).ToList();
+                list = uow.FichaTecnicaBusinessLogic.Get(e => e.FideicomisoID == idFideicomiso).ToList();
 
             lblResultado.Text = "Resultado: " + list.Count.ToString() + " registros";
 
@@ -247,7 +247,7 @@ namespace SISEC.Reports
                         on df.ID equals ud.DependenciaFideicomisoEjercicioID
                         join f in uow.FideicomisoBusinessLogic.Get()
                         on df.FideicomisoID equals f.ID
-                        select new { df.ID, f.Clave });
+                        select new { f.ID, f.Clave });
 
             ddlFideicomisos.DataSource = list;
             ddlFideicomisos.DataValueField = "ID";
@@ -299,7 +299,7 @@ namespace SISEC.Reports
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                int idDependenciaFideicomiso = Utilerias.StrToInt(gridSintesis.DataKeys[e.Row.RowIndex].Values["DependenciaFideicomisoEjercicioID"].ToString());
+                int idDependenciaFideicomiso = Utilerias.StrToInt(gridSintesis.DataKeys[e.Row.RowIndex].Values["FideicomisoID"].ToString());
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
 
                 lblFideicomiso.Text = GetClaveFideicomiso(idDependenciaFideicomiso);

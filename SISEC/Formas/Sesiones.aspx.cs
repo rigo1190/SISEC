@@ -24,12 +24,57 @@ namespace SISEC.Formas
                 BindDropDownTipoSesion();
                 BindDropDownStatusSesion();
 
+
+
                 if (ddlFideicomisos.Items.Count == 0)
+                {
                     btnCrearCalendario.Enabled = false;
+                }
+                else
+                {
+                    if (CalendarioCerrado())
+                    {
+                        btnCrearCalendario.Enabled = false;
+                        divAlerta.Style.Add("display", "block");
+                        lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                    }
+                        
+                }
+
 
                 ddlStatus.Attributes["onchange"] = "fnc_GetDatosStatus(this)";
+
+                //ValidarEjercicioSeleccionado();
+
             }
         }
+
+        private void ValidarEjercicioSeleccionado()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+            {
+                gridSesiones.Columns[0].Visible = false;
+                btnCrearCalendario.Enabled = false;
+            }
+
+
+        }
+
+        private bool CalendarioCerrado()
+        {
+            int idCalendario = BuscarCalendario();
+            Calendario obj = uow.CalendarioBusinessLogic.GetByID(idCalendario);
+
+            return !Convert.ToBoolean(obj!=null?obj.Activo:true);
+ 
+        }
+
+        
+
         private void CargarGridPrimerFideicomiso()
         {
             if (ddlFideicomisos.Items.Count > 0)
@@ -102,6 +147,7 @@ namespace SISEC.Formas
             Calendario obj = new Calendario();
             obj.DependenciaFideicomisoEjercicioID = idFideicomiso;
             obj.EjercicioID = idEjercicio;
+            obj.Activo = true;
             obj.FechaCaptura = DateTime.Now;
             obj.UsuarioCaptura = Session["Login"].ToString();
 
@@ -221,21 +267,56 @@ namespace SISEC.Formas
             int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
             List<string> R = null;
 
-            if (idCalendario == 0)
+            if (!CalendarioCerrado())
             {
-                R = CrearCalendario(idFideicomiso, idEjercicio);
-                
-                if (!R[0].Equals(string.Empty))
+                if (idCalendario == 0)
                 {
-                    //MANEJAR EL ERROR
-                    divMsgError.Style.Add("display", "block");
-                    divMsgSuccess.Style.Add("display", "none");
-                    lblMsgError.Text = R[0];
-                    return;
+                    Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+                    if (objEjercicio.Anio == DateTime.Now.Year)
+                    {
+                        R = CrearCalendario(idFideicomiso, idEjercicio);
+
+                        if (!R[0].Equals(string.Empty))
+                        {
+                            //MANEJAR EL ERROR
+                            divMsgError.Style.Add("display", "block");
+                            divMsgSuccess.Style.Add("display", "none");
+                            lblMsgError.Text = R[0];
+                            return;
+                        }
+
+                        idCalendario = Utilerias.StrToInt(R[1]);
+
+                        btnCrearCalendario.Enabled = true;
+                        divAlerta.Style.Add("display", "none");
+                    }
+                    else
+                    {
+                        btnCrearCalendario.Enabled = false;
+                        divAlerta.Style.Add("display", "block");
+                        lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                    }
+
                 }
-                idCalendario = Utilerias.StrToInt(R[1]);
+                else
+                {
+                    btnCrearCalendario.Enabled = true;
+                    divAlerta.Style.Add("display", "none");
+                }
+
+                
+            }
+            else
+            {
+                btnCrearCalendario.Enabled = false;
+
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
 
             }
+               
+
                 
             BindGridSesiones(idCalendario);
 
@@ -287,6 +368,7 @@ namespace SISEC.Formas
             //Se inhabilita el combo de status y se coloca en el index cero
             ddlStatus.Enabled = false;
             ddlStatus.SelectedIndex = 0;
+            btnGuardar.Enabled = true;
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -386,7 +468,8 @@ namespace SISEC.Formas
             {
                 Label lblStatus = (Label)e.Row.FindControl("lblStatus");
                 ImageButton imgBtnEliminar = (ImageButton)e.Row.FindControl("imgBtnEliminar");
-                List<string> columnas = new List<string>();
+                ImageButton imgBtnEdit = (ImageButton)e.Row.FindControl("imgBtnEdit");
+
                 int idSesion = Utilerias.StrToInt(gridSesiones.DataKeys[e.Row.RowIndex].Values["ID"].ToString());
                 Sesion obj=uow.SesionBusinessLogic.GetByID(idSesion);
                 StatusSesion status=uow.StatusSesionBusinessLogic.GetByID(obj.StatusSesionID);
@@ -394,7 +477,15 @@ namespace SISEC.Formas
 
                 if (imgBtnEliminar != null)
                     imgBtnEliminar.Attributes.Add("onclick", "fnc_ColocarIDSesion(" + idSesion + ")");
+
+
+                if (CalendarioCerrado())
+                    imgBtnEliminar.Enabled = false;
+                else
+                    imgBtnEliminar.Enabled = true;
                 
+
+
             }
         }
         protected void imgBtnEdit_Click(object sender, ImageClickEventArgs e)
@@ -413,6 +504,19 @@ namespace SISEC.Formas
 
             //Se habilita el combo de status de sesion
             ddlStatus.Enabled = true;
+
+            if (CalendarioCerrado())
+            {
+                btnGuardar.Enabled = false;
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+            }
+            else
+            {
+                btnGuardar.Enabled = true;
+                divAlerta.Style.Add("display", "none");
+            }
+                
         }
         protected void btnDel_Click(object sender, EventArgs e)
         {

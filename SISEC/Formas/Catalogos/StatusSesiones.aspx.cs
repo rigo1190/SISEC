@@ -40,6 +40,14 @@ namespace SISEC.Formas.Catalogos
 
         }
 
+        private void ValidarInsercion(string clave, StatusSesion objStatus)
+        {
+            StatusSesion obj = null;
+
+            if (objStatus == null)
+                obj = uow.StatusSesionBusinessLogic.Get(e => e.Clave == clave).FirstOrDefault();
+
+        }
         private bool ValidarEliminarStatus(StatusSesion obj)
         {
             if (obj.DetalleSesiones.Count > 0)
@@ -70,6 +78,7 @@ namespace SISEC.Formas.Catalogos
             gridStatus.PageIndex = e.NewPageIndex;
             BindGrid();
             divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
         }
@@ -81,7 +90,7 @@ namespace SISEC.Formas.Catalogos
             _Accion.Value = "A";
 
             BindControles();
-
+            txtClave.Disabled = true;
             divCaptura.Style.Add("display", "block");
             divEncabezado.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
@@ -125,6 +134,8 @@ namespace SISEC.Formas.Catalogos
                 //MANEJAR EL ERROR
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 lblMsgError.Text = M;
                 return;
             }
@@ -154,8 +165,10 @@ namespace SISEC.Formas.Catalogos
             {
                 M = "No se puede eliminar el registro, se encuentra en uso por otros módulos.";
                 lblMsgError.Text = M;
-                divMsgError.Style.Add("display", "none");
+                divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 
@@ -171,6 +184,8 @@ namespace SISEC.Formas.Catalogos
                 lblMsgError.Text = M;
                 divMsgError.Style.Add("display", "block");
                 divMsgSuccess.Style.Add("display", "none");
+                divEncabezado.Style.Add("display", "block");
+                divCaptura.Style.Add("display", "none");
                 return;
             }
 
@@ -180,6 +195,8 @@ namespace SISEC.Formas.Catalogos
             lblMsgSuccess.Text = M;
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "block");
+            divEncabezado.Style.Add("display", "block");
+            divCaptura.Style.Add("display", "none");
         }
     }
 }

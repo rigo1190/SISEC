@@ -26,9 +26,42 @@ namespace SISEC.Formas
                 {
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
+
+                    //ValidarEjercicioSeleccionado();
+                }
+
+                if (CalendarioCerrado())
+                {
+                    divAlerta.Style.Add("display", "block");
+                    lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
                 }
                 
             }
+        }
+
+        private bool CalendarioCerrado()
+        {
+            int idCalendario = BuscarCalendario();
+            Calendario obj = uow.CalendarioBusinessLogic.GetByID(idCalendario);
+
+            return !Convert.ToBoolean(obj.Activo);
+
+        }
+
+        private void ValidarEjercicioSeleccionado()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+            {
+                gridNotas.Columns[0].Visible = false;
+                gridActas.Columns[0].Visible = false;
+
+            }
+
+
         }
 
         #region METODOS
@@ -237,10 +270,31 @@ namespace SISEC.Formas
             divNotas.Style.Add("display", "block");
             divEncabezadoNotas.Style.Add("display", "block");
             divMenu.Style.Add("display", "block");
-
+            divCapturaNotas.Style.Add("display", "none");
+            divEncabezadoActas.Style.Add("display", "none");
+            divCapturaActas.Style.Add("display", "none");
 
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            _AccionN.Value = string.Empty;
+            _AccionA.Value = string.Empty;
+
+            if (CalendarioCerrado())
+            {
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+
+                btnCrearNota.Disabled = true;
+                btnCrearActa.Disabled = true;
+            }
+            else
+            {
+                divAlerta.Style.Add("display", "none");
+                btnCrearNota.Disabled = false;
+                btnCrearActa.Disabled = false;
+            }
+
         }
         protected void gridSesiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -309,6 +363,18 @@ namespace SISEC.Formas
                 HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVerA");
                 string ruta = ResolveClientUrl("~/AbrirDocto.aspx");
                 btnVer.Attributes["onclick"] = "fnc_AbrirArchivo('" + ruta + "'," + idActa + "," + 3 + ")";
+
+
+                if (CalendarioCerrado())
+                {
+                    imgBtnEliminar.Enabled = false;
+                }
+                else
+                {
+                    imgBtnEliminar.Enabled = true;
+                }
+
+
             }
         }
         protected void imgBtnEditA_Click(object sender, ImageClickEventArgs e)
@@ -328,6 +394,18 @@ namespace SISEC.Formas
             divMenu.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            if (CalendarioCerrado())
+            {
+                btnGuardarA.Enabled = false;
+                fileUploadA.Enabled = false;
+            }
+            else
+            {
+                btnGuardarA.Enabled = false;
+                fileUploadA.Enabled = false;
+            }
+
         }
         protected void btnGuardarA_Click(object sender, EventArgs e)
         {
@@ -553,6 +631,18 @@ namespace SISEC.Formas
             divMenu.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            if (CalendarioCerrado())
+            {
+                btnGuardarN.Enabled = false;
+                fileUploadN.Enabled = false;
+            }
+            else
+            {
+                btnGuardarN.Enabled = true;
+                fileUploadN.Enabled = true;
+            }
+
         }
         protected void btnGuardarN_Click(object sender, EventArgs e)
         {

@@ -30,11 +30,42 @@ namespace SISEC.Formas
                     txtFideicomisoInfo.Value = GetClaveFideicomiso(idCalendario, uow);
                     
                 }
-                
+
+                if (CalendarioCerrado())
+                {
+                    divAlerta.Style.Add("display", "block");
+                    lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                }
+                //ValidarEjercicioSeleccionado();
             }
         }
 
         #region METODOS
+
+        private bool CalendarioCerrado()
+        {
+            int idCalendario = BuscarCalendario();
+            Calendario obj = uow.CalendarioBusinessLogic.GetByID(idCalendario);
+
+            return !Convert.ToBoolean(obj.Activo);
+
+        }
+
+        private void ValidarEjercicioSeleccionado()
+        {
+            int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+            {
+                
+                gridAcuerdos.Columns[0].Visible = false;
+                gridSeguimientos.Columns[0].Visible = false;
+            }
+
+
+        }
         private void BindDropDownFideicomisos()
         {
             int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
@@ -66,12 +97,23 @@ namespace SISEC.Formas
             gridSesiones.DataSource = list;
             gridSesiones.DataBind();
 
-            if (list.Count == 0)
+            if (CalendarioCerrado())
             {
-                lblAlerta.Text = "No existen sesiones. Capture nuevas sesiones para poder agregar Acuerdos";
                 divAlerta.Style.Add("display", "block");
-            }else
-                divAlerta.Style.Add("display", "none");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+            }
+            else
+            {
+
+                if (list.Count == 0)
+                {
+                    lblAlerta.Text = "No existen sesiones. Capture nuevas sesiones para poder agregar Acuerdos";
+                    divAlerta.Style.Add("display", "block");
+                }
+                else
+                    divAlerta.Style.Add("display", "none");
+            }
+
         }
         private void BindGridSeguimientos()
         {
@@ -281,7 +323,11 @@ namespace SISEC.Formas
                 
                 if (imgDetalle != null)
                     imgDetalle.Attributes["onclick"] = "fnc_CargarDetalleAcuerdo(" + idAcuerdo + ");return false;";
-                
+
+                if (CalendarioCerrado())
+                {
+                    imgBtnEliminar.Enabled = false;
+                }
             }
         }
 
@@ -311,6 +357,22 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
 
+            if (CalendarioCerrado())
+            {
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                btnCrearAcuerdo2.Disabled = true;
+                btnGuardar.Enabled = false;
+                
+            }
+            else
+            {
+                divAlerta.Style.Add("display", "none");
+                btnCrearAcuerdo2.Disabled = false;
+                btnGuardar.Enabled = true;
+                
+            }
+
             
         }
 
@@ -331,6 +393,23 @@ namespace SISEC.Formas
             divCapturaDetalle.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+            divMenu.Style.Add("display", "none");
+
+            if (CalendarioCerrado())
+            {
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                btnCrearAcuerdo.Disabled = true;
+                btnGuardar.Enabled = false;
+                btnCrearSeguimiento.Disabled = true;
+            }
+            else
+            {
+                divAlerta.Style.Add("display", "none");
+                btnCrearAcuerdo.Disabled = false;
+                btnGuardar.Enabled = true;
+                btnCrearSeguimiento.Disabled = false;
+            }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -518,6 +597,23 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
 
+
+            if (CalendarioCerrado())
+            {
+                divAlerta.Style.Add("display", "block");
+                lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
+                btnCrearSeguimiento.Disabled = true;
+                btnGuardarS.Enabled = true;
+
+            }
+            else
+            {
+                divAlerta.Style.Add("display", "none");
+                btnCrearSeguimiento.Disabled = false;
+                btnGuardarS.Enabled = false;
+
+            }
+
         }
 
         protected void btnGuardarS_Click(object sender, EventArgs e)
@@ -612,6 +708,10 @@ namespace SISEC.Formas
                 if (imgBtnEliminarS != null)
                     imgBtnEliminarS.Attributes.Add("onclick", "fnc_ColocarIDSeguimiento(" + idSeguimiento + ")");
 
+                if (CalendarioCerrado())
+                {
+                    imgBtnEliminarS.Enabled = false;
+                }
             }
         }
 

@@ -31,7 +31,7 @@ namespace SISEC.Formas
         private void BindGridFichas()
         {
             int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
-            gridFichas.DataSource = uow.FichaTecnicaBusinessLogic.Get(e => e.DependenciaFideicomisoEjercicioID == idFideicomiso).ToList();
+            gridFichas.DataSource = uow.FichaTecnicaBusinessLogic.Get(e => e.FideicomisoID == idFideicomiso).ToList();
             gridFichas.DataBind();
         }
         private string GetClaveFideicomiso()
@@ -146,7 +146,7 @@ namespace SISEC.Formas
                         on df.ID equals ud.DependenciaFideicomisoEjercicioID
                         join f in uow.FideicomisoBusinessLogic.Get()
                         on df.FideicomisoID equals f.ID
-                        select new { df.ID, f.Clave });
+                        select new { f.ID, f.Clave });
 
             ddlFideicomisos.DataSource = list;
             ddlFideicomisos.DataValueField = "ID";
@@ -228,7 +228,7 @@ namespace SISEC.Formas
 
             nomAnterior = obj.NombreArchivo;
 
-            obj.DependenciaFideicomisoEjercicioID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
+            obj.FideicomisoID = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
             //obj.Descripcion = txtDescripcion.Value;
             obj.NombreArchivo = fileUpload.FileName.Equals(string.Empty) ? obj.NombreArchivo : Path.GetFileName(fileUpload.FileName);
             obj.TipoArchivo = fileUpload.PostedFile.ContentType;

@@ -84,9 +84,6 @@ namespace SISEC.Formas.Catalogos
             if (obj.DetalleCalendarios.Count>0)
                 return false;
 
-            if (obj.DetalleFichasTecnicas.Count > 0)
-                return false;
-
             if (obj.DetallesNormatividad.Count > 0)
                 return false;
 

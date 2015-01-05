@@ -389,7 +389,7 @@
                                                 </div>
 
                                             <div class="col-lg-3">
-                                                <button type="button" id="btnCrearSeguimiento" onclick="fnc_CrearNuevoSeguimiento();" class="btn btn-default" value="Nuevo">Nuevo</button>
+                                                <button type="button" runat="server" id="btnCrearSeguimiento" onclick="fnc_CrearNuevoSeguimiento();" class="btn btn-default" value="Nuevo">Nuevo</button>
                                             </div>
                                 
                                         </div>

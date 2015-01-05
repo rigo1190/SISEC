@@ -19,7 +19,7 @@ namespace SISEC
             if (!IsPostBack)
             {
                 BindDropDownEjercicio();
-                
+                _Ruta.Value = ResolveClientUrl("~/Formas/Sesiones.aspx");
             }
         }
 
@@ -34,7 +34,15 @@ namespace SISEC
         protected void btnSeleccionar_Click(object sender, EventArgs e)
         {
             Session["Ejercicio"] = ddlEjercicios.SelectedValue;
-            Response.Redirect("~/Formas/Sesiones.aspx");
+
+            int idEjercicio = Utilerias.StrToInt(ddlEjercicios.SelectedValue);
+
+            Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+            if (objEjercicio.Anio != DateTime.Now.Year)
+                ClientScript.RegisterStartupScript(this.GetType(), "script", "fnc_Mensaje()", true);
+            else
+                Response.Redirect("~/Formas/Sesiones.aspx");
 
         }
     }

@@ -32,6 +32,7 @@
 
         });
 
+
         function fnc_Cancelar() {
             $("#<%= divEncabezadoDetalle.ClientID %>").css("display", "block");
 

@@ -164,7 +164,7 @@ namespace SISEC.Reports
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
                 Label lblSesion = (Label)e.Row.FindControl("lblSesion");
                 Label lblStatus = (Label)e.Row.FindControl("lblStatus");
-                HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
+                //HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVer");
                 
 
                 Acuerdo obj = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
@@ -176,7 +176,7 @@ namespace SISEC.Reports
 
 
                 //Se coloca la fucnion a corespondiente para visualizar el DOCUMENTO ADJUNTO 
-                btnVer.Attributes["onclick"] = "fnc_MostrarSeguimientos(" + obj.ID +  ")";
+                //btnVer.Attributes["onclick"] = "fnc_MostrarSeguimientos(" + obj.ID +  ")";
             }
         }
 

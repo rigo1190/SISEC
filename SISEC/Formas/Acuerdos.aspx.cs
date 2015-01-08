@@ -47,7 +47,7 @@ namespace SISEC.Formas
             int idCalendario = BuscarCalendario();
             Calendario obj = uow.CalendarioBusinessLogic.GetByID(idCalendario);
 
-            return !Convert.ToBoolean(obj.Activo);
+            return obj!=null?!Convert.ToBoolean(obj.Activo):false;
 
         }
 
@@ -394,6 +394,7 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
             divMenu.Style.Add("display", "none");
+            divSeguimiento.Style.Add("display", "none");
 
             if (CalendarioCerrado())
             {
@@ -440,7 +441,6 @@ namespace SISEC.Formas
 
             obj.Notas = txtNotas.Value;
             obj.NumAcuerdo = txtNumAcuerdo.Value;
-            obj.StatusAcuerdoID = Utilerias.StrToInt(ddlStatus.SelectedValue);
             obj.FechaAcuerdo = Convert.ToDateTime(txtFechaAcuerdo.Value);
 
             if (_Accion.Value.Equals("N"))
@@ -448,11 +448,15 @@ namespace SISEC.Formas
                 obj.FechaCaptura = DateTime.Now;
                 obj.UsuarioCaptura = Session["Login"].ToString();
                 obj.SesionID = idSesion;
+                StatusAcuerdo objStatus = uow.StatusAcuerdoBusinessLogic.Get(s => s.Inicial == true).FirstOrDefault();
+                obj.StatusAcuerdoID = objStatus.ID;
                 uow.AcuerdoBusinessLogic.Insert(obj);
+
+                ddlStatus.SelectedValue = objStatus.ID.ToString();
             }
             else
             {
-                
+                obj.StatusAcuerdoID = Utilerias.StrToInt(ddlStatus.SelectedValue);
                 obj.FechaModificacion = DateTime.Now;
                 obj.UsuarioModifica = Session["Login"].ToString();
                 uow.AcuerdoBusinessLogic.Update(obj);
@@ -603,14 +607,14 @@ namespace SISEC.Formas
                 divAlerta.Style.Add("display", "block");
                 lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
                 btnCrearSeguimiento.Disabled = true;
-                btnGuardarS.Enabled = true;
+                btnGuardarS.Enabled = false;
 
             }
             else
             {
                 divAlerta.Style.Add("display", "none");
                 btnCrearSeguimiento.Disabled = false;
-                btnGuardarS.Enabled = false;
+                btnGuardarS.Enabled = true;
 
             }
 
@@ -661,8 +665,11 @@ namespace SISEC.Formas
 
             //ACTUALIZAR EL STATUS DEL ACUERDO, SE COLOCA A PROCESO
             Acuerdo objAcuerdo = uow.AcuerdoBusinessLogic.GetByID(idAcuerdo);
-            objAcuerdo.StatusAcuerdoID = 2;
-            ddlStatus.SelectedValue = "2";
+
+            StatusAcuerdo objStatusAcuerdo = uow.StatusAcuerdoBusinessLogic.Get(s => s.Clave == "PR").FirstOrDefault();
+
+            objAcuerdo.StatusAcuerdoID = objStatusAcuerdo.ID;
+            ddlStatus.SelectedValue = objStatusAcuerdo.ID.ToString();
             uow.AcuerdoBusinessLogic.Update(objAcuerdo);
 
             uow.SaveChanges();

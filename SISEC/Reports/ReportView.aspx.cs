@@ -126,7 +126,7 @@ namespace SISEC.Reports
             switch (caller)
             {
                 case 1: //ACUERDOS
-                    nombreReporte = "rptAcuerdos.rpt";
+                    nombreReporte = "rptAcuerdosSeguimientos.rpt";
                     break;
 
                 case 2: //FICHAS TECNICAS

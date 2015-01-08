@@ -39,9 +39,9 @@ namespace SISEC
 
             Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
 
-            if (objEjercicio.Anio != DateTime.Now.Year)
-                ClientScript.RegisterStartupScript(this.GetType(), "script", "fnc_Mensaje()", true);
-            else
+            //if (objEjercicio.Anio != DateTime.Now.Year)
+            //    ClientScript.RegisterStartupScript(this.GetType(), "script", "fnc_Mensaje()", true);
+            //else
                 Response.Redirect("~/Formas/Sesiones.aspx");
 
         }

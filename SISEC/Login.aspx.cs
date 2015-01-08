@@ -35,6 +35,11 @@ namespace SISEC
                 if (user.TipoUsuarioID == 1)
                 {
                     //Nos vamos a la pantalla de administrador
+                    FormsAuthentication.RedirectFromLoginPage(user.Login, false);
+                    Session.Timeout = 60;
+                    Session["Login"] = user.Login;
+                    Session["UserID"] = user.ID;
+                    Response.Redirect("~/Formas/Catalogos/Ejercicios.aspx");
                 }
                 else
                 {

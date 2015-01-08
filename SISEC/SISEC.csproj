@@ -939,6 +939,13 @@
     <Compile Include="Reports\ReportView.aspx.designer.cs">
       <DependentUpon>ReportView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\rptAcuerdosSeguimientos.cs">
+      <DependentUpon>rptAcuerdosSeguimientos.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\rptAcuerdos.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -952,6 +959,13 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\rptSubSeguimientos.cs">
+      <DependentUpon>rptSubSeguimientos.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Reports\rptSeguimientos.cs">
       <DependentUpon>rptSeguimientos.rpt</DependentUpon>
@@ -1049,6 +1063,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\rptSubSeguimientos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptSubSeguimientos.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\rptAcuerdosSeguimientos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptAcuerdosSeguimientos.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

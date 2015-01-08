@@ -48,13 +48,13 @@
         <input type="hidden" runat="server" id="_Ruta" />
     </div>
     
-    <div >
+    <%--<div >
         <fieldset>
 			<legend>Alert</legend>
 			<p>
 				<input runat="server" id="alert_button" type="button" value="Show Alert" />
 			</p>
 		</fieldset>
-    </div>
+    </div>--%>
 
 </asp:Content>

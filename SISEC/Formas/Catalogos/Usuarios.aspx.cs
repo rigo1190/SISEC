@@ -22,7 +22,7 @@ namespace SISEC.Formas.Catalogos
             {
                 BindGrid();
                 BindDropDownTipoUsuario();
-                
+                //EncriptarPasswordExistentes();
             }
         }
 

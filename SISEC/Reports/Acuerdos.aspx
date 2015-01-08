@@ -232,12 +232,12 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField  HeaderText="Seguimientos" SortExpression="Año">
+                                   <%-- <asp:TemplateField  HeaderText="Seguimientos" SortExpression="Año">
                                         <ItemTemplate>
                                              <button type="button" runat="server" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                                         </ItemTemplate>
                                         <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"/>  
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
 
 
                                 </Columns> 

@@ -44,7 +44,7 @@ namespace SISEC.Formas
             int idCalendario = BuscarCalendario();
             Calendario obj = uow.CalendarioBusinessLogic.GetByID(idCalendario);
 
-            return !Convert.ToBoolean(obj.Activo);
+            return obj!=null ? !Convert.ToBoolean(obj.Activo) : false;
 
         }
 

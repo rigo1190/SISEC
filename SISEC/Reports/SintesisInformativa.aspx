@@ -1,14 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="SintesisInformativa.aspx.cs" Inherits="SISEC.Reports.SintesisInformativa" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-        function fnc_AbrirReporte() {
+        function fnc_AbrirReporte(caller) {
 
             var izq = (screen.width - 750) / 2
             var sup = (screen.height - 600) / 2
             var param = "";
             param = fnc_ArmarParamentros();
             url = $("#<%= _URL.ClientID %>").val();
-            var argumentos = "?c=" + 2 + param;
+            var argumentos = "?c=" + caller + param;
             url += argumentos;
             window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
 
@@ -24,9 +24,20 @@
             return p;
 
         }
+
+        function fnc_CrearHistorico(idSintesis) {
+            PageMethods.CrearSintesisHistorico(idSintesis, fnc_EjecutarReporte)
+        }
+
+        function fnc_EjecutarReporte(response){
+            fnc_AbrirReporte(6);
+        }
+
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" EnablePageMethods="true" runat="server"></asp:ScriptManager>
     <div id="page-wrapper">
         <div class="container-fluid">
             
@@ -70,7 +81,7 @@
                         <div class="col-md-11">
                             <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
                         </div>
-                        <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
+                        <button type="button" runat="server" onclick="fnc_AbrirReporte(2)" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
@@ -89,6 +100,12 @@
                                     <asp:TemplateField HeaderText="Finalidad del Fideicomiso" SortExpression="Año">
                                         <ItemTemplate>
                                             <%# DataBinder.Eval(Container.DataItem, "Finalidad")%>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Consultar Histórico Síntesis" SortExpression="Año">
+                                        <ItemTemplate>
+                                            <button type="button" runat="server" id="btnVerHistorico"><span class="glyphicon glyphicon-print"></span></button>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns> 

@@ -60,6 +60,14 @@ namespace SISEC.Reports
                     rdc.SetParameterValue("@AcuerdoID", primerArray[0]);
 
                     break;
+
+                case 5: //HISTORICO SESIONES
+
+                    break;
+
+                case 6: //HISTORICO SINTESIS INFORMATIVA
+                    
+                    break;
             }
         }
 
@@ -139,8 +147,14 @@ namespace SISEC.Reports
 
                 case 4: //SEGUIMIENTOS DE ACUERDO
                     nombreReporte = "rptSeguimientos.rpt";
+                    break;
 
-                    
+                case 5: //HISTORICO SESIONES
+                    nombreReporte = "rptSesionesHistorico.rpt";
+                    break;
+
+                case 6: //HISTORICO SINTESIS INFORMATIVA
+                    nombreReporte = "rptSintesisInformativaHistorico.rpt";
                     break;
             }
 

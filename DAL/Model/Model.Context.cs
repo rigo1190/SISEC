@@ -51,6 +51,8 @@ namespace DAL.Model
         public virtual DbSet<FichaTecnicaHistorico> FichaTecnicaHistorico { get; set; }
         public virtual DbSet<rptSintesisInformativa> rptSintesisInformativa { get; set; }
         public virtual DbSet<rptSesiones> rptSesiones { get; set; }
+        public virtual DbSet<rptSesionesHistorico> rptSesionesHistorico { get; set; }
+        public virtual DbSet<rptSintesisInformativaHistorico> rptSintesisInformativaHistorico { get; set; }
     
         public virtual ObjectResult<pa_Acuerdos_Result> pa_Acuerdos(Nullable<int> fideicomiso, Nullable<int> ejercicio, Nullable<int> status, Nullable<int> sesion)
         {

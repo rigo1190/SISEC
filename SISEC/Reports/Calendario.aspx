@@ -1,18 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Navegador.Master" AutoEventWireup="true" CodeBehind="Calendario.aspx.cs" Inherits="SISEC.Reports.Calendario" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-        function fnc_AbrirReporte() {
+
+        function fnc_AbrirReporte(caller) {
 
             var izq = (screen.width - 750) / 2
             var sup = (screen.height - 600) / 2
             var param = "";
             param = fnc_ArmarParamentros();
             url = $("#<%= _URL.ClientID %>").val();
-            var argumentos = "?c=" + 3 + param;
+            var argumentos = "?c=" + caller + param;
             url += argumentos;
             window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
         }
 
+
+        
 
         function fnc_ArmarParamentros() {
             var p = "";
@@ -138,7 +141,7 @@
                             <div class="col-md-11">
                                 <h3 class="panel-title"><i class="fa"></i>Agenda de sesiones</h3>
                             </div>
-                             <button type="button" runat="server" onclick="fnc_AbrirReporte()" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
+                             <button type="button" runat="server" onclick="fnc_AbrirReporte(3)" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
@@ -171,6 +174,7 @@
         <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_IDSesion" />
         <input type="hidden" runat="server" id="_URL" />
+
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -249,6 +253,11 @@
                         <div class="form-group">
                             <label>Asuntos Relevantes:</label>
                             <textarea type="text" disabled="disabled" name="prueba" runat="server" class="form-control" id="txtDescripcion" />
+                        </div>
+
+                         <div class="form-group">
+                            <label>Histórico:</label>
+                             <button type="button" runat="server" onclick="fnc_AbrirReporte(5)" id="btnHistorico"><span class="glyphicon glyphicon-print"></span></button>
                         </div>
                                
                     </div>

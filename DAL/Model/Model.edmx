@@ -207,6 +207,21 @@
           <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
           <Property Name="ValorCampo" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="rptSesionesHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FideicomisoID" Type="int" />
+          <Property Name="NombreFideicomiso" Type="nvarchar" MaxLength="1000" />
+          <Property Name="SesionID" Type="int" />
+          <Property Name="CalendarioID" Type="int" />
+          <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
+          <Property Name="ValorCampo" Type="nvarchar(max)" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Ejercicio" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
         <EntityType Name="rptSintesisInformativa">
           <Key>
             <PropertyRef Name="ID" />
@@ -217,6 +232,18 @@
           <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
           <Property Name="FichaTecnicaID" Type="int" />
           <Property Name="ValorCampo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="rptSintesisInformativaHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FideicomisoID" Type="int" />
+          <Property Name="NombreFideicomiso" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
+          <Property Name="ValorCampo" Type="nvarchar(max)" />
+          <Property Name="FichaTecnicaID" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
         </EntityType>
         <EntityType Name="Seguimiento">
           <Key>
@@ -564,6 +591,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FideicomisoFichaTecnica">
+          <End Role="Fideicomiso" Type="Self.Fideicomiso" Multiplicity="1" />
+          <End Role="FichaTecnica" Type="Self.FichaTecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fideicomiso">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichaTecnica">
+              <PropertyRef Name="FideicomisoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SesionActas">
           <End Role="Sesion" Type="Self.Sesion" Multiplicity="1" />
           <End Role="Actas" Type="Self.Actas" Multiplicity="*" />
@@ -674,7 +713,9 @@
           <EntitySet Name="Normatividad" EntityType="Self.Normatividad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rptSesiones" EntityType="Self.rptSesiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rptSesionesHistorico" EntityType="Self.rptSesionesHistorico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rptSintesisInformativa" EntityType="Self.rptSintesisInformativa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rptSintesisInformativaHistorico" EntityType="Self.rptSintesisInformativaHistorico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sesion" EntityType="Self.Sesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SesionHistorico" EntityType="Self.SesionHistorico" Schema="dbo" store:Type="Tables" />
@@ -748,6 +789,10 @@
           <AssociationSet Name="FK_FichaTecnicaFichaTecnicaHistorico" Association="Self.FK_FichaTecnicaFichaTecnicaHistorico">
             <End Role="FichaTecnica" EntitySet="FichaTecnica" />
             <End Role="FichaTecnicaHistorico" EntitySet="FichaTecnicaHistorico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FideicomisoFichaTecnica" Association="Self.FK_FideicomisoFichaTecnica">
+            <End Role="Fideicomiso" EntitySet="Fideicomiso" />
+            <End Role="FichaTecnica" EntitySet="FichaTecnica" />
           </AssociationSet>
           <AssociationSet Name="FK_SesionActas" Association="Self.FK_SesionActas">
             <End Role="Sesion" EntitySet="Sesion" />
@@ -1291,6 +1336,8 @@
             <End Role="Fideicomiso" EntitySet="Fideicomiso" />
             <End Role="FichaTecnica" EntitySet="FichaTecnica" />
           </AssociationSet>
+          <EntitySet Name="rptSesionesHistorico" EntityType="SISEFModel.rptSesionesHistorico" />
+          <EntitySet Name="rptSintesisInformativaHistorico" EntityType="SISEFModel.rptSintesisInformativaHistorico" />
         </EntityContainer>
         <Association Name="TipoUsuarioUsuario">
           <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
@@ -1645,6 +1692,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="rptSesionesHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FideicomisoID" Type="Int32" Nullable="true" />
+          <Property Name="NombreFideicomiso" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="SesionID" Type="Int32" Nullable="true" />
+          <Property Name="CalendarioID" Type="Int32" Nullable="true" />
+          <Property Name="NombreCampo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ValorCampo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Ejercicio" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="rptSintesisInformativaHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FideicomisoID" Type="Int32" Nullable="true" />
+          <Property Name="NombreFideicomiso" Type="String" Nullable="true" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NombreCampo" Type="String" Nullable="true" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ValorCampo" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FichaTecnicaID" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="true" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1670,14 +1744,14 @@
     <EntitySetMapping Name="Calendario">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.Calendario)">
         <MappingFragment StoreEntitySet="Calendario">
-          <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="DependenciaFideicomisoEjercicioID" ColumnName="DependenciaFideicomisoEjercicioID" />
           <ScalarProperty Name="EjercicioID" ColumnName="EjercicioID" />
           <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
           <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
           <ScalarProperty Name="UsuarioCaptura" ColumnName="UsuarioCaptura" />
           <ScalarProperty Name="UsuarioModifica" ColumnName="UsuarioModifica" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -2039,6 +2113,35 @@
           <ScalarProperty Name="ValorCampo" ColumnName="ValorCampo" />
           <ScalarProperty Name="Mes" ColumnName="Mes" />
           <ScalarProperty Name="Ejercicio" ColumnName="Ejercicio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rptSesionesHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSesionesHistorico)">
+        <MappingFragment StoreEntitySet="rptSesionesHistorico">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
+          <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
+          <ScalarProperty Name="SesionID" ColumnName="SesionID" />
+          <ScalarProperty Name="CalendarioID" ColumnName="CalendarioID" />
+          <ScalarProperty Name="NombreCampo" ColumnName="NombreCampo" />
+          <ScalarProperty Name="ValorCampo" ColumnName="ValorCampo" />
+          <ScalarProperty Name="Mes" ColumnName="Mes" />
+          <ScalarProperty Name="Ejercicio" ColumnName="Ejercicio" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rptSintesisInformativaHistorico">
+      <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSintesisInformativaHistorico)">
+        <MappingFragment StoreEntitySet="rptSintesisInformativaHistorico">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
+          <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
+          <ScalarProperty Name="NombreCampo" ColumnName="NombreCampo" />
+          <ScalarProperty Name="ValorCampo" ColumnName="ValorCampo" />
+          <ScalarProperty Name="FichaTecnicaID" ColumnName="FichaTecnicaID" />
+          <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

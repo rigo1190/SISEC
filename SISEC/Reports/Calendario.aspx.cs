@@ -28,7 +28,7 @@ namespace SISEC.Reports
                 //BindDropDownStatusSesion();
                 string M = string.Empty;
                 _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
-
+               
                 M=CrearObjetoReporte();
 
                 if (!M.Equals(string.Empty))
@@ -271,7 +271,7 @@ namespace SISEC.Reports
                                 rpt.ValorCampo = item.NumSesion;
                                 break;
                             case "NumOficio":
-                                Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(Utilerias.StrToInt(Session["Ejercicio"].ToString()));
+                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(Utilerias.StrToInt(Session["Ejercicio"].ToString()));
                                 rpt = new DAL.Model.rptSesiones();
                                 rpt.NombreCampo = "Número de Oficio";
                                 rpt.ValorCampo = item.NumOficio;
@@ -386,7 +386,198 @@ namespace SISEC.Reports
 
         }
 
+        private static void CrearHistoricoSesion(int idSesion, int idCalendario)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            bool eliminados = uow.RptSesionesHistoricoBusinessLogic.DeleteAll();
+            string M = string.Empty;
+            DAL.Model.Calendario cal = uow.CalendarioBusinessLogic.GetByID(idCalendario);
 
+
+            if (eliminados)
+            {
+                uow.SaveChanges();
+
+                //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                if (uow.Errors.Count > 0)
+                {
+                    foreach (string m in uow.Errors)
+                        M += m;
+                }
+
+                //int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
+                //int idCalendario = BuscarCalendario();
+                int idEjercicio = cal.EjercicioID;//Utilerias.StrToInt(Session["Ejercicio"].ToString());
+                Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+
+                var listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
+                                    join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                                    on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                    join f in uow.FideicomisoBusinessLogic.Get()
+                                    on dfe.FideicomisoID equals f.ID
+                                    join s in uow.SesionBusinessLogic.Get(e=>e.ID==idSesion)
+                                    on c.ID equals s.CalendarioID
+                                    join sh in uow.SesionHistoricoBusinessLogic.Get()
+                                    on s.ID equals sh.SesionID
+                                    join ts in uow.TipoSesionBusinessLogic.Get()
+                                    on sh.TipoSesionID equals ts.ID
+                                    join ss in uow.StatusSesionBusinessLogic.Get()
+                                    on sh.StatusSesionID equals ss.ID
+                                    select new
+                                    {
+                                        SesionID = sh.ID,
+                                        CalendarioID = c.ID,
+                                        FideicomisoID = f.ID,
+                                        NombreFideicomiso = f.Descripcion,
+                                        NumSesion = sh.NumSesion,
+                                        NumOficio = sh.NumOficio,
+                                        FechaOficio = sh.FechaOficio,
+                                        TipoSesion = ts.Descripcion,
+                                        StatusSesion = ss.Descripcion,
+                                        Mes = sh.Mes,
+                                        Descripcion = sh.Descripcion,
+                                        FechaProgramada = sh.FechaProgramada,
+                                        FechaCelebrada = sh.FechaCelebrada,
+                                        FechaReprogamada = sh.FechaReprogramada,
+                                        Observaciones = sh.Observaciones,
+                                        LugarReunion = sh.LugarReunion,
+                                        HoraProgramada = sh.HoraProgramada,
+                                        HoraReprogramada = sh.HoraReprogramada,
+                                        HoraCelebrada = sh.HoraCelebrada,
+                                        FechaCaptura=sh.FechaCapturaCorta
+                                    }).OrderByDescending(e=>e.FechaCaptura);
+
+                #region SE LLENA LA TABLA TEMPORAL PARA EL REPORTE
+
+                foreach (var item in listSesiones)
+                {
+
+                    List<PropertyInfo> propiedades = item.GetType().GetProperties().ToList();
+
+                    foreach (PropertyInfo propiedad in propiedades)
+                    {
+                        DAL.Model.rptSesionesHistorico rpt = null;
+
+                        switch (propiedad.Name)
+                        {
+                            case "NumSesion":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Número de Sesión";
+                                rpt.ValorCampo = item.NumSesion;
+                                break;
+                            case "NumOficio":
+                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(cal.EjercicioID);
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Número de Oficio";
+                                rpt.ValorCampo = item.NumOficio;
+                                break;
+                            case "FechaOficio":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Fecha Oficio";
+                                rpt.ValorCampo = item.FechaOficio != null ? item.FechaOficio.Value.ToShortDateString() : string.Empty;
+                                break;
+                            case "TipoSesion":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Tipo Sesión";
+                                rpt.ValorCampo = item.TipoSesion;
+                                break;
+                            case "StatusSesion":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Status Sesión";
+                                rpt.ValorCampo = item.StatusSesion;
+                                break;
+                            case "Mes":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Mes Programada";
+                                rpt.ValorCampo = Utilerias.GetNombreMes(Utilerias.StrToInt(item.Mes.ToString()));
+                                break;
+                            case "Descripcion":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Descripción";
+                                rpt.ValorCampo = item.Descripcion;
+                                break;
+                            case "FechaProgramada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Fecha Programada";
+                                rpt.ValorCampo = item.FechaProgramada != null ? item.FechaProgramada.Value.ToShortDateString() : string.Empty;
+                                break;
+                            case "FechaCelebrada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Fecha Celebrada";
+                                rpt.ValorCampo = item.FechaCelebrada != null ? item.FechaCelebrada.Value.ToShortDateString() : string.Empty;
+                                break;
+                            case "FechaReprogramada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Fecha Reprogramada";
+                                rpt.ValorCampo = item.FechaReprogamada != null ? item.FechaReprogamada.Value.ToShortDateString() : string.Empty;
+                                break;
+
+                            case "Observaciones":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Observaciones";
+                                rpt.ValorCampo = item.Observaciones;
+                                break;
+                            case "LugarReunion":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Lugar de Reunión";
+                                rpt.ValorCampo = item.LugarReunion;
+                                break;
+                            case "HoraProgramada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Hora Programada";
+                                rpt.ValorCampo = item.HoraProgramada;
+                                break;
+
+                            case "HoraReprogramada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Hora Reprogramada";
+                                rpt.ValorCampo = item.HoraReprogramada;
+                                break;
+
+                            case "HoraCelebrada":
+                                rpt = new DAL.Model.rptSesionesHistorico();
+                                rpt.NombreCampo = "Hora Celebrada";
+                                rpt.ValorCampo = item.HoraCelebrada;
+                                break;
+                            
+
+                        }
+
+                        if (rpt != null)
+                        {
+                            rpt.CalendarioID = item.CalendarioID;
+                            rpt.SesionID = item.SesionID;
+                            rpt.FideicomisoID = item.FideicomisoID;
+                            rpt.NombreFideicomiso = item.NombreFideicomiso;
+                            rpt.Mes = item.Mes;
+                            rpt.Ejercicio = objEjercicio.Anio;
+                            rpt.FechaModificacion = Convert.ToDateTime(item.FechaCaptura);
+
+                            uow.RptSesionesHistoricoBusinessLogic.Insert(rpt);
+                            uow.SaveChanges();
+
+                            if (uow.Errors.Count > 0)
+                            {
+                                foreach (string m in uow.Errors)
+                                    M += m;
+
+                                
+                            }
+
+
+                        }
+                    }
+
+                }
+
+                #endregion
+
+            }
+
+
+
+
+        }
 
         private void BindDropDownTipoSesion()
         {
@@ -429,11 +620,25 @@ namespace SISEC.Reports
         {
             List<Sesion> list = null;
             int idCalendario;
+            int idEjercicio=Utilerias.StrToInt(Session["Ejercicio"].ToString());
 
             if (ddlFideicomisos.Items.Count > 0)
             {
                 idCalendario = BuscarCalendario();
-                list = uow.SesionBusinessLogic.Get(e => e.CalendarioID == idCalendario).ToList();
+
+                if (idCalendario==0)
+                {
+                    list = (from c in uow.CalendarioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
+                            join s in uow.SesionBusinessLogic.Get()
+                            on c.ID equals s.CalendarioID
+                            select s).ToList();
+                }
+                else
+                {
+                    list = uow.SesionBusinessLogic.Get(e => e.CalendarioID == idCalendario).ToList();
+                }
+                    
+                
             }
 
             return list;
@@ -504,6 +709,11 @@ namespace SISEC.Reports
                     
                     break;
             }
+
+            //Se crea el reporte de historico de la sesion
+
+
+            CrearHistoricoSesion(obj.ID,obj.CalendarioID);
 
             return R;
         }

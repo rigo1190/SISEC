@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace SISEC.Reports
@@ -60,9 +62,7 @@ namespace SISEC.Reports
                 int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
 
                 //SE OBTIENEN TODOS LOS REGISTROS
-                var listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
-                                    join f in uow.FideicomisoBusinessLogic.Get()
-                                    on dfe.FideicomisoID equals f.ID
+                var listSintesis = (from f in uow.FideicomisoBusinessLogic.Get()
                                     join si in uow.FichaTecnicaBusinessLogic.Get()
                                     on f.ID equals si.FideicomisoID
                                     select new
@@ -86,30 +86,28 @@ namespace SISEC.Reports
 
                 if (idFideicomiso > 0)//SE FILTRA POR EL FIDEICOMISO SELECCIONADO, SI ES QUE SE ELIGIO ALGUNO 
                 {
-                    
-                    listSintesis = (from dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
-                                    join f in uow.FideicomisoBusinessLogic.Get(e => e.ID == idFideicomiso)
-                                        on dfe.FideicomisoID equals f.ID
-                                        join si in uow.FichaTecnicaBusinessLogic.Get()
-                                        on f.ID equals si.FideicomisoID
-                                        select new
-                                        {
-                                            FichaTecnicaID = si.ID, //ID de la ficha tecnica
-                                            FideicomisoID = f.ID,
-                                            Nombre = f.Descripcion, //Nombre del Fideicomiso
-                                            ResponsableOperativo = si.ResponsableOperativo,
-                                            Finalidad = si.Finalidad,
-                                            Creacion = si.Creacion,
-                                            Formalizacion = si.Formalizacion,
-                                            Partes = si.Partes,
-                                            Modificaciones = si.Modificaciones,
-                                            Integracion = si.ComiteTecnico,
-                                            Reglas = si.ReglasOperacion,
-                                            Estructura = si.EstructuraAdministrativa,
-                                            Calendario = si.Calendario,
-                                            Presupuesto = si.PresupuestoAnual,
-                                            Situacion = si.SituacionPatrimonial
-                                        });
+
+                    listSintesis = (from f in uow.FideicomisoBusinessLogic.Get(e=>e.ID==idFideicomiso)
+                                    join si in uow.FichaTecnicaBusinessLogic.Get()
+                                    on f.ID equals si.FideicomisoID
+                                    select new
+                                    {
+                                        FichaTecnicaID = si.ID, //ID de la ficha tecnica
+                                        FideicomisoID = f.ID,
+                                        Nombre = f.Descripcion, //Nombre del Fideicomiso
+                                        ResponsableOperativo = si.ResponsableOperativo,
+                                        Finalidad = si.Finalidad,
+                                        Creacion = si.Creacion,
+                                        Formalizacion = si.Formalizacion,
+                                        Partes = si.Partes,
+                                        Modificaciones = si.Modificaciones,
+                                        Integracion = si.ComiteTecnico,
+                                        Reglas = si.ReglasOperacion,
+                                        Estructura = si.EstructuraAdministrativa,
+                                        Calendario = si.Calendario,
+                                        Presupuesto = si.PresupuestoAnual,
+                                        Situacion = si.SituacionPatrimonial
+                                    });
                 }
 
                 
@@ -217,6 +215,159 @@ namespace SISEC.Reports
 
         }
 
+        [WebMethod]
+        public static string CrearSintesisHistorico(int idSintesis)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            bool eliminados = uow.RptSintesisInformativaHistoricoBusinessLogic.DeleteAll();
+            string M = string.Empty;
+            
+
+            if (eliminados)
+            {
+                uow.SaveChanges();
+
+                //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                if (uow.Errors.Count > 0)
+                {
+                    foreach (string m in uow.Errors)
+                        M += m;
+
+                    return M;
+                }
+
+                //int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
+
+                var listSintesis = (from f in uow.FideicomisoBusinessLogic.Get()
+                                    join si in uow.FichaTecnicaBusinessLogic.Get(e => e.ID == idSintesis)
+                                    on f.ID equals si.FideicomisoID
+                                    join sih in uow.FichaTecnicaHistoricoBusinessLogic.Get()
+                                    on si.ID equals sih.FichaTecnicaID
+                                    select new
+                                    {
+                                        FichaTecnicaID = sih.ID, //ID de la ficha tecnica
+                                        FideicomisoID = f.ID,
+                                        Nombre = f.Descripcion, //Nombre del Fideicomiso
+                                        ResponsableOperativo = sih.ResponsableOperativo,
+                                        Finalidad = sih.Finalidad,
+                                        Creacion = sih.Creacion,
+                                        Formalizacion = sih.Formalizacion,
+                                        Partes = sih.Partes,
+                                        Modificaciones = sih.Modificaciones,
+                                        Integracion = sih.ComiteTecnico,
+                                        Reglas = sih.ReglasOperacion,
+                                        Estructura = sih.EstructuraAdministrativa,
+                                        Calendario = sih.Calendario,
+                                        Presupuesto = sih.PresupuestoAnual,
+                                        Situacion = sih.SituacionPatrimonial,
+                                        FechaCaptura=sih.FechaCaptura
+                                    });
+
+                foreach (var item in listSintesis)
+                {
+
+                    List<PropertyInfo> propiedades = item.GetType().GetProperties().ToList();
+
+                    foreach (PropertyInfo propiedad in propiedades)
+                    {
+                        DAL.Model.rptSintesisInformativaHistorico rpt = null;
+
+                        switch (propiedad.Name)
+                        {
+                            case "ResponsableOperativo":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Responsable Operativo";
+                                rpt.ValorCampo = item.ResponsableOperativo;
+                                break;
+                            case "Finalidad":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Finalidad del Fideicomiso";
+                                rpt.ValorCampo = item.Finalidad;
+                                break;
+                            case "Creacion":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Creación";
+                                rpt.ValorCampo = item.Creacion;
+                                break;
+                            case "Formalizacion":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Formalización";
+                                rpt.ValorCampo = item.Formalizacion;
+                                break;
+                            case "Partes":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Partes del Fideicomiso";
+                                rpt.ValorCampo = item.Partes;
+                                break;
+                            case "Modificaciones":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Modificaciones al Decreto de Creación y Contrato de Fideicomiso";
+                                rpt.ValorCampo = item.Modificaciones;
+                                break;
+                            case "Integracion":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Integración del Comité Técnico";
+                                rpt.ValorCampo = item.Integracion;
+                                break;
+                            case "Reglas":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Reglas de Operación";
+                                rpt.ValorCampo = item.Reglas;
+                                break;
+                            case "Estructura":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Estructura Administrativa";
+                                rpt.ValorCampo = item.Estructura;
+                                break;
+                            case "Calendario":
+                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(Utilerias.StrToInt(Session["Ejercicio"].ToString()));
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Calendario de Sesiones ";// + ejercicio.Anio;
+                                rpt.ValorCampo = item.Calendario;
+                                break;
+                            case "Presupuesto":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Presupuesto Anual";
+                                rpt.ValorCampo = item.Presupuesto;
+                                break;
+                            case "Situacion":
+                                rpt = new DAL.Model.rptSintesisInformativaHistorico();
+                                rpt.NombreCampo = "Situacion Patrimonial";
+                                rpt.ValorCampo = item.Situacion;
+                                break;
+                        }
+
+                        if (rpt != null)
+                        {
+                            rpt.FichaTecnicaID = item.FichaTecnicaID;
+                            rpt.FideicomisoID = item.FideicomisoID;
+                            rpt.NombreFideicomiso = item.Nombre;
+                            rpt.FechaModificacion = item.FechaCaptura;
+
+                            uow.RptSintesisInformativaHistoricoBusinessLogic.Insert(rpt);
+                            uow.SaveChanges();
+
+
+                            if (uow.Errors.Count > 0)
+                            {
+                                foreach (string m in uow.Errors)
+                                    M += m;
+
+                                return M;
+                            }
+
+
+                        }
+                    }
+
+                }
+
+            }
+
+            return M;
+        }
+
+
         
 
         private void BindGrid()
@@ -301,9 +452,11 @@ namespace SISEC.Reports
             {
                 int idDependenciaFideicomiso = Utilerias.StrToInt(gridSintesis.DataKeys[e.Row.RowIndex].Values["FideicomisoID"].ToString());
                 Label lblFideicomiso = (Label)e.Row.FindControl("lblFideicomiso");
+                HtmlButton btnVer = (HtmlButton)e.Row.FindControl("btnVerHistorico"); 
 
                 lblFideicomiso.Text = GetClaveFideicomiso(idDependenciaFideicomiso);
 
+                btnVer.Attributes["onclick"] = "fnc_CrearHistorico(" + gridSintesis.DataKeys[e.Row.RowIndex].Values["ID"] + ")";
             }
         }
 

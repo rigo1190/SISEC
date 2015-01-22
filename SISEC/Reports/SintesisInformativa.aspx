@@ -34,6 +34,39 @@
         }
 
 
+        function fnc_Test(val1, val2, val3) {
+
+            var argumentos = fnc_Convertir("uno", "dos", "tres", "cuatro", "cinco");
+
+            var args = ["uno", "dos", "tres", "cuatro", "cinco",2];
+            var cad = "uno, dos, tres";
+            //var a = JSON.stringify(args);s
+
+            if (argumentos == args) {
+                alert("iguales");
+            }
+
+            PageMethods.Test(argumentos, fnc_ResponseTest);
+
+        }
+
+        function fnc_ResponseTest(response) {
+            var msg = response[0];
+
+            alert(msg);
+
+        }
+
+        function fnc_Convertir() {
+            var array = new Array(arguments.length);
+
+            for (i = 0; i < arguments.length; i++) {
+                array[i] = arguments[i];
+            }
+
+            return array;
+        }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

@@ -174,8 +174,8 @@
                 
                 <div class="row" id="divMenu" style="display:none" runat="server">
                     <ul class="nav nav-tabs nav-justified panel-success">
-                        <li class="active"><a id="linkNotas" href="#">Notas</a></li>
-                        <li class="active"><a id="linkActas" href="#">Actas</a></li>
+                        <li class="active"><a id="linkNotas">Notas</a></li>
+                        <li class="active"><a id="linkActas">Actas</a></li>
                     </ul>
                 </div>
             

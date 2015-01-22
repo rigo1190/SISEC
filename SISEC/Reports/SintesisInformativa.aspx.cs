@@ -367,8 +367,17 @@ namespace SISEC.Reports
             return M;
         }
 
+        [WebMethod]
+        public static List<string> Test(string[] args)
+        {
+            List<string> R=new List<string>();
 
-        
+            R.Add("Funcion exitosa");
+
+
+
+            return R;
+        }
 
         private void BindGrid()
         {

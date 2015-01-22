@@ -299,8 +299,8 @@
                     
                     <div id="divMenu" style="display:none" runat="server">
                         <ul class="nav nav-tabs nav-justified panel-success">
-                            <li class="active"><a id="linkAcuerdo" href="#">Acuerdo</a></li>
-                            <li class="active"><a id="linkSeguimiento" href="#">Seguimientos</a></li>
+                            <li class="active"><a id="linkAcuerdo">Acuerdo</a></li>
+                            <li class="active"><a id="linkSeguimiento">Seguimientos</a></li>
                         </ul>
                     </div>
                     

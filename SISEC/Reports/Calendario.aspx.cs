@@ -102,7 +102,7 @@ namespace SISEC.Reports
                                         SesionID = s.ID,
                                         CalendarioID = c.ID,
                                         FideicomisoID = f.ID,
-                                        NombreFideicomiso = f.Descripcion,
+                                        NombreFideicomiso = f.Descripcion + " (" + f.Clave +")",
                                         NumSesion = s.NumSesion,
                                         NumOficio = s.NumOficio,
                                         FechaOficio = s.FechaOficio,
@@ -144,7 +144,7 @@ namespace SISEC.Reports
                                         SesionID = s.ID,
                                         CalendarioID = c.ID,
                                         FideicomisoID = f.ID,
-                                        NombreFideicomiso = f.Descripcion,
+                                        NombreFideicomiso = f.Descripcion + " (" + f.Clave + ")",
                                         NumSesion = s.NumSesion,
                                         NumOficio = s.NumOficio,
                                         FechaOficio = s.FechaOficio,
@@ -189,7 +189,7 @@ namespace SISEC.Reports
                                             SesionID = s.ID,
                                             CalendarioID = c.ID,
                                             FideicomisoID = f.ID,
-                                            NombreFideicomiso = f.Descripcion,
+                                            NombreFideicomiso = f.Descripcion + " (" + f.Clave + ")",
                                             NumSesion = s.NumSesion,
                                             NumOficio = s.NumOficio,
                                             FechaOficio = s.FechaOficio,
@@ -230,7 +230,7 @@ namespace SISEC.Reports
                                             SesionID = s.ID,
                                             CalendarioID = c.ID,
                                             FideicomisoID = f.ID,
-                                            NombreFideicomiso = f.Descripcion,
+                                            NombreFideicomiso = f.Descripcion + " (" + f.Clave + ")",
                                             NumSesion = s.NumSesion,
                                             NumOficio = s.NumOficio,
                                             FechaOficio = s.FechaOficio,
@@ -271,7 +271,6 @@ namespace SISEC.Reports
                                 rpt.ValorCampo = item.NumSesion;
                                 break;
                             case "NumOficio":
-                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(Utilerias.StrToInt(Session["Ejercicio"].ToString()));
                                 rpt = new DAL.Model.rptSesiones();
                                 rpt.NombreCampo = "Número de Oficio";
                                 rpt.ValorCampo = item.NumOficio;
@@ -405,9 +404,8 @@ namespace SISEC.Reports
                         M += m;
                 }
 
-                //int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
-                //int idCalendario = BuscarCalendario();
-                int idEjercicio = cal.EjercicioID;//Utilerias.StrToInt(Session["Ejercicio"].ToString());
+                
+                int idEjercicio = cal.EjercicioID;
                 Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
 
                 var listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
@@ -466,7 +464,7 @@ namespace SISEC.Reports
                                 rpt.ValorCampo = item.NumSesion;
                                 break;
                             case "NumOficio":
-                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(cal.EjercicioID);
+                                
                                 rpt = new DAL.Model.rptSesionesHistorico();
                                 rpt.NombreCampo = "Número de Oficio";
                                 rpt.ValorCampo = item.NumOficio;
@@ -753,6 +751,8 @@ namespace SISEC.Reports
             {
                 foreach (Sesion obj in list)
                 {
+                    string claveFideicomiso = GetClaveFideicomiso(obj.CalendarioID, uow);
+                    
                     if (dayHold != obj.FechaProgramada)
                     {
                         if (dayTextHasChanged)
@@ -775,7 +775,7 @@ namespace SISEC.Reports
                         temp.Append("<a href='#'");
                         temp.Append("<span onclick='fnc_CargarDatos(" + obj.ID + ");' style=color:green;font-family:Arial;font-weight:bold;font-size:11px;");
                         temp.Append("<br>");
-                        temp.Append(" " + obj.NumSesion);
+                        temp.Append(" " + obj.NumSesion + " ("+claveFideicomiso+")");
                         temp.Append("</span>");
                         temp.Append("</a>");
 
@@ -844,8 +844,7 @@ namespace SISEC.Reports
 
         }
 
-        
-        
+
     }
 
 

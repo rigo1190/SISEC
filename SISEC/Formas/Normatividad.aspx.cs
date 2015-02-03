@@ -29,10 +29,29 @@ namespace SISEC.Formas
 
                 ddlTipoNormatividad.Attributes["onchange"] = "fnc_MostrarFideicomisos(this)";
 
-                ValidarEjercicioSeleccionado();
+                //ValidarEjercicioSeleccionado();
+                ValidarPermisosUsuario();
             }
         }
 
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    gridNormatividad.Columns[0].Visible = false;
+                    btnGuardar.Enabled = false;
+                    break;
+            }
+        }
 
         private void ValidarEjercicioSeleccionado()
         {
@@ -65,6 +84,7 @@ namespace SISEC.Formas
             ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
 
+            ValidarPermisosUsuario();
 
         }
         private void BindGridNormatividad()
@@ -231,6 +251,8 @@ namespace SISEC.Formas
             gridNormatividad.PageIndex = e.NewPageIndex;
             BindGridNormatividad();
             divCapturaNormatividad.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
@@ -425,11 +447,13 @@ namespace SISEC.Formas
         protected void ddlTipoNormatividad_SelectedIndexChanged(object sender, EventArgs e)
         {
             Consultar();
+            ValidarPermisosUsuario();
         }
 
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
         {
             Consultar();
+            ValidarPermisosUsuario();
         }
 
     }

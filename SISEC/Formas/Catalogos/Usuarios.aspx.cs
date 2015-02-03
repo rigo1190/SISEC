@@ -238,6 +238,7 @@ namespace SISEC.Formas.Catalogos
             obj.Login = txtLogin.Value;
             obj.Password = Encriptar(txtPassword.Value);
             obj.TipoUsuarioID = Utilerias.StrToInt(ddlTipoUsuario.SelectedValue);
+            obj.Activo = chkActivo.Checked;
 
             if (_Accion.Value.Equals("N"))
                 uow.UsuarioBusinessLogic.Insert(obj);

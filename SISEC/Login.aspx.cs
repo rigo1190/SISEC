@@ -30,25 +30,24 @@ namespace SISEC
 
             if (user != null)
             {
+                FormsAuthentication.RedirectFromLoginPage(user.Login, false);
+                Session.Timeout = 60;
+                Session["Login"] = user.Login;
+                Session["UserID"] = user.ID;
+                
                 //Se resuelve el tipo de usuario
+                switch (user.TipoUsuarioID)
+                {
+                    case 1: //ADMINISTRADOR
+                        //Nos vamos a la pantalla de administrador
+                        Response.Redirect("~/Formas/Catalogos/Ejercicios.aspx");
+                        break;
 
-                if (user.TipoUsuarioID == 1)
-                {
-                    //Nos vamos a la pantalla de administrador
-                    FormsAuthentication.RedirectFromLoginPage(user.Login, false);
-                    Session.Timeout = 60;
-                    Session["Login"] = user.Login;
-                    Session["UserID"] = user.ID;
-                    Response.Redirect("~/Formas/Catalogos/Ejercicios.aspx");
-                }
-                else
-                {
-                    
-                    FormsAuthentication.RedirectFromLoginPage(user.Login, false);
-                    Session.Timeout = 60;
-                    Session["Login"] = user.Login;
-                    Session["UserID"] = user.ID;
-                    Response.Redirect("~/SeleccionarEjercicio.aspx");
+                    case 3: //EJECUTIVO
+                    case 2: //ANALISTA
+                        Response.Redirect("~/SeleccionarEjercicio.aspx");
+                        break;
+
                 }
 
             }

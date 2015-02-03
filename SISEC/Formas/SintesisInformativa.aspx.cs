@@ -23,11 +23,32 @@ namespace SISEC.Formas
 
                 BindDropDownFideicomisos();
                 CargarGridPrimerFideicomiso();
-                
+                ValidarPermisosUsuario();
             }
         }
 
         #region METODOS
+
+
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    gridFichas.Columns[0].Visible = false;
+                    btnGuardar.Enabled = false;
+                    break;
+            }
+        }
+
         private void BindGridFichas()
         {
             int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);

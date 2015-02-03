@@ -167,7 +167,7 @@
                                         </asp:TemplateField>
                                          <asp:TemplateField Visible="false" HeaderText="Fecha Programada" SortExpression="FP">
                                             <ItemTemplate>
-                                                <%# String.Format("{0:d}",DataBinder.Eval(Container.DataItem, "FechaProgramada"))%>
+                                               <%#Convert.ToDateTime(DataBinder.Eval(Container.DataItem, "FechaProgramada")).ToString("d")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField Visible="false" HeaderText="Hora Programada" SortExpression="HP">

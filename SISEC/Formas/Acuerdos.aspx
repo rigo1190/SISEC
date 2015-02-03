@@ -70,7 +70,15 @@
             $("#<%= txtNotas.ClientID %>").prop('disabled', false);
             $("#<%= txtNumAcuerdo.ClientID %>").prop('disabled', false);
             $("#<%= ddlStatus.ClientID %>").prop('disabled', true);
-            $("#<%= btnGuardar.ClientID %>").prop('disabled', false);
+
+
+            if ($("#<%= _TipoUser.ClientID %>").val() != "3") {
+                $("#<%= btnCrearAcuerdo2.ClientID %>").prop('disabled', false);
+                $("#<%= btnCrearAcuerdo.ClientID %>").prop('disabled', false);
+                $("#<%= btnGuardar.ClientID %>").prop('disabled', false);
+            }
+                
+
             $("#<%=ddlStatus.ClientID%>").val(response);
 
             var date = new Date();
@@ -201,7 +209,7 @@
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText="Fecha Programada" SortExpression="Año">
                                             <ItemTemplate>
-                                                <%# DataBinder.Eval(Container.DataItem, "FechaProgramada")%>
+                                                <%#Convert.ToDateTime(DataBinder.Eval(Container.DataItem, "FechaProgramada")).ToString("d")%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Hora Programada" SortExpression="Año">
@@ -246,12 +254,19 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Acciones">
                                                     <ItemTemplate>
-                                                        <asp:ImageButton  ID="imgDetalle" ToolTip="Detalle acuerdo" runat="server" ImageUrl="~/img/magnifier.png" />
                                                         <asp:ImageButton  ID="imgBtnEdit" ToolTip="Editar" OnClick="imgBtnEdit_Click" runat="server" ImageUrl="~/img/Edit1.png" />
                                                         <asp:ImageButton  ID="imgBtnEliminar" ToolTip="Borrar" runat="server" ImageUrl="~/img/close.png" data-toggle="modal" data-target="#myModal"/>
                                                     </ItemTemplate>
                                                     <HeaderStyle BackColor="#EEEEEE" />
-                                                    <ItemStyle HorizontalAlign="right" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
+                                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
+                                                </asp:TemplateField>
+
+                                                <asp:TemplateField HeaderText="Ver Detalle" SortExpression="Año">
+                                                    <ItemTemplate>
+                                                        <asp:ImageButton  ID="imgDetalle" ToolTip="Detalle acuerdo" runat="server" ImageUrl="~/img/magnifier.png" />
+                                                    </ItemTemplate>
+                                                    <HeaderStyle BackColor="#EEEEEE" />
+                                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="50px" BackColor="#EEEEEE" />
                                                 </asp:TemplateField>
 
                                                 <asp:TemplateField HeaderText="Fideicomiso" SortExpression="Año">
@@ -450,6 +465,7 @@
         <input type="hidden" runat="server" id="_IDSesion" />
         <input type="hidden" runat="server" id="_IDAcuerdo" />
         <input type="hidden" runat="server" id="_IDSeguimiento" />
+        <input type="hidden" runat="server" id="_TipoUser" />
     </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">

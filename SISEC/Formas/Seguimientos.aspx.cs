@@ -24,8 +24,28 @@ namespace SISEC.Formas
                 {
                     int idCalendario = BuscarCalendario();
                     BindGridSesiones(idCalendario);
-                    ValidarEjercicioSeleccionado();
+                    //ValidarEjercicioSeleccionado();
+                    ValidarPermisosUsuario();
                 }
+            }
+        }
+
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    gridSeguimientos.Columns[0].Visible = false;
+                    btnGuardar.Enabled = false;
+                    break;
             }
         }
 
@@ -67,6 +87,8 @@ namespace SISEC.Formas
             ddlFideicomisos.DataTextField = "Descripcion";
             ddlFideicomisos.DataBind();
 
+
+            ValidarPermisosUsuario();
 
 
         }
@@ -122,6 +144,8 @@ namespace SISEC.Formas
             
             divDetalleSeguimientos.Style.Add("display", "none");
             divEncabezado.Style.Add("display", "block");
+
+            ValidarPermisosUsuario();
             
         }
         protected void gridSesiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -132,6 +156,8 @@ namespace SISEC.Formas
             divEncabezado.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridSesiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -154,6 +180,8 @@ namespace SISEC.Formas
             divEncabezado.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridSeguimientos_RowDataBound(object sender, GridViewRowEventArgs e)
         {

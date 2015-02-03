@@ -45,7 +45,27 @@ namespace SISEC.Formas
                 ddlStatus.Attributes["onchange"] = "fnc_GetDatosStatus(this)";
 
                 //ValidarEjercicioSeleccionado();
+                ValidarPermisosUsuario();
+            }
+        }
 
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    gridSesiones.Columns[0].Visible = false;
+                    btnGuardar.Enabled = false;
+                    btnCrearCalendario.Enabled = false;
+                    break;
             }
         }
 
@@ -320,6 +340,8 @@ namespace SISEC.Formas
                 
             BindGridSesiones(idCalendario);
 
+            ValidarPermisosUsuario();
+
             divCapturaSesion.Style.Add("display", "none");
             divEncabezado.Style.Add("display", "block");
 
@@ -573,7 +595,7 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
 
-            
+            ValidarPermisosUsuario();
         }
         protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -601,6 +623,8 @@ namespace SISEC.Formas
                 case "C": //CANCELADA
                     break;
             }
+
+            ValidarPermisosUsuario();
 
         }
 

@@ -28,6 +28,7 @@ namespace SISEC.Formas
                     BindGridSesiones(idCalendario);
 
                     //ValidarEjercicioSeleccionado();
+                    ValidarPermisosUsuario();
                 }
 
                 if (CalendarioCerrado())
@@ -36,6 +37,28 @@ namespace SISEC.Formas
                     lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
                 }
                 
+            }
+        }
+
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    gridNotas.Columns[0].Visible = false;
+                    gridActas.Columns[0].Visible = false;
+                    btnGuardarA.Enabled = false;
+                    btnGuardarN.Enabled = false;
+                    
+                    break;
             }
         }
 
@@ -81,6 +104,8 @@ namespace SISEC.Formas
             ddlFideicomisos.DataValueField = "ID";
             ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
+
+            ValidarPermisosUsuario();
         }
 
        
@@ -249,7 +274,9 @@ namespace SISEC.Formas
             divNotasActas.Style.Add("display", "none");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
-            
+
+            ValidarPermisosUsuario();
+
         }
         protected void btnNotas_ServerClick(object sender, EventArgs e)
         {
@@ -305,6 +332,8 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
             divNotasActas.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridSesiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -332,6 +361,8 @@ namespace SISEC.Formas
 
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridActas_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -581,6 +612,8 @@ namespace SISEC.Formas
 
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridNotas_RowDataBound(object sender, GridViewRowEventArgs e)
         {

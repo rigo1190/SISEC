@@ -37,6 +37,7 @@ namespace SISEC.Formas
                     lblAlerta.Text = "El ejercicio se encuentra cerrado para este fideicomiso, sólo se puede consultar la información.";
                 }
                 //ValidarEjercicioSeleccionado();
+                ValidarPermisosUsuario();
             }
         }
 
@@ -49,6 +50,31 @@ namespace SISEC.Formas
 
             return obj!=null?!Convert.ToBoolean(obj.Activo):false;
 
+        }
+
+
+        private void ValidarPermisosUsuario()
+        {
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+
+            Usuario obj = uow.UsuarioBusinessLogic.GetByID(idUser);
+
+            switch (obj.TipoUsuarioID)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3: //EJECUTIVO
+                    _TipoUser.Value = obj.TipoUsuarioID.ToString();
+                     gridAcuerdos.Columns[0].Visible = false;
+                     btnCrearAcuerdo.Disabled = true;
+                     btnCrearAcuerdo2.Disabled = true;
+                     gridSeguimientos.Columns[0].Visible = false;
+                     btnGuardar.Enabled = false;
+                     btnGuardarS.Enabled = false;
+                    break;
+            }
         }
 
         private void ValidarEjercicioSeleccionado()
@@ -82,6 +108,8 @@ namespace SISEC.Formas
             ddlFideicomisos.DataValueField = "ID";
             ddlFideicomisos.DataTextField = "Clave";
             ddlFideicomisos.DataBind();
+
+            ValidarPermisosUsuario();
         }
         private void BindDropDownStatusAcuerdo()
         {
@@ -184,6 +212,7 @@ namespace SISEC.Formas
         {
             UnitOfWork uow = new UnitOfWork();
             StatusAcuerdo obj = uow.StatusAcuerdoBusinessLogic.Get(e => e.Inicial == true).FirstOrDefault();
+
             return obj.ID.ToString();
 
         }
@@ -259,6 +288,8 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
 
+            ValidarPermisosUsuario();
+
         }
         protected void gridSesiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -268,6 +299,8 @@ namespace SISEC.Formas
             divEncabezado.Style.Add("display", "block");
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
         }
         protected void gridSesiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -411,6 +444,8 @@ namespace SISEC.Formas
                 btnGuardar.Enabled = true;
                 btnCrearSeguimiento.Disabled = false;
             }
+
+            ValidarPermisosUsuario();
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -577,6 +612,7 @@ namespace SISEC.Formas
             divMsgError.Style.Add("display", "none");
             divMsgSuccess.Style.Add("display", "none");
 
+            ValidarPermisosUsuario();
         }
 
 
@@ -774,6 +810,8 @@ namespace SISEC.Formas
             divSeguimiento.Style.Add("display", "block");
             divEncabezadoSeguimiento.Style.Add("display", "block");
             divCapturaDetalle.Style.Add("display", "none");
+
+            ValidarPermisosUsuario();
 
         }
 

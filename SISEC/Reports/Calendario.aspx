@@ -7,9 +7,9 @@
             var izq = (screen.width - 750) / 2
             var sup = (screen.height - 600) / 2
             var param = "";
-            param = fnc_ArmarParamentros();
+            param = fnc_ArmarParamentros(caller);
             url = $("#<%= _URL.ClientID %>").val();
-            var argumentos = "?c=" + caller + param;
+            var argumentos = "?c=" + caller + "&p="+ param;
             url += argumentos;
             window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
         }
@@ -17,9 +17,18 @@
 
         
 
-        function fnc_ArmarParamentros() {
+        function fnc_ArmarParamentros(caller) {
             var p = "";
             var msg = "";
+
+            switch (caller) {
+                case 3:
+                case 5:
+                case 7:
+                    p = $("#<%= _IDUser.ClientID %>").val();
+                    break;
+            }
+
             return p;
 
         }
@@ -138,15 +147,19 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                          <div class="panel-heading">
-                            <div class="col-md-11">
+                            <div class="col-md-7">
                                 <h3 class="panel-title"><i class="fa"></i>Agenda de sesiones</h3>
                             </div>
+                             <label>Detalle Sesiones:</label>
                              <button type="button" runat="server" onclick="fnc_AbrirReporte(3)" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
+                             &nbsp;&nbsp;&nbsp;&nbsp;
+                             <label>Agenda Sesiones</label>
+                             <button type="button" runat="server" onclick="fnc_AbrirReporte(7)" id="btnVer2"><span class="glyphicon glyphicon-print"></span></button>
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
                                 <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender"
-                                    
+                                    OnVisibleMonthChanged="Calendar1_VisibleMonthChanged"
                                     DayStyle-Height="100" DayStyle-Width="75" DayStyle-HorizontalAlign="Left"
                                     DayStyle-verticalalign="Top"
                                     DayStyle-Font-Name="Arial" DayStyle-Font-Size="12" 
@@ -174,6 +187,7 @@
         <input type="hidden" runat="server" id="_IDCalendario" />
         <input type="hidden" runat="server" id="_IDSesion" />
         <input type="hidden" runat="server" id="_URL" />
+        <input type="hidden" runat="server" id="_IDUser" />
 
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">

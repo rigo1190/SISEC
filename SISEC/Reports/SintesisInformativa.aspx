@@ -8,7 +8,7 @@
             var param = "";
             param = fnc_ArmarParamentros();
             url = $("#<%= _URL.ClientID %>").val();
-            var argumentos = "?c=" + caller + param;
+            var argumentos = "?c=" + caller + "&p=" + param;
             url += argumentos;
             window.open(url, 'pmgw', 'toolbar=no,status=no,scrollbars=yes,resizable=yes,directories=no,location=no,menubar=no,width=750,height=500,top=' + sup + ',left=' + izq);
 
@@ -21,6 +21,9 @@
         function fnc_ArmarParamentros() {
             var p = "";
             var msg = "";
+
+            p = $("#<%= _IDUser.ClientID %>").val();
+
             return p;
 
         }
@@ -111,9 +114,10 @@
                 
                  <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                             <h3 class="panel-title"><i class="fa"></i><asp:Label runat="server" ID="lblResultado"></asp:Label></h3>
                         </div>
+                        <label>Síntesis actual:</label>
                         <button type="button" runat="server" onclick="fnc_AbrirReporte(2)" id="btnVer"><span class="glyphicon glyphicon-print"></span></button>
                     </div>
                     <div class="panel-body">
@@ -140,6 +144,7 @@
                                         <ItemTemplate>
                                             <button type="button" runat="server" id="btnVerHistorico"><span class="glyphicon glyphicon-print"></span></button>
                                         </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="50px" /> 
                                     </asp:TemplateField>
                                 </Columns> 
                                 <PagerSettings FirstPageText="Primera" LastPageText="Ultima" Mode="NextPreviousFirstLast" NextPageText="Siguiente" PreviousPageText="Anterior" />
@@ -161,6 +166,7 @@
         <input type="hidden" runat="server" id="_Consultado" />
         <input type="hidden" runat="server" id="_Ejercicio" />
         <input type="hidden" runat="server" id="_URL" />
+        <input type="hidden" runat="server" id="_IDUser" />
     </div>
 
     <div class="row">

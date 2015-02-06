@@ -43,14 +43,39 @@ namespace BL
         private IBusinessLogic<rptSesiones> rptSesionesBusinessLogic;
         private IBusinessLogic<rptSesionesHistorico> rptSesionesHistoricoBusinessLogic;
         private IBusinessLogic<rptSintesisInformativaHistorico> rptSintesisInformativaHistoricoBusinessLogic;
-
-
+        private IBusinessLogic<MesAgendaSesiones> mesAgendaSesionesBusinessLogic;
+        private IBusinessLogic<MesCompleto> mesCompletoBusinessLogic;
 
         public UnitOfWork()
         {
             this.contexto = new SISEF();
         }
 
+        public IBusinessLogic<MesCompleto> MesCompletoBusinessLogic
+        {
+            get
+            {
+                if (this.mesCompletoBusinessLogic == null)
+                {
+                    this.mesCompletoBusinessLogic = new GenericBusinessLogic<MesCompleto>(contexto);
+                }
+
+                return mesCompletoBusinessLogic;
+            }
+        }
+
+        public IBusinessLogic<MesAgendaSesiones> MesAgendaSesionesBusinessLogic
+        {
+            get
+            {
+                if (this.mesAgendaSesionesBusinessLogic == null)
+                {
+                    this.mesAgendaSesionesBusinessLogic = new GenericBusinessLogic<MesAgendaSesiones>(contexto);
+                }
+
+                return mesAgendaSesionesBusinessLogic;
+            }
+        }
 
         public IBusinessLogic<rptSintesisInformativaHistorico> RptSintesisInformativaHistoricoBusinessLogic
         {

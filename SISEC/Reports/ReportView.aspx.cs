@@ -50,10 +50,11 @@ namespace SISEC.Reports
                     break;
 
                 case 2: //SINTESIS INFORMATIVA
-                    
+                    rdc.SetParameterValue("UsuarioID", primerArray[0]);
                     break;
 
                 case 3: //AGENDA DE SESIONES
+                    rdc.SetParameterValue("UsuarioID", primerArray[0]);
                     break;
 
                 case 4: //SEGUIMIENTOS DE ACUERDOS
@@ -62,11 +63,15 @@ namespace SISEC.Reports
                     break;
 
                 case 5: //HISTORICO SESIONES
-
+                    rdc.SetParameterValue("UsuarioID", primerArray[0]);
                     break;
 
                 case 6: //HISTORICO SINTESIS INFORMATIVA
-                    
+                    rdc.SetParameterValue("UsuarioID", primerArray[0]);
+                    break;
+
+                case 7: //AGENDA FORMATO CALENDARIO
+                    rdc.SetParameterValue("UsuarioID", primerArray[0]);
                     break;
             }
         }
@@ -156,6 +161,11 @@ namespace SISEC.Reports
                 case 6: //HISTORICO SINTESIS INFORMATIVA
                     nombreReporte = "rptSintesisInformativaHistorico.rpt";
                     break;
+
+                case 7: //AGENDA FORMATO CALENDARIO
+                    nombreReporte = "rptAgenda.rpt";
+                    break;
+
             }
 
             return nombreReporte;

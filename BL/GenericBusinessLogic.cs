@@ -32,11 +32,12 @@ namespace BL
             return true;
         }
 
-        public virtual bool DeleteAll() 
+        public virtual bool DeleteAll(System.Linq.Expressions.Expression<Func<T, bool>> filter = null) 
         {
-            repository.DeleteAll();
+            repository.DeleteAll(filter);
             return true;
         }
+
 
         public IQueryable<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {

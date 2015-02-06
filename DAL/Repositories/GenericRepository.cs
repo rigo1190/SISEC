@@ -101,10 +101,14 @@ namespace DAL.Repositories
             dbSet.Remove(entityToDelete);
         }
 
-        public virtual void DeleteAll()
+        public virtual void DeleteAll(Expression<Func<T, bool>> filter = null)
         {
-
-            IList<T> colEntities=Get().ToList() ;
+            IList<T> colEntities;
+            
+            if (filter != null)
+                colEntities = Get(filter).ToList();
+            else
+                colEntities = Get().ToList();
 
             foreach (T item in colEntities)
 	        {

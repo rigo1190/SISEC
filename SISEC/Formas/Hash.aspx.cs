@@ -1,4 +1,5 @@
 ﻿using BL;
+using DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,22 @@ namespace SISEC.Formas
 
         protected void btnDesencriptar_Click(object sender, EventArgs e)
         {
-            txtPasswordD.Value = Desencriptar(txtPasswordE.Value);
+            string login = txtLogin.Value;
+            string passwordE=string.Empty;
+            Usuario user=null;
+
+            if (!login.Equals(string.Empty))
+                user = uow.UsuarioBusinessLogic.Get(u => u.Login == login).FirstOrDefault();
+
+            if (user != null)
+                passwordE = user.Password;
+            else
+            {
+                if (!txtPasswordE.Value.Equals(string.Empty))
+                    passwordE = txtPasswordE.Value;
+            }
+
+            txtPasswordD.Value = Desencriptar(passwordE);
         }
 
         private string Desencriptar(string cadena)

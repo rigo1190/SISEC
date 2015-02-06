@@ -953,6 +953,12 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\rptAgenda.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptAgenda.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\rptCalendarioSesiones.cs">
       <DependentUpon>rptCalendarioSesiones.rpt</DependentUpon>
       <SubType>Component</SubType>
@@ -971,6 +977,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rptSintesisInformativaHistorico.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\rptSubAgenda.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptSubAgenda.rpt</DependentUpon>
     </Compile>
     <Compile Include="Reports\rptSubSeguimientos.cs">
       <DependentUpon>rptSubSeguimientos.rpt</DependentUpon>
@@ -1091,6 +1102,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\rptAgenda.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptAgenda.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\rptSesionesHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptSesionesHistorico.cs</LastGenOutput>
@@ -1098,6 +1113,10 @@
     <EmbeddedResource Include="Reports\rptSintesisInformativaHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptSintesisInformativaHistorico.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptSubAgenda.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptSubAgenda.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

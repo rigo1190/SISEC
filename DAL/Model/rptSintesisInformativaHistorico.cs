@@ -21,5 +21,6 @@ namespace DAL.Model
         public string ValorCampo { get; set; }
         public Nullable<int> FichaTecnicaID { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public Nullable<int> UsuarioID { get; set; }
     }
 }

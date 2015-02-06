@@ -23,5 +23,6 @@ namespace DAL.Model
         public string ValorCampo { get; set; }
         public Nullable<int> Mes { get; set; }
         public Nullable<int> Ejercicio { get; set; }
+        public Nullable<int> UsuarioID { get; set; }
     }
 }

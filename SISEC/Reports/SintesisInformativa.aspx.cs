@@ -23,7 +23,8 @@ namespace SISEC.Reports
                 BindDropDownFideicomisos();
                 _Ejercicio.Value = Session["Ejercicio"].ToString();
                 _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
-                
+                _IDUser.Value = Session["UserID"].ToString();
+
                 string M = string.Empty;
                 
                 BindGrid();
@@ -41,7 +42,8 @@ namespace SISEC.Reports
 
         private string CrearObjetoReporte()
         {
-            bool eliminados=uow.RptSintesisInformativaBusinessLogic.DeleteAll();
+            int idUser = Utilerias.StrToInt(_IDUser.Value);
+            bool eliminados=uow.RptSintesisInformativaBusinessLogic.DeleteAll(e=>e.UsuarioID==idUser);
             string M = string.Empty;
 
             if (eliminados)
@@ -190,6 +192,7 @@ namespace SISEC.Reports
                             rpt.FichaTecnicaID = item.FichaTecnicaID;
                             rpt.FideicomisoID = item.FideicomisoID;
                             rpt.NombreFideicomiso = item.Nombre;
+                            rpt.UsuarioID = idUser;
 
                             uow.RptSintesisInformativaBusinessLogic.Insert(rpt);
                             uow.SaveChanges();
@@ -219,7 +222,10 @@ namespace SISEC.Reports
         public static string CrearSintesisHistorico(int idSintesis)
         {
             UnitOfWork uow = new UnitOfWork();
-            bool eliminados = uow.RptSintesisInformativaHistoricoBusinessLogic.DeleteAll();
+            int idUser = Utilerias.StrToInt(HttpContext.Current.Session["UserID"].ToString());
+
+            bool eliminados = uow.RptSintesisInformativaHistoricoBusinessLogic.DeleteAll(e=>e.UsuarioID==idUser);
+
             string M = string.Empty;
             
 
@@ -235,8 +241,6 @@ namespace SISEC.Reports
 
                     return M;
                 }
-
-                //int idFideicomiso = Utilerias.StrToInt(_IDFideicomiso.Value);
 
                 var listSintesis = (from f in uow.FideicomisoBusinessLogic.Get()
                                     join si in uow.FichaTecnicaBusinessLogic.Get(e => e.ID == idSintesis)
@@ -320,9 +324,8 @@ namespace SISEC.Reports
                                 rpt.ValorCampo = item.Estructura;
                                 break;
                             case "Calendario":
-                                //Ejercicio ejercicio = uow.EjercicioBusinessLogic.GetByID(Utilerias.StrToInt(Session["Ejercicio"].ToString()));
                                 rpt = new DAL.Model.rptSintesisInformativaHistorico();
-                                rpt.NombreCampo = "Calendario de Sesiones ";// + ejercicio.Anio;
+                                rpt.NombreCampo = "Calendario de Sesiones ";
                                 rpt.ValorCampo = item.Calendario;
                                 break;
                             case "Presupuesto":
@@ -343,6 +346,7 @@ namespace SISEC.Reports
                             rpt.FideicomisoID = item.FideicomisoID;
                             rpt.NombreFideicomiso = item.Nombre;
                             rpt.FechaModificacion = item.FechaCaptura;
+                            rpt.UsuarioID = idUser;
 
                             uow.RptSintesisInformativaHistoricoBusinessLogic.Insert(rpt);
                             uow.SaveChanges();

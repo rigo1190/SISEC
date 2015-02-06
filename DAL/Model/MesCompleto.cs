@@ -12,18 +12,14 @@ namespace DAL.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class rptSesionesHistorico
+    public partial class MesCompleto
     {
         public int ID { get; set; }
-        public Nullable<int> FideicomisoID { get; set; }
-        public string NombreFideicomiso { get; set; }
-        public Nullable<int> SesionID { get; set; }
-        public Nullable<int> CalendarioID { get; set; }
-        public string NombreCampo { get; set; }
-        public string ValorCampo { get; set; }
+        public int Año { get; set; }
         public Nullable<int> Mes { get; set; }
-        public Nullable<int> Ejercicio { get; set; }
-        public Nullable<System.DateTime> FechaModificacion { get; set; }
+        public Nullable<int> Dia { get; set; }
+        public Nullable<System.DateTime> FechaCompleta { get; set; }
+        public string NombreDia { get; set; }
         public Nullable<int> UsuarioID { get; set; }
     }
 }

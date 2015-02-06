@@ -28,7 +28,7 @@ namespace SISEC.Reports
                 //BindDropDownStatusSesion();
                 string M = string.Empty;
                 _URL.Value = ResolveClientUrl("~/Reports/ReportView.aspx");
-               
+                _IDUser.Value = Session["UserID"].ToString();
                 M=CrearObjetoReporte();
 
                 if (!M.Equals(string.Empty))
@@ -38,7 +38,164 @@ namespace SISEC.Reports
                 }
 
                 
+                
             }
+
+        }
+
+
+        private string ConstruirMes(int año, int mes, int idUser)
+        {
+            if (uow.MesCompletoBusinessLogic.Get(e => e.Año == año && e.Mes == mes && e.UsuarioID == idUser).Count() > 0)
+                return string.Empty;
+            
+            bool eliminados = uow.MesCompletoBusinessLogic.DeleteAll(e=>e.UsuarioID==idUser);
+
+            string M = string.Empty;
+
+            if (eliminados)
+            {
+                uow.SaveChanges();
+
+                //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                if (uow.Errors.Count > 0)
+                {
+                    foreach (string m in uow.Errors)
+                        M += m;
+
+                    return M;
+                }
+
+                int dias = DateTime.DaysInMonth(año, mes);
+
+
+                for (int i = 1; i <= dias; i++)
+                {
+                    DateTime dia = new DateTime(año, mes, i);
+                    MesCompleto mesCompleto = new MesCompleto();
+                    mesCompleto.Año = año;
+                    mesCompleto.Mes = mes;
+                    mesCompleto.Dia = i;
+                    mesCompleto.NombreDia = dia.DayOfWeek.ToString();
+                    mesCompleto.FechaCompleta = dia;
+                    mesCompleto.UsuarioID = idUser;
+
+                    uow.MesCompletoBusinessLogic.Insert(mesCompleto);
+                    uow.SaveChanges();
+
+                    //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                    if (uow.Errors.Count > 0)
+                    {
+                        foreach (string m in uow.Errors)
+                            M += m;
+
+                        return M;
+                    }
+                }
+                
+            }
+
+            return M;
+        }
+
+        private string ConstruirAgendaSesiones(int mes, int idFideicomiso)
+        {
+            string M = string.Empty;
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+            int anio = GetEjercicioAño();
+
+            bool eliminados = uow.MesAgendaSesionesBusinessLogic.DeleteAll(e => e.UsuarioID == idUser);
+
+            if (eliminados)
+            {
+                uow.SaveChanges();
+
+                //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                if (uow.Errors.Count > 0)
+                {
+                    foreach (string m in uow.Errors)
+                        M += m;
+
+                    return M;
+                }
+
+                M = ConstruirMes(anio, mes, idUser);
+
+                if (!M.Equals(string.Empty))
+                    return M;
+
+
+
+                //PARA TODOS LOS FIDEICOMISOS DE ALGUN MES EN PARTICULAR
+                var listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
+                                    join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                                    on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                    join u in uow.UsuarioFideicomisoBusinessLogic.Get(e => e.UsuarioID == idUser)
+                                    on dfe.ID equals u.DependenciaFideicomisoEjercicioID
+                                    join f in uow.FideicomisoBusinessLogic.Get()
+                                    on dfe.FideicomisoID equals f.ID
+                                    join s in uow.SesionBusinessLogic.Get(e => e.Mes == mes)
+                                    on c.ID equals s.CalendarioID
+                                    select new
+                                    {
+                                        NombreFideicomiso = f.Clave,
+                                        NumSesion = s.NumSesion,
+                                        FechaProgramada=s.FechaProgramada,
+                                        txtFechaReprogramada = s.FechaReprogramada
+                                    });
+
+
+                //PARA ALGUN FIEDICOMISO EN PARTICULAR, DE ALGUN MES EN PARTICULAR
+
+                if (idFideicomiso > 0)
+                {
+                    listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
+                                    join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get(e=>e.ID==idFideicomiso)
+                                    on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                    join u in uow.UsuarioFideicomisoBusinessLogic.Get(e => e.UsuarioID == idUser)
+                                    on dfe.ID equals u.DependenciaFideicomisoEjercicioID
+                                    join f in uow.FideicomisoBusinessLogic.Get()
+                                    on dfe.FideicomisoID equals f.ID
+                                    join s in uow.SesionBusinessLogic.Get(e => e.Mes == mes)
+                                    on c.ID equals s.CalendarioID
+                                    select new
+                                    {
+                                        NombreFideicomiso = f.Clave,
+                                        NumSesion = s.NumSesion,
+                                        FechaProgramada = s.FechaProgramada,
+                                        txtFechaReprogramada = s.FechaReprogramada
+                                    });
+                }
+
+
+                foreach (var item in listSesiones)
+                {
+                    MesAgendaSesiones agenda = new MesAgendaSesiones();
+                    agenda.Año = anio;
+                    agenda.Mes = item.FechaProgramada.Value.Month;
+                    agenda.Dia=item.FechaProgramada.Value.Day;
+                    agenda.Descripcion = item.NumSesion + " (" + item.NombreFideicomiso + ")";
+                    agenda.UsuarioID = idUser;
+
+                    uow.MesAgendaSesionesBusinessLogic.Insert(agenda);
+                    uow.SaveChanges();
+
+                    //SI HUBO ERORRES AL ELIMINAR REGISTROS PREVIOS
+                    if (uow.Errors.Count > 0)
+                    {
+                        foreach (string m in uow.Errors)
+                            M += m;
+
+                        return M;
+                    }
+
+                }
+
+
+
+            }
+
+            return M;
 
         }
 
@@ -60,7 +217,8 @@ namespace SISEC.Reports
 
         private string CrearObjetoReporte()
         {
-            bool eliminados = uow.RptSesionesBusinessLogic.DeleteAll();
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
+            bool eliminados = uow.RptSesionesBusinessLogic.DeleteAll(e=>e.UsuarioID==idUser);
             string M = string.Empty;
 
             if (eliminados)
@@ -69,6 +227,7 @@ namespace SISEC.Reports
 
                 int idEjercicio = Utilerias.StrToInt(Session["Ejercicio"].ToString());
                 Ejercicio objEjercicio = uow.EjercicioBusinessLogic.GetByID(idEjercicio);
+                
 
                 uow.SaveChanges();
 
@@ -89,6 +248,8 @@ namespace SISEC.Reports
                 var listSesiones = (from c in uow.CalendarioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
                                     join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                    join u in uow.UsuarioFideicomisoBusinessLogic.Get(e=>e.UsuarioID==idUser)
+                                    on dfe.ID equals u.DependenciaFideicomisoEjercicioID
                                     join f in uow.FideicomisoBusinessLogic.Get()
                                     on dfe.FideicomisoID equals f.ID
                                     join s in uow.SesionBusinessLogic.Get()
@@ -131,6 +292,8 @@ namespace SISEC.Reports
                     listSesiones = (from c in uow.CalendarioBusinessLogic.Get()
                                     join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
                                     on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                                    join u in uow.UsuarioFideicomisoBusinessLogic.Get(e => e.UsuarioID == idUser)
+                                    on dfe.ID equals u.DependenciaFideicomisoEjercicioID
                                     join f in uow.FideicomisoBusinessLogic.Get()
                                     on dfe.FideicomisoID equals f.ID
                                     join s in uow.SesionBusinessLogic.Get(e => e.Mes == mes)
@@ -355,6 +518,7 @@ namespace SISEC.Reports
                             rpt.NombreFideicomiso = item.NombreFideicomiso;
                             rpt.Mes = item.Mes;
                             rpt.Ejercicio = objEjercicio.Anio;
+                            rpt.UsuarioID = idUser;
 
                             uow.RptSesionesBusinessLogic.Insert(rpt);
                             uow.SaveChanges();
@@ -388,7 +552,8 @@ namespace SISEC.Reports
         private static void CrearHistoricoSesion(int idSesion, int idCalendario)
         {
             UnitOfWork uow = new UnitOfWork();
-            bool eliminados = uow.RptSesionesHistoricoBusinessLogic.DeleteAll();
+            int idUser = Utilerias.StrToInt(HttpContext.Current.Session["UserID"].ToString());
+            bool eliminados = uow.RptSesionesHistoricoBusinessLogic.DeleteAll(e=>e.UsuarioID==idUser);
             string M = string.Empty;
             DAL.Model.Calendario cal = uow.CalendarioBusinessLogic.GetByID(idCalendario);
 
@@ -550,6 +715,7 @@ namespace SISEC.Reports
                             rpt.Mes = item.Mes;
                             rpt.Ejercicio = objEjercicio.Anio;
                             rpt.FechaModificacion = Convert.ToDateTime(item.FechaCaptura);
+                            rpt.UsuarioID = idUser;
 
                             uow.RptSesionesHistoricoBusinessLogic.Insert(rpt);
                             uow.SaveChanges();
@@ -619,6 +785,7 @@ namespace SISEC.Reports
             List<Sesion> list = null;
             int idCalendario;
             int idEjercicio=Utilerias.StrToInt(Session["Ejercicio"].ToString());
+            int idUser = Utilerias.StrToInt(Session["UserID"].ToString());
 
             if (ddlFideicomisos.Items.Count > 0)
             {
@@ -629,6 +796,10 @@ namespace SISEC.Reports
                     list = (from c in uow.CalendarioBusinessLogic.Get(e => e.EjercicioID == idEjercicio)
                             join s in uow.SesionBusinessLogic.Get()
                             on c.ID equals s.CalendarioID
+                            join dfe in uow.DependenciaFideicomisoEjercicioBusinessLogic.Get()
+                            on c.DependenciaFideicomisoEjercicioID equals dfe.ID
+                            join ud in uow.UsuarioFideicomisoBusinessLogic.Get(e=>e.UsuarioID==idUser)
+                            on dfe.ID equals ud.DependenciaFideicomisoEjercicioID
                             select s).ToList();
                 }
                 else
@@ -752,7 +923,7 @@ namespace SISEC.Reports
                 foreach (Sesion obj in list)
                 {
                     string claveFideicomiso = GetClaveFideicomiso(obj.CalendarioID, uow);
-                    
+
                     if (dayHold != obj.FechaProgramada)
                     {
                         if (dayTextHasChanged)
@@ -764,6 +935,7 @@ namespace SISEC.Reports
                     else
                         multipleDayItem = true;
 
+                    
 
                     if (e.Day.Date == obj.FechaProgramada)
                     {
@@ -771,11 +943,11 @@ namespace SISEC.Reports
                             temp = new StringBuilder();
                         else
                             temp.Append("<br>");
-                        
+
                         temp.Append("<a href='#'");
                         temp.Append("<span onclick='fnc_CargarDatos(" + obj.ID + ");' style=color:green;font-family:Arial;font-weight:bold;font-size:11px;");
                         temp.Append("<br>");
-                        temp.Append(" " + obj.NumSesion + " ("+claveFideicomiso+")");
+                        temp.Append(" " + obj.NumSesion + " (" + claveFideicomiso + ")");
                         temp.Append("</span>");
                         temp.Append("</a>");
 
@@ -785,9 +957,17 @@ namespace SISEC.Reports
 
                 if (dayTextHasChanged)
                     e.Cell.Controls.Add(new LiteralControl(temp.ToString()));
-
             }
+            
+        }
 
+        protected void Calendar1_VisibleMonthChanged(object sender, MonthChangedEventArgs e)
+        {
+            int mes = e.NewDate.Month;
+            ddlMes.SelectedValue = mes.ToString();
+            int idFideicomiso = Utilerias.StrToInt(ddlFideicomisos.SelectedValue);
+
+            string M = ConstruirAgendaSesiones(mes, idFideicomiso);
         }
 
         protected void ddlFideicomisos_SelectedIndexChanged(object sender, EventArgs e)
@@ -814,9 +994,18 @@ namespace SISEC.Reports
             {
                 divMsgError.Attributes.Add("display", "block");
                 lblMsgError.Text = M;
+                return;
             }
 
+            if (!ddlMes.SelectedValue.Equals("0"))
+                M = ConstruirAgendaSesiones(Utilerias.StrToInt(ddlMes.SelectedValue), Utilerias.StrToInt(ddlFideicomisos.SelectedValue));
 
+            if (!M.Equals(string.Empty))
+            {
+                divMsgError.Attributes.Add("display", "block");
+                lblMsgError.Text = M;
+                return;
+            }
             
         }
 
@@ -839,10 +1028,23 @@ namespace SISEC.Reports
             {
                 divMsgError.Attributes.Add("display", "block");
                 lblMsgError.Text = M;
+                return;
             }
 
+            if (!ddlMes.SelectedValue.Equals("0"))
+                M = ConstruirAgendaSesiones(Utilerias.StrToInt(ddlMes.SelectedValue), Utilerias.StrToInt(ddlFideicomisos.SelectedValue));
+
+
+            if (!M.Equals(string.Empty))
+            {
+                divMsgError.Attributes.Add("display", "block");
+                lblMsgError.Text = M;
+                return;
+            }
 
         }
+
+        
 
 
     }

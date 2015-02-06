@@ -67,6 +67,15 @@ namespace SISEC.Reports {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnVer;
         
         /// <summary>
+        /// Control btnVer2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnVer2;
+        
+        /// <summary>
         /// Control Calendar1.
         /// </summary>
         /// <remarks>
@@ -101,6 +110,15 @@ namespace SISEC.Reports {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden _URL;
+        
+        /// <summary>
+        /// Control _IDUser.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden _IDUser;
         
         /// <summary>
         /// Control txtFideicomiso.

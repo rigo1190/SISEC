@@ -162,6 +162,29 @@
           <Property Name="Imagen" Type="varbinary(max)" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="MesAgendaSesiones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Año" Type="int" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Dia" Type="int" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="UsuarioID" Type="int" />
+        </EntityType>
+        <EntityType Name="MesCompleto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Año" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Dia" Type="int" />
+          <Property Name="FechaCompleta" Type="datetime" />
+          <Property Name="NombreDia" Type="nvarchar" MaxLength="50" />
+          <Property Name="UsuarioID" Type="int" />
+        </EntityType>
         <EntityType Name="Normatividad">
           <Key>
             <PropertyRef Name="ID" />
@@ -206,6 +229,7 @@
           <Property Name="CalendarioID" Type="int" />
           <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
           <Property Name="ValorCampo" Type="nvarchar(max)" />
+          <Property Name="UsuarioID" Type="int" />
         </EntityType>
         <EntityType Name="rptSesionesHistorico">
           <Key>
@@ -221,6 +245,7 @@
           <Property Name="Mes" Type="int" />
           <Property Name="Ejercicio" Type="int" />
           <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioID" Type="int" />
         </EntityType>
         <EntityType Name="rptSintesisInformativa">
           <Key>
@@ -232,6 +257,7 @@
           <Property Name="NombreCampo" Type="nvarchar" MaxLength="250" />
           <Property Name="FichaTecnicaID" Type="int" />
           <Property Name="ValorCampo" Type="nvarchar(max)" />
+          <Property Name="UsuarioID" Type="int" />
         </EntityType>
         <EntityType Name="rptSintesisInformativaHistorico">
           <Key>
@@ -244,6 +270,7 @@
           <Property Name="ValorCampo" Type="nvarchar(max)" />
           <Property Name="FichaTecnicaID" Type="int" />
           <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="UsuarioID" Type="int" />
         </EntityType>
         <EntityType Name="Seguimiento">
           <Key>
@@ -710,6 +737,8 @@
           <EntitySet Name="FichaTecnicaHistorico" EntityType="Self.FichaTecnicaHistorico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fideicomiso" EntityType="Self.Fideicomiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Imagenes" EntityType="Self.Imagenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MesAgendaSesiones" EntityType="Self.MesAgendaSesiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MesCompleto" EntityType="Self.MesCompleto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Normatividad" EntityType="Self.Normatividad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notas" EntityType="Self.Notas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rptSesiones" EntityType="Self.rptSesiones" Schema="dbo" store:Type="Tables" />
@@ -1338,6 +1367,8 @@
           </AssociationSet>
           <EntitySet Name="rptSesionesHistorico" EntityType="SISEFModel.rptSesionesHistorico" />
           <EntitySet Name="rptSintesisInformativaHistorico" EntityType="SISEFModel.rptSintesisInformativaHistorico" />
+          <EntitySet Name="MesAgendaSesiones" EntityType="SISEFModel.MesAgendaSesiones" />
+          <EntitySet Name="MesCompleto" EntityType="SISEFModel.MesCompleto" />
         </EntityContainer>
         <Association Name="TipoUsuarioUsuario">
           <End Type="SISEFModel.TipoUsuario" Role="TipoUsuario" Multiplicity="1" />
@@ -1653,6 +1684,7 @@
           <Property Name="NombreCampo" Type="String" Nullable="true" FixedLength="false" MaxLength="250" Unicode="true" />
           <Property Name="ValorCampo" Type="String" Nullable="true" FixedLength="false" MaxLength="Max" Unicode="true" />
           <Property Name="FichaTecnicaID" Type="Int32" />
+          <Property Name="UsuarioID" Type="Int32" />
         </EntityType>
         <EntityType Name="rptSesiones">
           <Key>
@@ -1667,6 +1699,7 @@
           <Property Name="ValorCampo" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
           <Property Name="Mes" Type="Int32" />
           <Property Name="Ejercicio" Type="Int32" />
+          <Property Name="UsuarioID" Type="Int32" />
         </EntityType>
         <Association Name="FK_DependenciaFideicomiso">
           <End Type="SISEFModel.Dependencia" Role="Dependencia" Multiplicity="0..1" />
@@ -1706,6 +1739,7 @@
           <Property Name="Mes" Type="Int32" />
           <Property Name="Ejercicio" Type="Int32" />
           <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioID" Type="Int32" />
         </EntityType>
         <EntityType Name="rptSintesisInformativaHistorico">
           <Key>
@@ -1718,6 +1752,30 @@
           <Property Name="ValorCampo" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FichaTecnicaID" Type="Int32" />
           <Property Name="FechaModificacion" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="UsuarioID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MesAgendaSesiones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Año" Type="Int32" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Dia" Type="Int32" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MesCompleto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Año" Type="Int32" Nullable="false" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Dia" Type="Int32" />
+          <Property Name="FechaCompleta" Type="DateTime" Precision="3" />
+          <Property Name="NombreDia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioID" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2092,7 +2150,8 @@
     <EntitySetMapping Name="rptSintesisInformativa">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSintesisInformativa)">
         <MappingFragment StoreEntitySet="rptSintesisInformativa">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
           <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
           <ScalarProperty Name="NombreCampo" ColumnName="NombreCampo" />
@@ -2104,7 +2163,8 @@
     <EntitySetMapping Name="rptSesiones">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSesiones)">
         <MappingFragment StoreEntitySet="rptSesiones">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
           <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
           <ScalarProperty Name="SesionID" ColumnName="SesionID" />
@@ -2119,7 +2179,8 @@
     <EntitySetMapping Name="rptSesionesHistorico">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSesionesHistorico)">
         <MappingFragment StoreEntitySet="rptSesionesHistorico">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
           <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
           <ScalarProperty Name="SesionID" ColumnName="SesionID" />
@@ -2135,7 +2196,8 @@
     <EntitySetMapping Name="rptSintesisInformativaHistorico">
       <EntityTypeMapping TypeName="IsTypeOf(SISEFModel.rptSintesisInformativaHistorico)">
         <MappingFragment StoreEntitySet="rptSintesisInformativaHistorico">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="FideicomisoID" ColumnName="FideicomisoID" />
           <ScalarProperty Name="NombreFideicomiso" ColumnName="NombreFideicomiso" />
           <ScalarProperty Name="NombreCampo" ColumnName="NombreCampo" />
@@ -2145,6 +2207,31 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="MesAgendaSesiones">
+            <EntityTypeMapping TypeName="SISEFModel.MesAgendaSesiones">
+              <MappingFragment StoreEntitySet="MesAgendaSesiones">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MesCompleto">
+            <EntityTypeMapping TypeName="SISEFModel.MesCompleto">
+              <MappingFragment StoreEntitySet="MesCompleto">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="NombreDia" ColumnName="NombreDia" />
+                <ScalarProperty Name="FechaCompleta" ColumnName="FechaCompleta" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

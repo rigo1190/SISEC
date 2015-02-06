@@ -78,6 +78,12 @@
     <Compile Include="Model\Imagenes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MesAgendaSesiones.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MesCompleto.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Model.Context.cs">
       <DependentUpon>Model.Context.tt</DependentUpon>
       <DesignTime>True</DesignTime>
